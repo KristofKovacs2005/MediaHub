@@ -1,6 +1,8 @@
 CREATE DATABASE mediahub
     DEFAULT CHARACTER SET = 'utf8mb4';
 
+USE mediahub
+
 CREATE TABLE items(
     i_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     author VARCHAR(255),
@@ -96,11 +98,11 @@ DELETE FROM users;
 create trigger insert_user BEFORE insert on users
 for each row set new.password = pwd_encrypt(new.password);
 
-create trigger update_user BEFORE UPDATE on users // futtatni
+create trigger update_user BEFORE UPDATE on users /*// futtatni*/
 for each row set new.password = pwd_encrypt(new.password);
 
 DROP Trigger insert_user;
-DROP Trigger update_user; // futatni
+DROP Trigger update_user; /*// futatni*/
 
 create FUNCTION pwd_encrypt(pwd varchar(100))
 RETURNS VARCHAR(255) DETERMINISTIC

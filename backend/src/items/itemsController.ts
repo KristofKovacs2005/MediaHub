@@ -124,7 +124,7 @@ export async function insertItem(request: Request, response: Response) {
             "insert into items values (null, ?, ?, ?, ?)", [item.author, item.i_name, item.img_url, item.i_description]
         ) as Array<any>
         let _addTags;
-      
+        
         for (let i = 0; i < tags.length; i++) {
             let asd: Array<any> = []
             asd.push(results.insertId)
@@ -133,7 +133,7 @@ export async function insertItem(request: Request, response: Response) {
             "insert into item_tag values(?, ?)", asd
         )
         }
-         
+        
         
         if (results.affectedRows > 0) {
             response.status(201).send({message:"Created"})

@@ -1,0 +1,62 @@
+/* Ensure consistent box-sizing and that html/body fill the viewport */
+html, body {
+  height: 100%;
+  margin: 0;            /* remove default browser margin */
+  box-sizing: border-box;
+  background-color: #FBF9F6; /* lighter page surround (subtle off-white) */
+}
+
+/* make all elements inherit the box-sizing */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* root should fill the entire body (full width and height) and keep a warmer background */
+#root {
+  width: 100%;
+  max-width: none;       /* allow root to span full width */
+  height: 100%;          /* fill parent's height */
+  min-height: 100vh;     /* ensure it at least fills the viewport vertically */
+  margin: 0;
+  padding: 2rem;
+  text-align: center;
+  background-color: #F2E2C8; /* slightly stronger / warmer parchment for the app root */
+}
+
+
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
