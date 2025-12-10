@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Termek from "./termek";
+import { Cards } from "../components/cards";
 
 export default function Termekek() {
 	const [items, setItems] = useState([]);
@@ -110,6 +111,7 @@ export default function Termekek() {
 							i_description={it?.i_description}
 						/>
 					))}
+					<Cards />
 				</section>
 			)}
 		</section>

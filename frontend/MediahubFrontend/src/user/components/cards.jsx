@@ -1,17 +1,23 @@
 import konyvIcon from "../../assets/book-open-cover.png"
 import filmIcon from "../../assets/play-alt.png"
 
-export function Cards(){
-    return(
-        <section className="kartyakSection">
-            <div className="kartyakDivKonyv">
-                <img src={konyvIcon} alt="Könyvek" id="könyvICon"/>
-                <h3>Könyvek</h3>
-            </div>
-            <div className="kartyakDivFilm">
-                <img src={filmIcon} alt="Filmek" id="filmICon"/>
-                <h3>Filmek</h3>
-            </div>
-        </section>
+export function Cards() {
+    return (
+        <table className="kartyaTable">
+            <tbody>
+                <tr className="kartya">
+                    <td>
+                        <div className="kartyakDivKonyv">
+                            <img className="bigCardPicIcon" src={konyvIcon} alt="Könyvek" id="könyvICon" />
+                        </div>
+                    </td>
+                    <td >
+                        <div className="kartyakDivFilm">
+                            <img className="bigCardPicIcon" src={filmIcon} alt="Filmek" id="filmICon" /><br />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     )
 }

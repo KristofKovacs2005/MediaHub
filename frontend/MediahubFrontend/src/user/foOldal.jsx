@@ -10,6 +10,7 @@ export default function FoOldal(){
             <Navbar />
             <div className="pageBelowNavbar">
                 <Termekek />
+                
             </div>
             <Footer />
         </>

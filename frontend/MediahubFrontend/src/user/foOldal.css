@@ -1,18 +1,50 @@
-.kartyakDivKonyv{
-    background-image: url("../assets/ELTE-konyvtar.png");
-    border-radius: 15px;
+/**
+ * FOOLDAL CSS
+ */
+
+.pageBelowNavbar{
+    padding-top: 72px; /* slightly larger than navbar height (64px) for breathing room */
+    min-height: calc(100vh - 72px); /* fill remaining viewport height beneath navbar */
+    background-color: transparent; /* let #root/body background show through */
+    justify-items: center;
 }
 
-.kartyakDivFilm{
+body {
+    /* background handled in App.css so avoid overriding it here */
+    color: #1B1B1B;            /* main text color for contrast */
+}
+
+a, .appNavbar .navbarSection2 p {
+    color: #0F4C5C; /* link/interactive color (deep teal) */
+}
+
+/* kartyak */
+
+.kartyakDivKonyv {
+    background-image: url("../assets/ELTE-konyvtar.png");
+}
+
+.kartyakDivFilm, .kartyakDivKonyv{
+    width: 100%;
+    height: 300px; 
+    background-size: cover;            /* shows whole picture */
+    background-position: center;
+    border-radius: 20px;
+    margin: 20px auto;
+    display: flex;                     /* center icon */
+    justify-content: center;
+    align-items: center;
+}
+
+.kartyakDivFilm {
     background-image: url("../assets/filmBkgPic.png");
-    border-radius: 15px;
 }
 
 .kartyakSection {
     display: flex;
     flex-wrap: wrap; /* ADD THIS */
     gap: 1rem;       /* optional spacing between items */
-    width: 70%;      /* you can keep this */
+    width: 80%;      /* you can keep this */
     margin: 0 auto;  /* center the section if desired */
 }
 
@@ -24,33 +56,27 @@
     margin: 0 auto;  /* center the section if desired */
 }
 
-.pageBelowNavbar{
-    padding-top: 72px; /* slightly larger than navbar height (64px) for breathing room */
-    min-height: calc(100vh - 72px); /* fill remaining viewport height beneath navbar */
-    background-color: transparent; /* let #root/body background show through */
+.bigCardPicIcon {
+    width: 120px;
+    height: 120px;
+    background-size: 80%;  /* <-- makes it smaller */
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .kartyakSection div:hover{
     transform: scale(1.10);
 }
 
-.termekDiv{
-    flex: 0 0 200px; /* flex-grow:0, flex-shrink:0, flex-basis:200px */
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    border: 3px solid #646cff;
+.kartya{
+    flex: 1 1 50%;
 }
 
-.filter-btn{
-    background-color: #0F4C5C;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.kartyaTable{
+    width: 100%;
 }
+/* Termekek */
+
 .termekekSection{
     display: flex;
     flex-wrap: wrap;
@@ -64,11 +90,22 @@
     padding: 15px;
 }
 
-body {
-    /* background handled in App.css so avoid overriding it here */
-    color: #1B1B1B;            /* main text color for contrast */
+.termekDiv{
+    flex: 0 0 200px; /* flex-grow:0, flex-shrink:0, flex-basis:200px */
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 3px solid #646cff;
 }
 
-a, .appNavbar .navbarSection2 p {
-    color: #0F4C5C; /* link/interactive color (deep teal) */
+/* Szűrők */
+
+.filter-btn{
+    background-color: #0F4C5C;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
