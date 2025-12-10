@@ -3,7 +3,7 @@ html, body {
   height: 100%;
   margin: 0;            /* remove default browser margin */
   box-sizing: border-box;
-  background-color: #FBF9F6; /* lighter page surround (subtle off-white) */
+  background-color: #F2E2C8; /* lighter page surround (subtle off-white) */
 }
 
 /* make all elements inherit the box-sizing */

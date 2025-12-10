@@ -3,6 +3,8 @@ CREATE DATABASE mediahub
 
 USE mediahub
 
+
+
 CREATE TABLE items(
     i_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     author VARCHAR(255),
@@ -13,10 +15,28 @@ CREATE TABLE items(
 
 ALTER Table items AUTO_INCREMENT = 1;
 
-INSERT INTO items VALUES(NULL, "someone", "book", "kep1", "This is a simple book"),
-                        (NULL, "other", "movie", "kep2", "This is a simple movie");
+INSERT INTO items (author, i_name, img_url, i_description) VALUES
+('John Doe', 'Test Item 1', 'https://example.com/img1.jpg', 'This is a sample description for item 1.'),
+('Alice Smith', 'Test Item 2', 'https://example.com/img2.jpg', 'Another example description for item 2.'),
+('Bob Johnson', 'Demo Product', 'https://example.com/demo.jpg', 'Demo product used for basic testing.'),
+('Charlie Brown', 'Sample Gadget', 'https://example.com/gadget.png', 'A simple gadget for UI testing.'),
+('Eve Adams', 'Placeholder Item', 'https://example.com/placeholder.png', 'Placeholder description text.'),
+('Mark Lee', 'Cool Widget', 'https://example.com/widget.jpg', 'A cool widget for testing images and text.'),
+('Sara Hall', 'Basic Tool', 'https://example.com/tool.jpg', 'A basic tool for functionality checks.'),
+('Tom Reed', 'Prototype Item', 'https://example.com/prototype.jpg', 'Prototype for early-stage testing.'),
+('Lily Evans', 'Mock Product', 'https://example.com/mock.jpg', 'Mock product description for layout tests.'),
+('Greg Miles', 'Utility Object', 'https://example.com/utility.jpg', 'A utility object for interaction tests.'),
+('Nina Gray', 'Visual Test Item', 'https://example.com/visual.jpg', 'Used to test UI rendering and visuals.'),
+('Oscar Kane', 'Simple Device', 'https://example.com/device.jpg', 'Simple device entry for CRUD testing.'),
+('Paula West', 'Functional Item', 'https://example.com/functional.jpg', 'Functional test description text.'),
+('Rick Stone', 'Random Object', 'https://example.com/random.jpg', 'Just a random object to fill the database.'),
+('Emma Frost', 'Prototype Gadget', 'https://example.com/proto-gadget.jpg', 'Prototype gadget with placeholder info.');
 
 DELETE FROM items;
+
+Drop TABLE items;
+
+SELECT * FROM items;
 
 CREATE TABLE status(
     s_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
