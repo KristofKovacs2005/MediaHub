@@ -2,16 +2,29 @@
  * FOOLDAL CSS
  */
 
+:root{
+    --primary: #0F4C5C;
+    --accent: #646cff;
+    --bg: #f7f9fb;
+    --card-bg: #ffffff;
+    --muted: #6b7280;
+    --radius: 8px;
+}
+
 .pageBelowNavbar{
     padding-top: 72px; /* slightly larger than navbar height (64px) for breathing room */
     min-height: calc(100vh - 72px); /* fill remaining viewport height beneath navbar */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     background-color: transparent; /* let #root/body background show through */
     justify-items: center;
 }
 
 body {
-    /* background handled in App.css so avoid overriding it here */
-    color: #1B1B1B;            /* main text color for contrast */
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #111827;            /* main text color for contrast */
+    background-color: var(--bg);
 }
 
 a, .appNavbar .navbarSection2 p {
@@ -42,18 +55,11 @@ a, .appNavbar .navbarSection2 p {
 
 .kartyakSection {
     display: flex;
-    flex-wrap: wrap; /* ADD THIS */
-    gap: 1rem;       /* optional spacing between items */
-    width: 80%;      /* you can keep this */
-    margin: 0 auto;  /* center the section if desired */
-}
-
-.kartyakSection {
-    display: flex;
-    flex-wrap: wrap; /* ADD THIS */
-    gap: 1rem;       /* optional spacing between items */
-    width:100%;      /* you can keep this */
-    margin: 0 auto;  /* center the section if desired */
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+    margin: 0 auto;
+    align-items: flex-start;
 }
 
 .bigCardPicIcon {
@@ -65,11 +71,38 @@ a, .appNavbar .navbarSection2 p {
 }
 
 .kartyakSection div:hover{
-    transform: scale(1.10);
+    transform: scale(1.05);
 }
 
-.kartya{
-    flex: 1 1 50%;
+/* Default: flexible items that try to be 20% width but can shrink on narrow screens */
+.kartya {
+    flex: 1 1 20%;
+    max-width: 20%;
+    min-width: 0; /* allow shrinking */
+    box-sizing: border-box;
+}
+
+/* On large screens ensure exactly 5 per row */
+@media (min-width: 1100px){
+    .kartyakSection .kartya{
+        flex: 0 0 calc(20% - 0.8rem);
+        max-width: calc(20% - 0.8rem);
+    }
+}
+
+/* Responsive fallbacks */
+@media (max-width: 900px){
+    .kartyakSection .kartya{
+        flex: 0 0 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 480px){
+    .kartyakSection .kartya{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
 }
 
 .kartyaTable{
@@ -81,31 +114,118 @@ a, .appNavbar .navbarSection2 p {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    max-width: 662px;
-    width: 100%; /* ensure it fills parent up to 600px */
+    max-width: 100%;
+    width: 100%; /* ensure it fills parent */
     margin: 0 auto; /* center if needed */
-    border-radius: 15px;
-    border-style: none;
-    background-color: #dd9b1f;
-    padding: 15px;
+    padding: 8px;
+    justify-content: center; /* center the block */
+    align-items: flex-start;
+}
+
+/* Force exactly 5 equal columns on large screens */
+@media (min-width: 1100px){
+    .termekekSection{
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
 .termekDiv{
-    flex: 0 0 200px; /* flex-grow:0, flex-shrink:0, flex-basis:200px */
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     border-radius: 10px;
-    border: 3px solid #646cff;
+    border: 1px solid rgba(16,24,40,0.06);
+    background-color: var(--card-bg);
+    padding: 12px;
+    box-shadow: 0 1px 6px rgba(16,24,40,0.04);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+    min-width: 0; /* allow the card to shrink smaller than its contents */
+}
+
+/* ensure images don't force a larger column width */
+.termekDiv img{
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+
+.termekDiv:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(16,24,40,0.08);
+}
+
+/* Make items behave as five-per-row on wide screens */
+.termekDiv{
+    /* keep existing visual rules but control width for layout */
+    flex: 1 1 20%;
+    max-width: 20%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+@media (min-width: 1100px){
+    .termekekSection .termekDiv{
+        flex: 0 0 calc(20% - 1rem);
+        max-width: calc(20% - 1rem);
+    }
+}
+
+@media (max-width: 900px){
+    .termekekSection .termekDiv{
+        flex: 0 0 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 480px){
+    .termekekSection .termekDiv{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
 }
 
 /* Szűrők */
 
+.filter-row{
+    margin-bottom: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-input{
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(16,24,40,0.08);
+    min-width: 180px;
+    flex: 1 1 200px;
+    transition: box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.filter-input:focus{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(100,108,255,0.06);
+    outline: none;
+}
+
 .filter-btn{
-    background-color: #0F4C5C;
+    background-color: var(--primary);
     color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
+    padding: 8px 14px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.18s ease, transform 0.12s ease;
 }
+
+.filter-btn:hover{
+    background-color: darken(var(--primary), 6%);
+    transform: translateY(-1px);
+}
+
+/* small helper in case darken isn't available in some browsers; fallback */
+.filter-btn:hover{ background-color: #0b3b46; }

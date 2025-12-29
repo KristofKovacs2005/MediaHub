@@ -1,0 +1,10 @@
+#carouselExampleAutoplaying{
+    width: 800px;
+    margin: auto;
+    height: 300px;
+    background-color: rgb(49, 44, 44);
+}
+.carousel-item img{
+    height: 300px;
+    object-fit: contain;
+}

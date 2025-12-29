@@ -1,5 +1,5 @@
 import "./navbar.css";
-import userIcon from '../../assets/circle-user-pic.png';
+import userIcon from '../../../assets/circle-user-pic.png';
 export function Navbar(){
     return(
         <nav className="appNavbar">

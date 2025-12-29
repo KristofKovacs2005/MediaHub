@@ -1,0 +1,45 @@
+/* Hero banner styles */
+.hero-banner {
+    width: 100%;
+    height: 400px;
+    margin: 0 auto 16px;
+    padding: 40px 12px;
+    border-radius: 10px;
+    background-image: linear-gradient(rgba(16,24,40,0.55), rgba(116, 167, 68, 0.2), rgba(16,24,40,0.3)), url("../../../assets/ELTE-konyvtar.png");
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+
+    display: flex;              /* enable flex layout */
+    justify-content: center;    /* center horizontally */
+    align-items: center;        /* center vertically */
+    text-align: center;         /* optional: center text inside */
+}
+
+.hero-inner{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.hero-copy{
+    z-index: 2;
+}
+
+.hero-copy h1{
+    margin: 0 0 6px 0;
+    font-size: 1.8rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+}
+
+.hero-copy p{
+    margin: 0;
+    color: rgba(255,255,255,0.95);
+}
+
+/* stacked on smaller screens */
+@media (max-width: 640px){
+    .hero-inner{ flex-direction: column; text-align: center; }
+}

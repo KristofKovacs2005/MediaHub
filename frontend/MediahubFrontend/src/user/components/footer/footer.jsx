@@ -1,11 +1,11 @@
 import './footer.css';
-import phonePic from '../../assets/phone.png';
-import facebookIcon from '../../assets/facebook.png';
-import twitterIcon from '../../assets/twitter.png';
-import instagramIcon from '../../assets/instagramColorless.png';
-import facebookColoredIcon from '../../assets/facebookcolored.png'
-import instagramColoredIcon from '../../assets/instagram.png'
-import twitterColoredIcon from '../../assets/twitterColored.png'
+import phonePic from '../../../assets/phone.png';
+import facebookIcon from '../../../assets/facebook.png';
+import twitterIcon from '../../../assets/twitter.png';
+import instagramIcon from '../../../assets/instagramColorless.png';
+import facebookColoredIcon from '../../../assets/facebookcolored.png'
+import instagramColoredIcon from '../../../assets/instagram.png'
+import twitterColoredIcon from '../../../assets/twitterColored.png'
 
 export function Footer(){
     return(
@@ -72,7 +72,7 @@ export function Footer(){
                             </a>
                         </div>
                     </div>
-                    <p>&copy; 2024 MediaHub. Minden jog fenntartva.</p>
+                    <p> 2024 MediaHub. Minden jog nincs fenntartva.</p>
                     <p className="footerLinks">Adatvédelem · Felhasználási feltételek · Gyakran ismételt kérdések</p>
                     <p>Ügyfélszolgálat</p>
                 </section>

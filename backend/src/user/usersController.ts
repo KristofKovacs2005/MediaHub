@@ -20,17 +20,15 @@ export async function getUsers(_request:Request, response:Response) {
             status: results[i].status
         })
         }
-       
         response.status(200).send(res)
     }
     catch (error) {
         console.log(error)
-       
     }
 }
 
 export async function getUsersById(request:Request, response:Response) {
-      let id:number = parseInt(request.params.id)
+    let id:number = parseInt(request.params.id)
     if (isNaN(id)) {
         response.status(400).send({message:"Bad request"})
         return;
@@ -58,7 +56,6 @@ export async function getUsersById(request:Request, response:Response) {
     }
     catch (error) {
         console.log(error)
-       
     }
 }
 
@@ -83,7 +80,7 @@ export async function insertUser(request: Request, response: Response) {
     }
     catch (error) {
         console.log(error)
-         response.status(409).send({message:"Valszeg valami konfliktus, gitgud, próbáld újra más adatokkal, ha továbbra sem működik, akkor írj nekem. Remélem ez segít: " + error})
+        response.status(409).send({message:"Valszeg valami konfliktus, gitgud, próbáld újra más adatokkal, ha továbbra sem működik, akkor írj nekem. Remélem ez segít: " + error})
     }
 }
 
@@ -106,7 +103,7 @@ export async function login(request: Request, response: Response) {
         if (!config.jwtSecret) {
             return response.status(400).send({message:"Secret key error"})
         }
-         const [jobbresults] = await connection.query (
+        const [jobbresults] = await connection.query (
             "select * from users where u_id = ?", [results[0].id]
         ) as Array<any>
 
