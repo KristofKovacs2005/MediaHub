@@ -1,4 +1,4 @@
-import LoadItems from "./load";
+import LoadItems from "../load";
 
 export function applyFilters({ nameFilter, tagsFilter, setLoading, setItems, setError }) {
     LoadItems({

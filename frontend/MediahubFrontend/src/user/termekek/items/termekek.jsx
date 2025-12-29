@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import LoadItems from "./load";
-import { applyFilters, clearFilters } from "./filterFunction.jsx";
-import FilterUI from "./filterUI";
-import TermekekSection from "./termekekSection";
+import LoadItems from "../load.jsx";
+import { applyFilters, clearFilters } from "../filter/filterFunction.jsx";
+import FilterUI from "../filter/filterUI.jsx";
+import TermekekSection from "./termekekSection.jsx";
 
 export default function Termekek() {
 	const [items, setItems] = useState([]);

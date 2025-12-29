@@ -2,7 +2,7 @@ import "./foOldal.css"
 
 import { Navbar } from "./components/navbar/navbar";
 import { Footer } from "./components/footer/footer";
-import Termekek from "./termekek/termekek";
+import Termekek from "./termekek/items/termekek";
 import { Carousel } from "./components/carousel/carousel";
 import Hero from "./components/hero/hero";
 
