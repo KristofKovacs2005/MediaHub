@@ -4,8 +4,10 @@ import User from "./user";
 import mysql from "mysql2/promise";
 import jwt from "jsonwebtoken"
 
-export async function getUsers(_request:Request, response:Response) {
-    
+export async function getUsers(request:any, response:Response) {
+    if (request.user.status != 5) {
+        response.status(401).send({message:"bad status"})
+    }
     const connection = await mysql.createConnection(config.database)
     try {
         const [results] = await connection.query(
@@ -27,7 +29,10 @@ export async function getUsers(_request:Request, response:Response) {
     }
 }
 
-export async function getUsersById(request:Request, response:Response) {
+export async function getUsersById(request:any, response:Response) {
+    if (request.user.status != 4 || request.user.status == 5) {
+        response.status(401).send({message:"bad status"})
+    }
     let id:number = parseInt(request.params.id)
     if (isNaN(id)) {
         response.status(400).send({message:"Bad request"})
@@ -65,6 +70,7 @@ export async function insertUser(request: Request, response: Response) {
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
     }
+    
     // to-do: check if no missing data and if duplicates exists ? {message:"Bad request"}
     let user:User = new User(request.body)
     const connection = await mysql.createConnection(config.database)
@@ -107,7 +113,7 @@ export async function login(request: Request, response: Response) {
             "select * from users where u_id = ?", [results[0].id]
         ) as Array<any>
 
-        const token = jwt.sign({id: results[0].id}, config.jwtSecret, {expiresIn: "2h"});
+        const token = jwt.sign({email:jobbresults[0].email, jelszo:jobbresults[0].username, id:jobbresults[0].u_id, status:jobbresults[0].status}, config.jwtSecret, {expiresIn: "2h"});
 
         console.log(jobbresults[0])
 
@@ -116,11 +122,15 @@ export async function login(request: Request, response: Response) {
     catch(error) {
         console.log(error)
     }
+    return
     
 }
 
 
-export async function modifyUser(request:Request, response:Response) {
+export async function modifyUser(request:any, response:Response) {
+    if (request.user.status != 5) {
+        response.status(401).send({message:"bad status"})
+    }
     let id:number = parseInt(request.params.id)
     if (isNaN(id)) {
         response.status(400).send({message:"Bad request"})

@@ -57,6 +57,28 @@ export async function getItem(request: Request, response: Response) {
     }
 }
 
+export async function getOneItem(request: Request, response: Response) {
+     let id:number = parseInt(request.params.id)
+    if (isNaN(id)) {
+        response.status(400).send({message:"Bad request"})
+        return;
+    }
+    const connection = await mysql.createConnection(config.database)
+    try {
+        const [results] = await connection.query(
+            "select * from items where i_id = ?", [id]
+        ) as Array<any>
+        if (results.length > 0) {
+            response.status(200).send(results)
+            return
+        }
+        response.status(404).send({message: "Item not found"})
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
 export async function getReviewsOfItem(request:Request, response:Response) {
     
     let id:number = parseInt(request.params.id)
@@ -85,7 +107,10 @@ export async function getReviewsOfItem(request:Request, response:Response) {
     }
 }
 
-export async function deleteItem(request:Request, response:Response) {
+export async function deleteItem(request:any, response:Response) {
+    if (request.user.status != 4) {
+        response.status(401).send({message:"bad status"})
+    }
     let id:number = parseInt(request.params.id)
     if (isNaN(id)) {
         response.status(400).send({message:"Bad request"})
@@ -107,9 +132,13 @@ export async function deleteItem(request:Request, response:Response) {
     }
 }
 
-export async function insertItem(request: Request, response: Response) {
+export async function insertItem(request: any, response: Response) {
+    
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
+    }
+    if (request.user.status != 4) {
+        response.status(401).send({message:"bad status"})
     }
     // to-do: check if no missing data and if duplicates exists ? {message:"Bad request"}
     let item:Items = new Items(request.body)
@@ -146,7 +175,7 @@ export async function insertItem(request: Request, response: Response) {
     }
 }
 
-export async function modifyItem(request:Request, response:Response) {
+export async function modifyItem(request:any, response:Response) {
     let id:number = parseInt(request.params.id)
     if (isNaN(id)) {
         response.status(400).send({message:"Bad request"})
@@ -154,6 +183,9 @@ export async function modifyItem(request:Request, response:Response) {
     }
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
+    }
+    if (request.user.status != 4) {
+        response.status(401).send({message:"bad status"})
     }
     // to-do: check if no missing data and if duplicates exists ? {message:"Bad request"}
     let item:any = new Items(request.body)

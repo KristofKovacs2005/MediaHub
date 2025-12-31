@@ -3,9 +3,11 @@ import Order from "./order";
 import config from "../config/config";
 import mysql from "mysql2/promise";
 
-export async function getOrders(_request: Request, response: Response) {
+export async function getOrders(request: any, response: Response) {
     const connection = await mysql.createConnection(config.database);
-
+    if (request.user.status != 4) {
+        response.status(401).send({message:"bad status"})
+    }
     try {
         const [results] = await connection.query(
             "select * from orders"
@@ -16,10 +18,28 @@ export async function getOrders(_request: Request, response: Response) {
         console.log(error);
     }
 }
+export async function getUserOrders(request: any, response: Response) {
+    const connection = await mysql.createConnection(config.database);
+    if (request.user.status != 1) {
+        response.status(401).send({message:"bad status"})
+    }
+    try {
+        const [results] = await connection.query(
+            "select * from orders where u_id = ?", [request.user.u_id]
+        ) as Array<any>
+        response.status(200).send(results)
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
 
-export async function insertOrders(request: Request, response: Response) {
+export async function insertOrders(request: any, response: Response) {
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
+    }
+    if (request.user.status != 1) {
+        response.status(401).send({message:"bad status"})
     }
     let order:Order = new Order(request.body);
     // to chech if order valid
@@ -39,13 +59,16 @@ export async function insertOrders(request: Request, response: Response) {
     }
 }
 
-export async function modifyOrder(request: Request, response: Response) {
+export async function modifyOrder(request: any, response: Response) {
     let id: number = parseInt(request.params.id)
     if (isNaN(id)) {
         response.status(400).send({message:"Bad request"})
     }
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
+    }
+    if (request.user.status != 4) {
+        response.status(401).send({message:"bad status"})
     }
     let order:any = new Order(request.body)
     const allowedFields = ['o_id','s_id','u_id','p_id', 'date', 'return_date'] 
