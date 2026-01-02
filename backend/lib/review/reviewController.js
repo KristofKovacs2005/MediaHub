@@ -59,6 +59,7 @@ exports.getReviews = getReviews;
 exports.getFlaggedReviews = getFlaggedReviews;
 exports.deleteReviews = deleteReviews;
 exports.insertReview = insertReview;
+exports.modifyReview = modifyReview;
 var config_1 = __importDefault(require("../config/config"));
 var review_1 = __importDefault(require("./review"));
 var promise_1 = __importDefault(require("mysql2/promise"));
@@ -87,7 +88,7 @@ function getReviews(_request, response) {
         });
     });
 }
-function getFlaggedReviews(_request, response) {
+function getFlaggedReviews(request, response) {
     return __awaiter(this, void 0, void 0, function () {
         var connection, _a, results, error_2;
         return __generator(this, function (_b) {
@@ -95,6 +96,9 @@ function getFlaggedReviews(_request, response) {
                 case 0: return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
                 case 1:
                     connection = _b.sent();
+                    if (request.user.status != 5) {
+                        response.status(401).send({ message: "bad status" });
+                    }
                     _b.label = 2;
                 case 2:
                     _b.trys.push([2, 4, , 5]);
@@ -121,6 +125,9 @@ function deleteReviews(request, response) {
                     id = parseInt(request.params.id);
                     if (isNaN(id)) {
                         response.status(400).send({ message: "Bad request" });
+                    }
+                    if (request.user.status != 5) {
+                        response.status(401).send({ message: "bad status" });
                     }
                     return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
                 case 1:
@@ -155,6 +162,9 @@ function insertReview(request, response) {
                     if (!request.body) {
                         response.status(400).send({ message: "Bad request" });
                     }
+                    if (request.user.status != 1) {
+                        response.status(401).send({ message: "bad status" });
+                    }
                     review = new review_1.default(request.body);
                     return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
                 case 1:
@@ -174,6 +184,57 @@ function insertReview(request, response) {
                 case 4:
                     error_4 = _b.sent();
                     console.log(error_4);
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
+function modifyReview(request, response) {
+    return __awaiter(this, void 0, void 0, function () {
+        var id, review, allowedFields, keys, updateString, values, sql, connection, _a, results, err_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    if (request.user.status != 5) {
+                        response.status(401).send({ message: "bad status" });
+                    }
+                    id = parseInt(request.params.id);
+                    if (isNaN(id)) {
+                        response.status(400).send({ message: "Bad request" });
+                    }
+                    if (!request.body) {
+                        response.status(400).send({ message: "Bad request" });
+                    }
+                    review = new review_1.default(request.body);
+                    allowedFields = ["r_id", "i_id", "u_id", "flagged", "stars", "comment"];
+                    keys = Object.keys(request.body).filter(function (key) { return allowedFields.includes(key); });
+                    if (keys.length === 0) {
+                        response.status(400).send({ error: 103, messege: "Nothing to update" });
+                        return [2 /*return*/];
+                    }
+                    updateString = keys.map(function (key) { return "".concat(key, " = ?"); }).join(', ');
+                    values = keys.map(function (key) { return review[key]; });
+                    values.push(id);
+                    sql = "update reviews set ".concat(updateString, " where r_id = ?");
+                    return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
+                case 1:
+                    connection = _b.sent();
+                    _b.label = 2;
+                case 2:
+                    _b.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, connection.query(sql, values)];
+                case 3:
+                    _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
+                    if (results.affectedRows > 0) {
+                        response.status(201).send({ message: "Modified" });
+                        return [2 /*return*/];
+                    }
+                    response.status(404).send({ message: "Item not found" });
+                    return [3 /*break*/, 5];
+                case 4:
+                    err_1 = _b.sent();
+                    console.log(err_1);
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];
             }

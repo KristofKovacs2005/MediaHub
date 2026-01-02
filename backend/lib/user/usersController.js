@@ -64,12 +64,16 @@ var config_1 = __importDefault(require("../config/config"));
 var user_1 = __importDefault(require("./user"));
 var promise_1 = __importDefault(require("mysql2/promise"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-function getUsers(_request, response) {
+function getUsers(request, response) {
     return __awaiter(this, void 0, void 0, function () {
         var connection, _a, results, res, i, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
+                case 0:
+                    if (request.user.status != 5) {
+                        response.status(401).send({ message: "bad status" });
+                    }
+                    return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
                 case 1:
                     connection = _b.sent();
                     _b.label = 2;
@@ -104,6 +108,9 @@ function getUsersById(request, response) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
+                    if (request.user.status != 4 || request.user.status == 5) {
+                        response.status(401).send({ message: "bad status" });
+                    }
                     id = parseInt(request.params.id);
                     if (isNaN(id)) {
                         response.status(400).send({ message: "Bad request" });
@@ -205,7 +212,7 @@ function login(request, response) {
                     return [4 /*yield*/, connection.query("select * from users where u_id = ?", [results[0].id])];
                 case 4:
                     _c = __read.apply(void 0, [_d.sent(), 1]), jobbresults = _c[0];
-                    token = jsonwebtoken_1.default.sign({ id: results[0].id }, config_1.default.jwtSecret, { expiresIn: "2h" });
+                    token = jsonwebtoken_1.default.sign({ email: jobbresults[0].email, jelszo: jobbresults[0].username, id: jobbresults[0].u_id, status: jobbresults[0].status }, config_1.default.jwtSecret, { expiresIn: "2h" });
                     console.log(jobbresults[0]);
                     return [2 /*return*/, response.status(200).send({ token: token, email: jobbresults[0].email, jelszo: jobbresults[0].username, id: jobbresults[0].u_id, status: jobbresults[0].status })];
                 case 5:
@@ -223,6 +230,9 @@ function modifyUser(request, response) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
+                    if (request.user.status != 5) {
+                        response.status(401).send({ message: "bad status" });
+                    }
                     id = parseInt(request.params.id);
                     if (isNaN(id)) {
                         response.status(400).send({ message: "Bad request" });
