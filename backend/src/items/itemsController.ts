@@ -45,7 +45,7 @@ export async function getItem(request: Request, response: Response) {
         const [results] = await connection.query(
             sql, values
         ) as Array<any>
-         
+        
         if (results.length == 0) {
             response.status(404).send({message:"Item not found"});
             return;
@@ -58,7 +58,7 @@ export async function getItem(request: Request, response: Response) {
 }
 
 export async function getOneItem(request: Request, response: Response) {
-     let id:number = parseInt(request.params.id)
+    let id:number = parseInt(request.params.id)
     if (isNaN(id)) {
         response.status(400).send({message:"Bad request"})
         return;

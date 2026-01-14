@@ -1,17 +1,18 @@
 .modal-overlay{
     position: fixed;
     inset: 0; /* top:0; right:0; bottom:0; left:0 */
-    background: rgba(0,0,0,0.65); /* slightly darker for visibility */
+    background: rgba(0, 0, 0, 0.65); /* normal dark overlay */
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 99999; /* ensure overlay sits above everything */
+    z-index: 99999;
     padding: 20px;
 }
 
 /* Modal box — made explicitly opaque and forced visible for debugging */
-.modal{
+.portal-modal{
     background: #ffffff; /* force opaque white background */
+    outline: 3px solid lime !important;
     color: #111;
     border-radius: 10px;
     width: min(720px, 96%);
@@ -23,15 +24,26 @@
     padding: 20px;
     z-index: 100000; /* ensure modal box is above the overlay layer */
     border: 2px solid rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+.portal-modal h2{
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.8em;
+    font-weight: 600;
+    align-self: center;
+    justify-self: center;
 }
 
 /* Force visibility for debugging — remove after confirming the modal shows */
-.modal, .modalContent, .modalContent *{
+.portal-modal, .modalContent, .modalContent *{
     visibility: visible !important;
     opacity: 1 !important;
 }
 
-.modalContent{ display: block; }
+.modalContent{ display: block; flex-direction: column;}
 
 /* Make sure inputs and buttons are visible */
 .modalContent input, .modalContent button{
@@ -64,6 +76,7 @@
     border-radius: 6px;
     border: 1px solid rgba(0,0,0,0.12);
 }
+
 
 .modalContent button[type="submit"]{
     margin-top: 8px;

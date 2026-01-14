@@ -56,12 +56,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOrders = getOrders;
+exports.getUserOrders = getUserOrders;
 exports.insertOrders = insertOrders;
 exports.modifyOrder = modifyOrder;
 var order_1 = __importDefault(require("./order"));
 var config_1 = __importDefault(require("../config/config"));
 var promise_1 = __importDefault(require("mysql2/promise"));
-function getOrders(_request, response) {
+function getOrders(request, response) {
     return __awaiter(this, void 0, void 0, function () {
         var connection, _a, results, error_1;
         return __generator(this, function (_b) {
@@ -69,6 +70,9 @@ function getOrders(_request, response) {
                 case 0: return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
                 case 1:
                     connection = _b.sent();
+                    if (request.user.status != 4) {
+                        response.status(401).send({ message: "bad status" });
+                    }
                     _b.label = 2;
                 case 2:
                     _b.trys.push([2, 4, , 5]);
@@ -86,14 +90,45 @@ function getOrders(_request, response) {
         });
     });
 }
+function getUserOrders(request, response) {
+    return __awaiter(this, void 0, void 0, function () {
+        var connection, _a, results, error_2;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
+                case 1:
+                    connection = _b.sent();
+                    if (request.user.status != 1) {
+                        response.status(401).send({ message: "bad status" });
+                    }
+                    _b.label = 2;
+                case 2:
+                    _b.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, connection.query("select * from orders where u_id = ?", [request.user.u_id])];
+                case 3:
+                    _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
+                    response.status(200).send(results);
+                    return [3 /*break*/, 5];
+                case 4:
+                    error_2 = _b.sent();
+                    console.log(error_2);
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
 function insertOrders(request, response) {
     return __awaiter(this, void 0, void 0, function () {
-        var order, connection, _a, results, error_2;
+        var order, connection, _a, results, error_3;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     if (!request.body) {
                         response.status(400).send({ message: "Bad request" });
+                    }
+                    if (request.user.status != 1) {
+                        response.status(401).send({ message: "bad status" });
                     }
                     order = new order_1.default(request.body);
                     return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
@@ -112,8 +147,8 @@ function insertOrders(request, response) {
                     response.status(400).send({ message: "Error, probably some conflict, try with different input or whatever" });
                     return [3 /*break*/, 5];
                 case 4:
-                    error_2 = _b.sent();
-                    console.log(error_2);
+                    error_3 = _b.sent();
+                    console.log(error_3);
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];
             }
@@ -132,6 +167,9 @@ function modifyOrder(request, response) {
                     }
                     if (!request.body) {
                         response.status(400).send({ message: "Bad request" });
+                    }
+                    if (request.user.status != 4) {
+                        response.status(401).send({ message: "bad status" });
                     }
                     order = new order_1.default(request.body);
                     allowedFields = ['o_id', 's_id', 'u_id', 'p_id', 'date', 'return_date'];

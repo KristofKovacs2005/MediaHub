@@ -56,6 +56,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getItem = getItem;
+exports.getOneItem = getOneItem;
 exports.getReviewsOfItem = getReviewsOfItem;
 exports.deleteItem = deleteItem;
 exports.insertItem = insertItem;
@@ -124,9 +125,44 @@ function getItem(request, response) {
         });
     });
 }
-function getReviewsOfItem(request, response) {
+function getOneItem(request, response) {
     return __awaiter(this, void 0, void 0, function () {
         var id, connection, _a, results, error_2;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    id = parseInt(request.params.id);
+                    if (isNaN(id)) {
+                        response.status(400).send({ message: "Bad request" });
+                        return [2 /*return*/];
+                    }
+                    return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
+                case 1:
+                    connection = _b.sent();
+                    _b.label = 2;
+                case 2:
+                    _b.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, connection.query("select * from items where i_id = ?", [id])];
+                case 3:
+                    _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
+                    if (results.length > 0) {
+                        response.status(200).send(results);
+                        return [2 /*return*/];
+                    }
+                    response.status(404).send({ message: "Item not found" });
+                    return [3 /*break*/, 5];
+                case 4:
+                    error_2 = _b.sent();
+                    console.log(error_2);
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
+function getReviewsOfItem(request, response) {
+    return __awaiter(this, void 0, void 0, function () {
+        var id, connection, _a, results, error_3;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -151,8 +187,8 @@ function getReviewsOfItem(request, response) {
                     response.status(200).send(results);
                     return [3 /*break*/, 5];
                 case 4:
-                    error_2 = _b.sent();
-                    console.log(error_2);
+                    error_3 = _b.sent();
+                    console.log(error_3);
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];
             }
@@ -161,10 +197,13 @@ function getReviewsOfItem(request, response) {
 }
 function deleteItem(request, response) {
     return __awaiter(this, void 0, void 0, function () {
-        var id, connection, _a, results, error_3;
+        var id, connection, _a, results, error_4;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
+                    if (request.user.status != 4) {
+                        response.status(401).send({ message: "bad status" });
+                    }
                     id = parseInt(request.params.id);
                     if (isNaN(id)) {
                         response.status(400).send({ message: "Bad request" });
@@ -186,8 +225,8 @@ function deleteItem(request, response) {
                     response.status(204).send();
                     return [3 /*break*/, 5];
                 case 4:
-                    error_3 = _b.sent();
-                    console.log(error_3);
+                    error_4 = _b.sent();
+                    console.log(error_4);
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];
             }
@@ -196,12 +235,15 @@ function deleteItem(request, response) {
 }
 function insertItem(request, response) {
     return __awaiter(this, void 0, void 0, function () {
-        var item, tags, connection, _a, results, _addTags, i, asd, error_4;
+        var item, tags, connection, _a, results, _addTags, i, asd, error_5;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     if (!request.body) {
                         response.status(400).send({ message: "Bad request" });
+                    }
+                    if (request.user.status != 4) {
+                        response.status(401).send({ message: "bad status" });
                     }
                     item = new items_1.default(request.body);
                     if (request.body.tags) {
@@ -239,8 +281,8 @@ function insertItem(request, response) {
                     response.status(400).send({ message: "Error, probably some conflict, try with different inputs or whatever" });
                     return [3 /*break*/, 9];
                 case 8:
-                    error_4 = _b.sent();
-                    console.log(error_4);
+                    error_5 = _b.sent();
+                    console.log(error_5);
                     return [3 /*break*/, 9];
                 case 9: return [2 /*return*/];
             }
@@ -260,6 +302,9 @@ function modifyItem(request, response) {
                     }
                     if (!request.body) {
                         response.status(400).send({ message: "Bad request" });
+                    }
+                    if (request.user.status != 4) {
+                        response.status(401).send({ message: "bad status" });
                     }
                     item = new items_1.default(request.body);
                     allowedFields = ['author', 'i_name', 'img_url', 'i_description', 'tags'];
