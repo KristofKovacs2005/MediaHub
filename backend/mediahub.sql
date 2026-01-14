@@ -109,6 +109,7 @@ CREATE TABLE users(
     password VARCHAR(255) NOT NULL,
     status INT NOT NULL
 );
+/*to-do: encypt, login auth, add mock users, etc...*/
 
 ALTER Table users AUTO_INCREMENT = 1;
 
@@ -117,11 +118,11 @@ DELETE FROM users;
 create trigger insert_user BEFORE insert on users
 for each row set new.password = pwd_encrypt(new.password);
 
-create trigger update_user BEFORE UPDATE on users
+create trigger update_user BEFORE UPDATE on users /*// futtatni*/
 for each row set new.password = pwd_encrypt(new.password);
 
 DROP Trigger insert_user;
-DROP Trigger update_user;
+DROP Trigger update_user; /*// futatni*/
 
 create FUNCTION pwd_encrypt(pwd varchar(100))
 RETURNS VARCHAR(255) DETERMINISTIC
@@ -129,6 +130,7 @@ RETURN SHA2(concat(pwd,'valamivalami'),256);
 
 DROP Function pwd_encrypt;
 
+delimiter $$
 CREATE Function login(email VARCHAR(255), pwd VARCHAR(100))
 RETURNS INTEGER DETERMINISTIC
 BEGIN
@@ -136,7 +138,9 @@ DECLARE ok INTEGER;
 SET ok = 0;
 SELECT u_id INTO ok FROM users WHERE users.email = email AND users.password = pwd_encrypt(pwd);
 RETURN ok;
-END;
+END$$
+
+delimter ;
 
 DROP Function login;
 
@@ -181,6 +185,7 @@ INSERT INTO item_tag VALUES
 
 DELETE FROM item_tag;
 
+
 SELECT items.i_id, items.i_name, items.author, items.i_description, items.img_url, 
 GROUP_CONCAT(tag.t_name ORDER BY t_name SEPARATOR ', ') AS Tagek,
 GROUP_CONCAT(reviews.r_id ORDER BY reviews.r_id SEPARATOR ", ") as review 
@@ -191,11 +196,18 @@ INNER JOIN reviews on items.i_id = reviews.i_id
 GROUP BY items.i_id, items.i_name
 HAVING items.i_name LIKE "book" AND Tagek LIKE "%romance%" AND Tagek LIKE "%history%";
 
-
-
 SELECT reviews.comment, reviews.stars, users.username
 FROM reviews 
 INNER JOIN items ON reviews.i_id = items.i_id 
 INNER JOIN users ON reviews.u_id = users.u_id
 WHERE items.i_id = 2;
+
+
+
+CREATE EVENT daily_date_update_for_order_status_if_late
+ON SCHEDULE EVERY 1 DAY
+DO
+    UPDATE orders
+    SET s_id = 6
+    WHERE return_date < CURDATE() AND (s_id != 4 OR s_id != 5);
 

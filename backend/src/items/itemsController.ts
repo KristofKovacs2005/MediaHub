@@ -140,8 +140,12 @@ export async function insertItem(request: any, response: Response) {
     if (request.user.status != 4) {
         response.status(401).send({message:"bad status"})
     }
-    // to-do: check if no missing data and if duplicates exists ? {message:"Bad request"}
+    
     let item:Items = new Items(request.body)
+    
+    if (item.i_name == "" || !item.i_name || !item.author || item.author == "" || !item.img_url || item.img_url == "" || !item.i_description || item.i_description == "") {
+        return response.status(400).send({error: "Missing data"})
+    }
     let tags;
     if (request.body.tags) {
         tags = request.body.tags.split(",")
@@ -163,7 +167,6 @@ export async function insertItem(request: any, response: Response) {
         )
         }
         
-        
         if (results.affectedRows > 0) {
             response.status(201).send({message:"Created"})
             return
@@ -172,7 +175,9 @@ export async function insertItem(request: any, response: Response) {
     }
     catch (error) {
         console.log(error)
+        return response.status(400).send(error)
     }
+    return response.status(400).send({error:"Something went wrong"});
 }
 
 export async function modifyItem(request:any, response:Response) {
@@ -187,7 +192,6 @@ export async function modifyItem(request:any, response:Response) {
     if (request.user.status != 4) {
         response.status(401).send({message:"bad status"})
     }
-    // to-do: check if no missing data and if duplicates exists ? {message:"Bad request"}
     let item:any = new Items(request.body)
     const allowedFields = ['author','i_name','img_url','i_description', 'tags'] 
     const keys = Object.keys(request.body).filter(key => allowedFields.includes(key))

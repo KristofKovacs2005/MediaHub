@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import Order from "./order";
 import config from "../config/config";
 import mysql from "mysql2/promise";
@@ -25,7 +25,7 @@ export async function getUserOrders(request: any, response: Response) {
     }
     try {
         const [results] = await connection.query(
-            "select * from orders where u_id = ?", [request.user.u_id]
+            "select * from orders where u_id = ?", [request.user.id]
         ) as Array<any>
         response.status(200).send(results)
     }
@@ -42,7 +42,12 @@ export async function insertOrders(request: any, response: Response) {
         response.status(401).send({message:"bad status"})
     }
     let order:Order = new Order(request.body);
-    // to chech if order valid
+    if (!order.s_id || !order.u_id  || !order.p_id) {
+        return response.status(400).send({error: "Missing data"})
+    }
+    if (order.s_id == null || order.u_id == null || order.p_id == null || !order.date || !order.return_date) {
+        return response.status(400).send({error: "Missing data"})
+    }
      const connection = await mysql.createConnection(config.database)
     try {
         const [results] = await connection.query(
@@ -56,7 +61,9 @@ export async function insertOrders(request: any, response: Response) {
     }
     catch (error) {
         console.log(error)
+        return response.status(400).send(error)
     }
+    return;
 }
 
 export async function modifyOrder(request: any, response: Response) {

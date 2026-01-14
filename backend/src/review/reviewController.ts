@@ -64,8 +64,14 @@ export async function insertReview(request: any, response: Response) {
     if (request.user.status != 1) {
         response.status(401).send({message:"bad status"})
     }
-    // to-do: check if no missing data and if duplicates exists ? {message:"Bad request"}
+
     let review:Review = new Review(request.body)
+     if (!review.i_id || !review.u_id || !review.flagged || !review.stars ) {
+        return response.status(400).send({error: "Missing data"})
+    }
+    if (review.i_id == null || review.u_id == null || review.flagged == null || review.stars == null) {
+        return response.status(400).send({error: "Missing data"})
+    }
     const connection = await mysql.createConnection(config.database)
     try {
         const [results] = await connection.query(
@@ -75,10 +81,11 @@ export async function insertReview(request: any, response: Response) {
             response.status(201).send({message:"Created"})
             return
         }
-        response.status(400).send({message:"Error, probably some conflict, try with different input or whatever"})
+        return response.status(400).send({message:"Error, probably some conflict, try with different input or whatever"})
     }
     catch (error) {
         console.log(error)
+        return response.status(400).send(error)
     }
 }
 

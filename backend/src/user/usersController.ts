@@ -70,9 +70,13 @@ export async function insertUser(request: Request, response: Response) {
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
     }
-    
-    // to-do: check if no missing data and if duplicates exists ? {message:"Bad request"}
     let user:User = new User(request.body)
+    if (!user.username || !user.email || !user.password || !user.status ) {
+        return response.status(400).send({error:"Missing data"})
+    }
+    if (user.username == "" || user.email == "" || user.password == "" || user.status == null) {
+        return response.status(400).send({error:"Missing data"})
+    }
     const connection = await mysql.createConnection(config.database)
     try {
         const [results] = await connection.query(
@@ -88,6 +92,7 @@ export async function insertUser(request: Request, response: Response) {
         console.log(error)
         response.status(409).send({message:"Valszeg valami konfliktus, gitgud, próbáld újra más adatokkal, ha továbbra sem működik, akkor írj nekem. Remélem ez segít: " + error})
     }
+    return;
 }
 
 export async function login(request: Request, response: Response) {
@@ -113,11 +118,11 @@ export async function login(request: Request, response: Response) {
             "select * from users where u_id = ?", [results[0].id]
         ) as Array<any>
 
-        const token = jwt.sign({email:jobbresults[0].email, jelszo:jobbresults[0].username, id:jobbresults[0].u_id, status:jobbresults[0].status}, config.jwtSecret, {expiresIn: "2h"});
+        const token = jwt.sign({username: jobbresults[0].username, email:jobbresults[0].email, id:jobbresults[0].u_id, status:jobbresults[0].status}, config.jwtSecret, {expiresIn: "2h"});
 
         console.log(jobbresults[0])
 
-        return response.status(200).send({token: token, email:jobbresults[0].email, jelszo:jobbresults[0].username, id:jobbresults[0].u_id, status:jobbresults[0].status});
+        return response.status(200).send({token: token});
     }
     catch(error) {
         console.log(error)
@@ -139,7 +144,7 @@ export async function modifyUser(request:any, response:Response) {
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
     }
-    // to-do: check if no missing data and if duplicates exists ? {message:"Bad request"}
+    
     let user:any = new User(request.body)
     const allowedFields = ['username','email','password','status'] 
     const keys = Object.keys(request.body).filter(key => allowedFields.includes(key))
