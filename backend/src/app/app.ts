@@ -1,5 +1,5 @@
 import express from "express";
-import router from "../routes/routes";
+//import router from "../routes/routes";
 import itemRouter from "../items/routes"
 import orderRouter from "../order/routes";
 import reviewRouter from "../review/routes";
@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-app.use('/',router)
+//app.use('/',router)
 app.use('/', itemRouter)
 app.use('/', orderRouter)
 app.use('/', reviewRouter)

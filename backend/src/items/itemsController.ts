@@ -42,6 +42,7 @@ export async function getItem(request: Request, response: Response) {
 
     const connection = await mysql.createConnection(config.database);
     try {
+        
         const [results] = await connection.query(
             sql, values
         ) as Array<any>
@@ -118,6 +119,7 @@ export async function deleteItem(request:any, response:Response) {
     }
     const connection = await mysql.createConnection(config.database)
     try {
+        await connection.query("START TRANSACTION;")
         const [results] = await connection.query(
             "delete from items where i_id = ?", [id]
         ) as Array<any>
@@ -125,6 +127,8 @@ export async function deleteItem(request:any, response:Response) {
             response.status(404).send({message:"Item not found"})
             return
         }
+        await connection.query("delete from item_tag where i_id = ?;", [id])
+        await connection.query("COMMIT;")
         response.status(204).send()
     }
     catch (error) {
@@ -153,20 +157,20 @@ export async function insertItem(request: any, response: Response) {
     
     const connection = await mysql.createConnection(config.database)
     try {
+        await connection.query("START TRANSACTION;")
         const [results] = await connection.query(
             "insert into items values (null, ?, ?, ?, ?)", [item.author, item.i_name, item.img_url, item.i_description]
         ) as Array<any>
-        let _addTags;
         
         for (let i = 0; i < tags.length; i++) {
             let asd: Array<any> = []
             asd.push(results.insertId)
             asd.push(tags[i])
-            _addTags = await connection.query(
+            await connection.query(
             "insert into item_tag values(?, ?)", asd
         )
         }
-        
+        await connection.query("COMMIT;")
         if (results.affectedRows > 0) {
             response.status(201).send({message:"Created"})
             return
@@ -227,6 +231,7 @@ export async function modifyItem(request:any, response:Response) {
     const connection = await mysql.createConnection(config.database);
 
     try {
+        await connection.query("START TRANSACTION;")
         const [results] = await connection.query(
             sql, values
         ) as Array<any>
@@ -240,6 +245,7 @@ export async function modifyItem(request:any, response:Response) {
                 "insert into item_tag values (?, ?)", asd
             )
         }
+        await connection.query("COMMIT;")
         if (results.affectedRows > 0) {
             response.status(201).send({message:"Modified"})
             return

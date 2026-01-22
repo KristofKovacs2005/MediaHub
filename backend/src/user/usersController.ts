@@ -122,7 +122,7 @@ export async function login(request: Request, response: Response) {
 
         console.log(jobbresults[0])
 
-        return response.status(200).send({token: token});
+        return response.status(200).send({token: token, status: jobbresults[0].status, username: jobbresults[0].username});
     }
     catch(error) {
         console.log(error)

@@ -3,8 +3,8 @@ import { getReviews, getFlaggedReviews, modifyReview, deleteReviews, insertRevie
 import verifyToken from "../middleware/auths";
 
 const router: Router = Router();
-// értékelés feljelentése
-router.get("/reviews", getReviews); //ez annyira nem is kell
+
+router.get("/reviews", getReviews); 
 router.get("/reviews/flagged", verifyToken, getFlaggedReviews); //moderátor
 router.delete("/reviews/:id", verifyToken, deleteReviews) //moderátor
 router.patch("/reviews/:id", verifyToken, modifyReview)
