@@ -214,28 +214,37 @@ function deleteItem(request, response) {
                     connection = _b.sent();
                     _b.label = 2;
                 case 2:
-                    _b.trys.push([2, 4, , 5]);
-                    return [4 /*yield*/, connection.query("delete from items where i_id = ?", [id])];
+                    _b.trys.push([2, 7, , 8]);
+                    return [4 /*yield*/, connection.query("START TRANSACTION;")];
                 case 3:
+                    _b.sent();
+                    return [4 /*yield*/, connection.query("delete from items where i_id = ?", [id])];
+                case 4:
                     _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
                     if (results.affectedRows == 0) {
                         response.status(404).send({ message: "Item not found" });
                         return [2 /*return*/];
                     }
+                    return [4 /*yield*/, connection.query("delete from item_tag where i_id = ?;", [id])];
+                case 5:
+                    _b.sent();
+                    return [4 /*yield*/, connection.query("COMMIT;")];
+                case 6:
+                    _b.sent();
                     response.status(204).send();
-                    return [3 /*break*/, 5];
-                case 4:
+                    return [3 /*break*/, 8];
+                case 7:
                     error_4 = _b.sent();
                     console.log(error_4);
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/];
+                    return [3 /*break*/, 8];
+                case 8: return [2 /*return*/];
             }
         });
     });
 }
 function insertItem(request, response) {
     return __awaiter(this, void 0, void 0, function () {
-        var item, tags, connection, _a, results, _addTags, i, asd, error_5;
+        var item, tags, connection, _a, results, i, asd, error_5;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -246,6 +255,9 @@ function insertItem(request, response) {
                         response.status(401).send({ message: "bad status" });
                     }
                     item = new items_1.default(request.body);
+                    if (item.i_name == "" || !item.i_name || !item.author || item.author == "" || !item.img_url || item.img_url == "" || !item.i_description || item.i_description == "") {
+                        return [2 /*return*/, response.status(400).send({ error: "Missing data" })];
+                    }
                     if (request.body.tags) {
                         tags = request.body.tags.split(",");
                     }
@@ -254,37 +266,41 @@ function insertItem(request, response) {
                     connection = _b.sent();
                     _b.label = 2;
                 case 2:
-                    _b.trys.push([2, 8, , 9]);
-                    return [4 /*yield*/, connection.query("insert into items values (null, ?, ?, ?, ?)", [item.author, item.i_name, item.img_url, item.i_description])];
+                    _b.trys.push([2, 10, , 11]);
+                    return [4 /*yield*/, connection.query("START TRANSACTION;")];
                 case 3:
-                    _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
-                    _addTags = void 0;
-                    i = 0;
-                    _b.label = 4;
+                    _b.sent();
+                    return [4 /*yield*/, connection.query("insert into items values (null, ?, ?, ?, ?)", [item.author, item.i_name, item.img_url, item.i_description])];
                 case 4:
-                    if (!(i < tags.length)) return [3 /*break*/, 7];
+                    _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
+                    i = 0;
+                    _b.label = 5;
+                case 5:
+                    if (!(i < tags.length)) return [3 /*break*/, 8];
                     asd = [];
                     asd.push(results.insertId);
                     asd.push(tags[i]);
                     return [4 /*yield*/, connection.query("insert into item_tag values(?, ?)", asd)];
-                case 5:
-                    _addTags = _b.sent();
-                    _b.label = 6;
                 case 6:
-                    i++;
-                    return [3 /*break*/, 4];
+                    _b.sent();
+                    _b.label = 7;
                 case 7:
+                    i++;
+                    return [3 /*break*/, 5];
+                case 8: return [4 /*yield*/, connection.query("COMMIT;")];
+                case 9:
+                    _b.sent();
                     if (results.affectedRows > 0) {
                         response.status(201).send({ message: "Created" });
                         return [2 /*return*/];
                     }
                     response.status(400).send({ message: "Error, probably some conflict, try with different inputs or whatever" });
-                    return [3 /*break*/, 9];
-                case 8:
+                    return [3 /*break*/, 11];
+                case 10:
                     error_5 = _b.sent();
                     console.log(error_5);
-                    return [3 /*break*/, 9];
-                case 9: return [2 /*return*/];
+                    return [2 /*return*/, response.status(400).send(error_5)];
+                case 11: return [2 /*return*/, response.status(400).send({ error: "Something went wrong" })];
             }
         });
     });
@@ -336,38 +352,43 @@ function modifyItem(request, response) {
                     connection = _b.sent();
                     _b.label = 2;
                 case 2:
-                    _b.trys.push([2, 9, , 10]);
-                    return [4 /*yield*/, connection.query(sql, values)];
+                    _b.trys.push([2, 11, , 12]);
+                    return [4 /*yield*/, connection.query("START TRANSACTION;")];
                 case 3:
+                    _b.sent();
+                    return [4 /*yield*/, connection.query(sql, values)];
+                case 4:
                     _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
                     return [4 /*yield*/, connection.query("delete from item_tag where i_id = ?", [id])];
-                case 4:
+                case 5:
                     _b.sent();
                     i = 0;
-                    _b.label = 5;
-                case 5:
-                    if (!(i < tags.length)) return [3 /*break*/, 8];
+                    _b.label = 6;
+                case 6:
+                    if (!(i < tags.length)) return [3 /*break*/, 9];
                     asd = [id];
                     asd.push(tags[i]);
                     return [4 /*yield*/, connection.query("insert into item_tag values (?, ?)", asd)];
-                case 6:
-                    _b.sent();
-                    _b.label = 7;
                 case 7:
-                    i++;
-                    return [3 /*break*/, 5];
+                    _b.sent();
+                    _b.label = 8;
                 case 8:
+                    i++;
+                    return [3 /*break*/, 6];
+                case 9: return [4 /*yield*/, connection.query("COMMIT;")];
+                case 10:
+                    _b.sent();
                     if (results.affectedRows > 0) {
                         response.status(201).send({ message: "Modified" });
                         return [2 /*return*/];
                     }
                     response.status(404).send({ message: "Item not found" });
-                    return [3 /*break*/, 10];
-                case 9:
+                    return [3 /*break*/, 12];
+                case 11:
                     err_1 = _b.sent();
                     console.log(err_1);
-                    return [3 /*break*/, 10];
-                case 10: return [2 /*return*/];
+                    return [3 /*break*/, 12];
+                case 12: return [2 /*return*/];
             }
         });
     });

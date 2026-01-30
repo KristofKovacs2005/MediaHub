@@ -1,9 +1,9 @@
 import "./navbar.css";
-import userIcon from '../../../assets/circle-user-pic.png';
-import Modal from "../modal/modal";
+import userIcon from '../../../../assets/circle-user-pic.png';
+import Modal from "../../modal/modal";
 import { useState } from "react";
-import  ModalContent  from "../modal/regisztralas/modalContent";
-import ModalBejelentkezesContent from "../modal/bejelentekezes/modalBejelentkezesContent";
+import  ModalContent  from "../../modal/regisztralas/modalContent";
+import ModalBejelentkezesContent from "../../modal/bejelentekezes/modalBejelentkezesContent";
 
 export function Navbar(){
     const [isOpenRegisztralas, setIsOpenRegisztralas] = useState(false);

@@ -104,7 +104,7 @@ function getUserOrders(request, response) {
                     _b.label = 2;
                 case 2:
                     _b.trys.push([2, 4, , 5]);
-                    return [4 /*yield*/, connection.query("select * from orders where u_id = ?", [request.user.u_id])];
+                    return [4 /*yield*/, connection.query("select * from orders where u_id = ?", [request.user.id])];
                 case 3:
                     _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
                     response.status(200).send(results);
@@ -131,6 +131,12 @@ function insertOrders(request, response) {
                         response.status(401).send({ message: "bad status" });
                     }
                     order = new order_1.default(request.body);
+                    if (!order.s_id || !order.u_id || !order.p_id) {
+                        return [2 /*return*/, response.status(400).send({ error: "Missing data" })];
+                    }
+                    if (order.s_id == null || order.u_id == null || order.p_id == null || !order.date || !order.return_date) {
+                        return [2 /*return*/, response.status(400).send({ error: "Missing data" })];
+                    }
                     return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
                 case 1:
                     connection = _b.sent();
@@ -149,7 +155,7 @@ function insertOrders(request, response) {
                 case 4:
                     error_3 = _b.sent();
                     console.log(error_3);
-                    return [3 /*break*/, 5];
+                    return [2 /*return*/, response.status(400).send(error_3)];
                 case 5: return [2 /*return*/];
             }
         });

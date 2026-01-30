@@ -166,6 +166,12 @@ function insertReview(request, response) {
                         response.status(401).send({ message: "bad status" });
                     }
                     review = new review_1.default(request.body);
+                    if (!review.i_id || !review.u_id || !review.flagged || !review.stars) {
+                        return [2 /*return*/, response.status(400).send({ error: "Missing data" })];
+                    }
+                    if (review.i_id == null || review.u_id == null || review.flagged == null || review.stars == null) {
+                        return [2 /*return*/, response.status(400).send({ error: "Missing data" })];
+                    }
                     return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
                 case 1:
                     connection = _b.sent();
@@ -179,12 +185,11 @@ function insertReview(request, response) {
                         response.status(201).send({ message: "Created" });
                         return [2 /*return*/];
                     }
-                    response.status(400).send({ message: "Error, probably some conflict, try with different input or whatever" });
-                    return [3 /*break*/, 5];
+                    return [2 /*return*/, response.status(400).send({ message: "Error, probably some conflict, try with different input or whatever" })];
                 case 4:
                     error_4 = _b.sent();
                     console.log(error_4);
-                    return [3 /*break*/, 5];
+                    return [2 /*return*/, response.status(400).send(error_4)];
                 case 5: return [2 /*return*/];
             }
         });

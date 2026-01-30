@@ -159,6 +159,12 @@ function insertUser(request, response) {
                         response.status(400).send({ message: "Bad request" });
                     }
                     user = new user_1.default(request.body);
+                    if (!user.username || !user.email || !user.password || !user.status) {
+                        return [2 /*return*/, response.status(400).send({ error: "Missing data" })];
+                    }
+                    if (user.username == "" || user.email == "" || user.password == "" || user.status == null) {
+                        return [2 /*return*/, response.status(400).send({ error: "Missing data" })];
+                    }
                     return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
                 case 1:
                     connection = _b.sent();
@@ -212,9 +218,9 @@ function login(request, response) {
                     return [4 /*yield*/, connection.query("select * from users where u_id = ?", [results[0].id])];
                 case 4:
                     _c = __read.apply(void 0, [_d.sent(), 1]), jobbresults = _c[0];
-                    token = jsonwebtoken_1.default.sign({ email: jobbresults[0].email, jelszo: jobbresults[0].username, id: jobbresults[0].u_id, status: jobbresults[0].status }, config_1.default.jwtSecret, { expiresIn: "2h" });
+                    token = jsonwebtoken_1.default.sign({ username: jobbresults[0].username, email: jobbresults[0].email, id: jobbresults[0].u_id, status: jobbresults[0].status }, config_1.default.jwtSecret, { expiresIn: "2h" });
                     console.log(jobbresults[0]);
-                    return [2 /*return*/, response.status(200).send({ token: token, email: jobbresults[0].email, jelszo: jobbresults[0].username, id: jobbresults[0].u_id, status: jobbresults[0].status })];
+                    return [2 /*return*/, response.status(200).send({ token: token, status: jobbresults[0].status, username: jobbresults[0].username })];
                 case 5:
                     error_4 = _d.sent();
                     console.log(error_4);
