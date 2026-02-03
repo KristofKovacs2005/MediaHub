@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Items from "./items";
 import config from "../config/config";
 import mysql from "mysql2/promise";
+import { uploadMiddleware } from "../middleware/upload";
 
 export async function getItem(request: Request, response: Response) {
 
@@ -138,16 +139,23 @@ export async function deleteItem(request:any, response:Response) {
 
 export async function insertItem(request: any, response: Response) {
     
+    await uploadMiddleware(request, response)
+
     if (!request.body) {
-        response.status(400).send({message:"Bad request"})
+        return response.status(400).send({message:"Bad request"})
+    }
+    if (!request.file) {
+        return response.status(400).send({message:"No picture found"})
     }
     if (request.user.status != 4) {
-        response.status(401).send({message:"bad status"})
+        return response.status(401).send({message:"bad status"})
     }
     
     let item:Items = new Items(request.body)
+
+    const img_url = "/uploads/" + request.file.filename
     
-    if (item.i_name == "" || !item.i_name || !item.author || item.author == "" || !item.img_url || item.img_url == "" || !item.i_description || item.i_description == "") {
+    if (item.i_name == "" || !item.i_name || !item.author || item.author == "" || !item.i_description || item.i_description == "") {
         return response.status(400).send({error: "Missing data"})
     }
     let tags;
@@ -159,7 +167,7 @@ export async function insertItem(request: any, response: Response) {
     try {
         await connection.query("START TRANSACTION;")
         const [results] = await connection.query(
-            "insert into items values (null, ?, ?, ?, ?)", [item.author, item.i_name, item.img_url, item.i_description]
+            "insert into items values (null, ?, ?, ?, ?)", [item.author, item.i_name, img_url, item.i_description]
         ) as Array<any>
         
         for (let i = 0; i < tags.length; i++) {
@@ -185,6 +193,7 @@ export async function insertItem(request: any, response: Response) {
 }
 
 export async function modifyItem(request:any, response:Response) {
+    await uploadMiddleware(request, response)
     let id:number = parseInt(request.params.id)
     if (isNaN(id)) {
         response.status(400).send({message:"Bad request"})
@@ -196,37 +205,72 @@ export async function modifyItem(request:any, response:Response) {
     if (request.user.status != 4) {
         response.status(401).send({message:"bad status"})
     }
-    let item:any = new Items(request.body)
-    const allowedFields = ['author','i_name','img_url','i_description', 'tags'] 
-    const keys = Object.keys(request.body).filter(key => allowedFields.includes(key))
+    // let item:any = new Items(request.body)
+    // const allowedFields = ['author','i_name','img_url','i_description', 'tags'] 
+    // const keys = Object.keys(request.body).filter(key => allowedFields.includes(key))
     
-    if (keys.length === 0 ) {
-        response.status(400).send({ error: 103, messege: "Nothing to update" })
-        return
-    }
+    // if (keys.length === 0 ) {
+    //     response.status(400).send({ error: 103, messege: "Nothing to update" })
+    //     return
+    // }
 
-    let updateString = ""
-    for (let i = 0; i < keys.length; i++) {
-        if (keys[i] != "tags") {
-            updateString += keys[i] + " = ?"
-        }
-        if (keys[i] != keys[keys.length-1] && keys[i] != keys[keys.length-2]) {
-            updateString += ", "
-        }
-    }
+    // let updateString = ""
+    // for (let i = 0; i < keys.length; i++) {
+    //     if (keys[i] != "tags") {
+    //         updateString += keys[i] + " = ?"
+    //     }
+    //     if (keys[i] != keys[keys.length-1] && keys[i] != keys[keys.length-2]) {
+    //         updateString += ", "
+    //     }
+    // }
 
-    const values = keys.map (key => item[key])
-    let tags: any
-    for (let i = 0; i < keys.length; i++) {
-        if (keys[i] == "tags") {
-            tags = values.pop()
-        }
-    }
+    // const values = keys.map (key => item[key])
+    // let tags: any
+    // for (let i = 0; i < keys.length; i++) {
+    //     if (keys[i] == "tags") {
+    //         tags = values.pop()
+    //     }
+    // }
     
+    // values.push(id)
+    // const sql = `update items set ${updateString} where i_id = ?`
+    
+    // if (tags) tags = tags.split(',')
+
+    let update: string[] = []
+    let values: any[] = []
+    let tags: string[] = []
+    
+    if (request.body.i_name) {
+        update.push("i_name = ?")
+        values.push(request.body.i_name)
+    }
+    if (request.body.author) {
+        update.push("author = ?")
+        values.push(request.body.author)
+    }
+    if (request.body.i_description) {
+        update.push("i_description = ?")
+        values.push(request.body.i_description)
+    }
+    if (request.file) {
+        update.push("img_url = ?")
+        const img_url = "/uploads/" + request.file.filename
+        values.push(img_url)
+    }
+    if (request.body.tags) {
+        const tagek = request.body.tags.split(',')
+        for (let i = 0; i < tagek.length; i++) {
+            tags.push(tagek[i])
+        }
+    }
     values.push(id)
-    const sql = `update items set ${updateString} where i_id = ?`
-    
-    tags = tags.split(',')
+    const updateString = update.join(',');
+
+    let sql = `UPDATE items set ${updateString} where i_id = ?;`
+
+    console.log(sql)
+    console.log(values)
 
     const connection = await mysql.createConnection(config.database);
 
@@ -235,15 +279,17 @@ export async function modifyItem(request:any, response:Response) {
         const [results] = await connection.query(
             sql, values
         ) as Array<any>
-        await connection.query(
-            "delete from item_tag where i_id = ?", [id]
-        )
-        for (let i = 0; i < tags.length; i++) {
-            let asd: Array<any> = [id]
-            asd.push(tags[i])
+        if (tags) {
             await connection.query(
-                "insert into item_tag values (?, ?)", asd
+                "delete from item_tag where i_id = ?", [id]
             )
+            for (let i = 0; i < tags.length; i++) {
+                let asd: Array<any> = [id]
+                asd.push(tags[i])
+                await connection.query(
+                    "insert into item_tag values (?, ?)", asd
+                )
+            }
         }
         await connection.query("COMMIT;")
         if (results.affectedRows > 0) {

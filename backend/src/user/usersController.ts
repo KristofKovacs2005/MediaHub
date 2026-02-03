@@ -134,7 +134,7 @@ export async function login(request: Request, response: Response) {
 
 export async function modifyUser(request:any, response:Response) {
     if (request.user.status != 5) {
-        response.status(401).send({message:"bad status"})
+            response.status(401).send({message:"bad status"})
     }
     let id:number = parseInt(request.params.id)
     if (isNaN(id)) {

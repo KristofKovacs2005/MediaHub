@@ -7,6 +7,7 @@ import tagRouter from "../tag/routes"
 import userRouter from "../user/routes";
 import cors from "cors";
 import bodyParser from "body-parser";
+import config from "../config/config";
 
 
 const app = express()
@@ -22,5 +23,7 @@ app.use('/', orderRouter)
 app.use('/', reviewRouter)
 app.use('/', userRouter)
 app.use('/', tagRouter)
+
+app.use('/uploads', express.static(config.baseDir + config.uploadDir))
 
 export default app;
