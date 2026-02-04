@@ -7,9 +7,9 @@ const router: Router = Router();
 router.get("/items{/:name}{/:tags}", getItem);
 router.get("/item/:id", getOneItem)
 router.get("/item/:id/reviews", getReviewsOfItem);
-router.post("/items", insertItem); //könyvtáros
+router.post("/items", verifyToken, insertItem); //könyvtáros
 router.delete("/items/:id", verifyToken, deleteItem); //Könyvtáros
-router.patch("/items/:id", modifyItem) //könyvtáros
+router.patch("/items/:id", verifyToken, modifyItem) //könyvtáros
 
 
 export default router;
