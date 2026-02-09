@@ -7,6 +7,6 @@ router.get("/users", verifyToken, getUsers) //moderátor
 router.get("/users/:id", verifyToken, getUsersById) //moderátor v. könyvtáros
 router.post("/users", insertUser)
 router.post("/users/login", login)
-router.patch("/users/:id", modifyUser) //moderátor
+router.patch("/users/:id", verifyToken, modifyUser) //moderátor
 
 export default router
