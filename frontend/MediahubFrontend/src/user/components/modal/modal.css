@@ -87,3 +87,53 @@
     border-radius: 6px;
     cursor: pointer;
 }
+
+/* Star Rating Component */
+.starRating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.star {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 0;
+}
+
+.star.active {
+    color: #ffc107;
+}
+
+.star:hover {
+    color: #ffc107;
+}
+
+.ratingText {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0F4C5C;
+    margin-left: 10px;
+}
+
+/* Textarea for comment */
+.modalContent textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.12);
+    font-family: inherit;
+    resize: vertical;
+    font-size: 14px;
+}
+
+.charCount {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 4px;
+    align-self: flex-end;
+}

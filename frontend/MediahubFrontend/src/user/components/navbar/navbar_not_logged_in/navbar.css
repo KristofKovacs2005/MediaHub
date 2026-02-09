@@ -46,6 +46,19 @@
     gap: 0.5rem;
 }
 
+
+a .navLink{
+    text-decoration: none;
+    color: inherit;
+    font-family: inherit;
+}
+
+a.navLink {
+    text-decoration: none !important;
+    color: inherit !important;
+    font-family: inherit;
+}
+
 /* other items roughly h4 size */
 .appNavbar .navbarSection2 p {
     margin: 0;

@@ -1,10 +1,9 @@
 import "./navbar.css";
 import userIcon from '../../../../assets/circle-user-pic.png';
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 export function Navbar_User_Log_In() {
-    const navigate = useNavigate();
 
     // Read username from localStorage
     const username = localStorage.getItem('username') || '';
@@ -15,13 +14,17 @@ export function Navbar_User_Log_In() {
         localStorage.removeItem('authToken');
         localStorage.removeItem('username');
         localStorage.removeItem('status');
-        navigate("/"); // Redirect to frontpage
+        if(window.location.pathname == "/"){
+            window.location.reload();
+            return;
+        }
+        redirect("/"); // Redirect to frontpage
     };
 
     return (
         <nav className="appNavbar">
             <section className="navbarSection1">
-                <h3>MediaHub</h3>
+                <Link to="/" className="navLink"><h3>MediaHub</h3></Link>
             </section>
 
             <section className="navbarSection2">
@@ -35,8 +38,8 @@ export function Navbar_User_Log_In() {
 
                     {dropdownOpen && (
                         <div className="dropdownMenu">
-                            <button disabled className="dropdownItem">Beállítások</button>
-                            <button className="dropdownItem" onClick={handleLogout}>Kilépés</button>
+                            <button disabled className="dropdownItem button_text">Beállítások</button>
+                            <button className="dropdownItem button_text" onClick={handleLogout}>Kilépés</button>
                         </div>
                     )}
                 </div>

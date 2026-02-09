@@ -25,6 +25,18 @@
     padding: 0 1rem; /* small horizontal padding inside each section */
 }
 
+a .navLink{
+    text-decoration: none;
+    color: inherit;
+    font-family: inherit;
+}
+
+a.navLink {
+    text-decoration: none !important;
+    color: inherit !important;
+    font-family: inherit;
+}
+
 .appNavbar .navbarSection1{
     justify-content: flex-start;
 }
@@ -61,6 +73,9 @@
     height: 36px;
     max-height: 36px;
     margin-left: 8px;
+}
+.button_text{
+    color:white;
 }
 
 /* keep accessibility: clickable items have pointer cursor */

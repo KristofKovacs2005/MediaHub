@@ -10,13 +10,7 @@ export default function TermekekUser() {
     const [error, setError] = useState(null);
     const [nameFilter, setNameFilter] = useState("");
     const [tagsFilter, setTagsFilter] = useState("");
-    const userToken = localStorage.getItem("userToken");
-    const jogosultsag = localStorage.getItem("jogosultsag");
-    if (!userToken || jogosultsag === 0 || jogosultsag === null || jogosultsag === undefined || jogosultsag === 3 || jogosultsag === 2) {
-        setError("User not authenticated");
-        setLoading(false);
-        return;
-    }
+
     // initial load (no filters)
     useEffect(() => {
         LoadItemsUser({ setLoading, setItems, setError });

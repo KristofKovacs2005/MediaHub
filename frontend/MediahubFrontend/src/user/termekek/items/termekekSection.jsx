@@ -10,6 +10,7 @@ export default function TermekekSection({items}) {
 						{items.map((it, idx) => (
 							<Termek
 								key={it?.i_id ?? it?.id ?? idx}
+								i_id={it?.i_id}
 								author={it?.author}
 								i_name={it?.i_name}
 								img_url={it?.img_url}

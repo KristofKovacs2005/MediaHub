@@ -1,5 +1,4 @@
 import "./navbar.css";
-import userIcon from '../../../../assets/circle-user-pic.png';
 import Modal from "../../modal/modal";
 import { useState } from "react";
 import  ModalContent  from "../../modal/regisztralas/modalContent";
@@ -23,7 +22,6 @@ export function Navbar(){
                 <Modal isOpen={isOpenRegisztralas} isClose={() => setIsOpenRegisztralas(false)}>
                     <ModalContent isClose={() => setIsOpenRegisztralas(false)} />
                 </Modal>
-                <p><img className="userIcon" src={userIcon} alt="user"/></p>
             </section>
         </nav>
     )

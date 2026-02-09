@@ -15,6 +15,12 @@
     padding: 0;                /* sections will span edge to edge */
 }
 
+a{
+    text-decoration: none;
+    color: inherit;
+    font-family: inherit;
+}
+
 /* make the two sections expand to fill the full width */
 .appNavbar .navbarSection1,
 .appNavbar .navbarSection2{
@@ -44,6 +50,13 @@
     align-items: center;
     font-family: 'Times New Roman', Times, serif;
     gap: 0.5rem;
+}
+
+/* fix Link component styling */
+a.navLink {
+    text-decoration: none !important;
+    color: inherit !important;
+    font-family: inherit;
 }
 
 /* other items roughly h4 size */

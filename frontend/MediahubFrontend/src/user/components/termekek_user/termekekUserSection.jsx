@@ -1,4 +1,4 @@
-import Termek from "./termek";
+import Termek_User from "./termekUser";
 
 export default function TermekekSectionUser({items}) {
     return (
@@ -6,10 +6,12 @@ export default function TermekekSectionUser({items}) {
                 {items.length === 0 ? (
                     <p>No items found.</p>
                 ) : (
+                    
                     <section className="kartyakSection">
                         {items.map((it, idx) => (
-                            <Termek
+                            <Termek_User
                                 key={it?.i_id ?? it?.id ?? idx}
+                                i_id={it?.i_id}
                                 author={it?.author}
                                 i_name={it?.i_name}
                                 img_url={it?.img_url}

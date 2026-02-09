@@ -1,0 +1,251 @@
+/**
+ * TERMEK DETAILS PAGE CSS
+ */
+
+.detailsPageMainDiv {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: transparent;
+}
+
+.pageBelowNavbar {
+	padding-top: 72px;
+	min-height: calc(100vh - 72px);
+	width: 100%;
+	background-color: transparent;
+	padding-bottom: 40px;
+}
+
+/* Loading and Error States */
+.loadingContainer,
+.errorContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 400px;
+	text-align: center;
+	font-size: 1.2rem;
+	color: #0F4C5C;
+}
+
+/* Details Section */
+.detailsSection {
+	margin: 40px auto;
+	background-color: #ffffff;
+	border-radius: 12px;
+	padding: 40px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 1200px;
+}
+
+/* Image */
+.detailsImage {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	object-fit: cover;
+}
+
+/* Title, text styling */
+.detailsTitle {
+	font-size: 2rem;
+	font-weight: 700;
+	color: #0F4C5C;
+	word-wrap: break-word;
+}
+
+.detailsCreator {
+	font-size: 1.1rem;
+	color: #6b7280;
+}
+
+.detailsDescription {
+	font-size: 1rem;
+	line-height: 1.6;
+	color: #111827;
+	text-align: justify;
+}
+
+/* Tags - using Bootstrap badges */
+.detailsTags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.detailsTags .badge {
+	background-color: #0F4C5C !important;
+	color: #ffffff;
+	font-weight: 500;
+	transition: transform 0.2s ease;
+}
+
+.detailsTags .badge:hover {
+	transform: scale(1.05);
+}
+
+/* Actions */
+.detailsActions {
+	display: flex;
+	gap: 12px;
+	margin-top: 20px;
+}
+
+.btnBorrow {
+	background-color: #0F4C5C;
+	border-color: #0F4C5C;
+	font-weight: 600;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btnBorrow:hover {
+	background-color: #0a3a48;
+	border-color: #0a3a48;
+	transform: translateY(-2px);
+}
+
+.btnBorrow:active {
+	transform: translateY(0);
+}
+
+/* Comments Section */
+.commentsSection {
+	margin: 40px auto;
+	background-color: #ffffff;
+	border-radius: 12px;
+	padding: 40px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 1200px;
+}
+
+.commentsTitle {
+	font-size: 1.8rem;
+	font-weight: 700;
+	color: #0F4C5C;
+	padding-bottom: 15px;
+	border-bottom: 2px solid #0F4C5C;
+}
+
+.commentsList {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	margin-top: 20px;
+}
+
+.noComments {
+	text-align: center;
+	color: #6b7280;
+	font-size: 1rem;
+	padding: 20px 0;
+	margin: 0;
+}
+
+/* Comment Component */
+.comment {
+	padding: 20px;
+	background-color: #f7f9fb;
+	border-left: 4px solid #0F4C5C;
+	border-radius: 6px;
+	transition: background-color 0.3s ease;
+}
+
+.comment:hover {
+	background-color: #f0f4f8;
+}
+
+.commentHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.commentAuthor {
+	font-weight: 700;
+	color: #0F4C5C;
+	font-size: 1rem;
+}
+
+.commentDate {
+	color: #9ca3af;
+	font-size: 0.9rem;
+}
+
+.commentBody {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.commentBody p {
+	margin: 0;
+	color: #111827;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+.commentRating {
+	font-weight: 600;
+	color: #0F4C5C;
+	font-size: 0.95rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.detailsSection,
+	.commentsSection {
+		padding: 20px;
+		margin: 20px auto;
+	}
+
+	.detailsTitle {
+		font-size: 1.5rem;
+	}
+
+	.detailsCreator {
+		font-size: 1rem;
+	}
+
+	.commentsTitle {
+		font-size: 1.4rem;
+	}
+
+	.pageBelowNavbar {
+		padding: 72px 16px 40px 16px;
+	}
+}
+
+@media (max-width: 480px) {
+	.detailsSection,
+	.commentsSection {
+		padding: 15px;
+		margin: 15px auto;
+	}
+
+	.detailsTitle {
+		font-size: 1.2rem;
+	}
+
+	.detailsCreator {
+		font-size: 0.9rem;
+	}
+
+	.detailsDescription {
+		font-size: 0.9rem;
+	}
+
+	.commentsSection {
+		padding: 15px;
+	}
+
+	.commentsTitle {
+		font-size: 1.2rem;
+	}
+}

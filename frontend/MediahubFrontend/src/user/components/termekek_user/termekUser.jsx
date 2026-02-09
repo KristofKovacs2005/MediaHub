@@ -1,6 +1,16 @@
-export default function Termek_User({ author, i_name, img_url, i_description }) {
+import { useNavigate } from "react-router-dom";
+
+export default function Termek_User({ i_id, author, i_name, img_url, i_description }) {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if (i_id) {
+            navigate(`/termekek/${i_id}`);
+        }
+    };
+
     return (
-        <div className="termekDiv">
+        <div className="termekDiv" onClick={handleClick} style={{ cursor: "pointer" }}>
             <img src={img_url} alt={i_name} title={i_name} />
             <h2>{i_name}</h2>
             <p><strong>Author:</strong> {author}</p>

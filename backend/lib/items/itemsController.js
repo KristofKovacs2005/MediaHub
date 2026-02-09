@@ -64,6 +64,8 @@ exports.modifyItem = modifyItem;
 var items_1 = __importDefault(require("./items"));
 var config_1 = __importDefault(require("../config/config"));
 var promise_1 = __importDefault(require("mysql2/promise"));
+var upload_1 = require("../middleware/upload");
+
 function getItem(request, response) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, name, tags, sql, values, tagList, i, connection, _b, results, error_1;
@@ -244,73 +246,81 @@ function deleteItem(request, response) {
 }
 function insertItem(request, response) {
     return __awaiter(this, void 0, void 0, function () {
-        var item, tags, connection, _a, results, i, asd, error_5;
+        var item, img_url, tags, connection, _a, results, i, asd, error_5;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0:
+                case 0: return [4 /*yield*/, (0, upload_1.uploadMiddleware)(request, response)];
+                case 1:
+                    _b.sent();
                     if (!request.body) {
-                        response.status(400).send({ message: "Bad request" });
+                        return [2 /*return*/, response.status(400).send({ message: "Bad request" })];
+                    }
+                    if (!request.file) {
+                        return [2 /*return*/, response.status(400).send({ message: "No picture found" })];
                     }
                     if (request.user.status != 4) {
-                        response.status(401).send({ message: "bad status" });
+                        return [2 /*return*/, response.status(401).send({ message: "bad status" })];
                     }
                     item = new items_1.default(request.body);
-                    if (item.i_name == "" || !item.i_name || !item.author || item.author == "" || !item.img_url || item.img_url == "" || !item.i_description || item.i_description == "") {
+                    img_url = "/uploads/" + request.file.filename;
+                    if (item.i_name == "" || !item.i_name || !item.author || item.author == "" || !item.i_description || item.i_description == "") {
                         return [2 /*return*/, response.status(400).send({ error: "Missing data" })];
                     }
                     if (request.body.tags) {
                         tags = request.body.tags.split(",");
                     }
                     return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
-                case 1:
-                    connection = _b.sent();
-                    _b.label = 2;
                 case 2:
-                    _b.trys.push([2, 10, , 11]);
-                    return [4 /*yield*/, connection.query("START TRANSACTION;")];
+                    connection = _b.sent();
+                    _b.label = 3;
                 case 3:
-                    _b.sent();
-                    return [4 /*yield*/, connection.query("insert into items values (null, ?, ?, ?, ?)", [item.author, item.i_name, item.img_url, item.i_description])];
+                    _b.trys.push([3, 11, , 12]);
+                    return [4 /*yield*/, connection.query("START TRANSACTION;")];
                 case 4:
+                    _b.sent();
+                    return [4 /*yield*/, connection.query("insert into items values (null, ?, ?, ?, ?)", [item.author, item.i_name, img_url, item.i_description])];
+                case 5:
                     _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
                     i = 0;
-                    _b.label = 5;
-                case 5:
-                    if (!(i < tags.length)) return [3 /*break*/, 8];
+                    _b.label = 6;
+                case 6:
+                    if (!(i < tags.length)) return [3 /*break*/, 9];
                     asd = [];
                     asd.push(results.insertId);
                     asd.push(tags[i]);
                     return [4 /*yield*/, connection.query("insert into item_tag values(?, ?)", asd)];
-                case 6:
-                    _b.sent();
-                    _b.label = 7;
                 case 7:
+                    _b.sent();
+                    _b.label = 8;
+                case 8:
                     i++;
-                    return [3 /*break*/, 5];
-                case 8: return [4 /*yield*/, connection.query("COMMIT;")];
-                case 9:
+                    return [3 /*break*/, 6];
+                case 9: return [4 /*yield*/, connection.query("COMMIT;")];
+                case 10:
                     _b.sent();
                     if (results.affectedRows > 0) {
                         response.status(201).send({ message: "Created" });
                         return [2 /*return*/];
                     }
                     response.status(400).send({ message: "Error, probably some conflict, try with different inputs or whatever" });
-                    return [3 /*break*/, 11];
-                case 10:
+                    return [3 /*break*/, 12];
+                case 11:
                     error_5 = _b.sent();
                     console.log(error_5);
                     return [2 /*return*/, response.status(400).send(error_5)];
-                case 11: return [2 /*return*/, response.status(400).send({ error: "Something went wrong" })];
+                case 12: return [2 /*return*/, response.status(400).send({ error: "Something went wrong" })];
             }
         });
     });
 }
 function modifyItem(request, response) {
     return __awaiter(this, void 0, void 0, function () {
-        var id, item, allowedFields, keys, updateString, i, values, tags, i, sql, connection, _a, results, i, asd, err_1;
+        var id, update, values, tags, img_url, tagek, i, updateString, sql, connection, _a, results, i, asd, err_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0:
+                case 0: return [4 /*yield*/, (0, upload_1.uploadMiddleware)(request, response)];
+                case 1:
+                    _b.sent();
                     id = parseInt(request.params.id);
                     if (isNaN(id)) {
                         response.status(400).send({ message: "Bad request" });
@@ -322,73 +332,80 @@ function modifyItem(request, response) {
                     if (request.user.status != 4) {
                         response.status(401).send({ message: "bad status" });
                     }
-                    item = new items_1.default(request.body);
-                    allowedFields = ['author', 'i_name', 'img_url', 'i_description', 'tags'];
-                    keys = Object.keys(request.body).filter(function (key) { return allowedFields.includes(key); });
-                    if (keys.length === 0) {
-                        response.status(400).send({ error: 103, messege: "Nothing to update" });
-                        return [2 /*return*/];
+                    update = [];
+                    values = [];
+                    tags = [];
+                    if (request.body.i_name) {
+                        update.push("i_name = ?");
+                        values.push(request.body.i_name);
                     }
-                    updateString = "";
-                    for (i = 0; i < keys.length; i++) {
-                        if (keys[i] != "tags") {
-                            updateString += keys[i] + " = ?";
-                        }
-                        if (keys[i] != keys[keys.length - 1] && keys[i] != keys[keys.length - 2]) {
-                            updateString += ", ";
-                        }
+                    if (request.body.author) {
+                        update.push("author = ?");
+                        values.push(request.body.author);
                     }
-                    values = keys.map(function (key) { return item[key]; });
-                    for (i = 0; i < keys.length; i++) {
-                        if (keys[i] == "tags") {
-                            tags = values.pop();
+                    if (request.body.i_description) {
+                        update.push("i_description = ?");
+                        values.push(request.body.i_description);
+                    }
+                    if (request.file) {
+                        update.push("img_url = ?");
+                        img_url = "/uploads/" + request.file.filename;
+                        values.push(img_url);
+                    }
+                    if (request.body.tags) {
+                        tagek = request.body.tags.split(',');
+                        for (i = 0; i < tagek.length; i++) {
+                            tags.push(tagek[i]);
                         }
                     }
                     values.push(id);
-                    sql = "update items set ".concat(updateString, " where i_id = ?");
-                    tags = tags.split(',');
+                    updateString = update.join(',');
+                    sql = "UPDATE items set ".concat(updateString, " where i_id = ?;");
+                    console.log(sql);
+                    console.log(values);
                     return [4 /*yield*/, promise_1.default.createConnection(config_1.default.database)];
-                case 1:
-                    connection = _b.sent();
-                    _b.label = 2;
                 case 2:
-                    _b.trys.push([2, 11, , 12]);
-                    return [4 /*yield*/, connection.query("START TRANSACTION;")];
+                    connection = _b.sent();
+                    _b.label = 3;
                 case 3:
+                    _b.trys.push([3, 12, , 13]);
+                    return [4 /*yield*/, connection.query("START TRANSACTION;")];
+                case 4:
                     _b.sent();
                     return [4 /*yield*/, connection.query(sql, values)];
-                case 4:
-                    _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
-                    return [4 /*yield*/, connection.query("delete from item_tag where i_id = ?", [id])];
                 case 5:
+                    _a = __read.apply(void 0, [_b.sent(), 1]), results = _a[0];
+                    if (!tags) return [3 /*break*/, 10];
+                    return [4 /*yield*/, connection.query("delete from item_tag where i_id = ?", [id])];
+                case 6:
                     _b.sent();
                     i = 0;
-                    _b.label = 6;
-                case 6:
-                    if (!(i < tags.length)) return [3 /*break*/, 9];
+                    _b.label = 7;
+                case 7:
+                    if (!(i < tags.length)) return [3 /*break*/, 10];
                     asd = [id];
                     asd.push(tags[i]);
                     return [4 /*yield*/, connection.query("insert into item_tag values (?, ?)", asd)];
-                case 7:
-                    _b.sent();
-                    _b.label = 8;
                 case 8:
+                    _b.sent();
+                    _b.label = 9;
+                case 9:
                     i++;
-                    return [3 /*break*/, 6];
-                case 9: return [4 /*yield*/, connection.query("COMMIT;")];
-                case 10:
+                    return [3 /*break*/, 7];
+                case 10: return [4 /*yield*/, connection.query("COMMIT;")];
+                case 11:
                     _b.sent();
                     if (results.affectedRows > 0) {
                         response.status(201).send({ message: "Modified" });
                         return [2 /*return*/];
                     }
                     response.status(404).send({ message: "Item not found" });
-                    return [3 /*break*/, 12];
-                case 11:
+                    return [3 /*break*/, 13];
+                case 12:
                     err_1 = _b.sent();
                     console.log(err_1);
-                    return [3 /*break*/, 12];
-                case 12: return [2 /*return*/];
+                    return [3 /*break*/, 13];
+                case 13: return [2 /*return*/];
             }
         });
     });
