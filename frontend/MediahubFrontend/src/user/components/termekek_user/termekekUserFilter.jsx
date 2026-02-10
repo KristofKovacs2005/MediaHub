@@ -1,3 +1,5 @@
+import "./termekek.css";
+
 export default function FilterUi({
     applyFilters,
     clearFilters,

@@ -1,5 +1,5 @@
 import LoadItemsUser from "./loadTermekekUser";
-
+import "./termekek.css";
 
 // Apply filters function
 export function applyFilters({ nameFilter, tagsFilter, setLoading, setItems, setError }) {

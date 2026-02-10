@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./termekek.css";
 
 export default async function LoadItemsUser({ name, tags, setLoading, setError, setItems } = {}) {
     const base = "http://localhost:3000/items";// Base URL for fetching items

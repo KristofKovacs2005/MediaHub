@@ -7,7 +7,7 @@ export function LoadThisItem({ id }) {
 	const [tags, setTags] = useState([]); // best-effort tags for this item
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const token = localStorage.getItem("authToken") || tokenLoader(); // get token for auth
+	const token = localStorage.getItem("authToken"); // get token for auth
 
 	useEffect(() => {
 		async function loadItemAndComments() {
@@ -69,7 +69,7 @@ export function LoadThisItem({ id }) {
 		}
 
 		if (id != null) loadItemAndComments();
-	}, [id]);
+	}, [id, token]);
 
 	// return item, comments and tags so the details UI can render them
 	return { item, comments, tags, loading, error };

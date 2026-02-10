@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import "./termekek.css";
 
 export default function Termek_User({ i_id, author, i_name, img_url, i_description }) {
     const navigate = useNavigate();

@@ -1,49 +1,61 @@
 import "./navbar.css";
-import userIcon from '../../../../assets/circle-user-pic.png';
-import { useState } from "react";
 import { Link, redirect } from "react-router-dom";
 
 export function Navbar_User_Log_In() {
+  // Read username from localStorage
+  const username = localStorage.getItem("username") || "";
 
-    // Read username from localStorage
-    const username = localStorage.getItem('username') || '';
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+  const handleLogout = () => {
+    // Clear token and user info
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("status");
+    if (window.location.pathname == "/") {
+      window.location.reload();
+      return;
+    }
+    redirect("/"); // Redirect to frontpage
+  };
 
-    const handleLogout = () => {
-        // Clear token and user info
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('username');
-        localStorage.removeItem('status');
-        if(window.location.pathname == "/"){
-            window.location.reload();
-            return;
-        }
-        redirect("/"); // Redirect to frontpage
-    };
+  return (
+    <nav className="appNavbar">
+      <section className="navbarSection1">
+        <Link to="/" className="navLink">
+          <h3>MediaHub</h3>
+        </Link>
+      </section>
 
-    return (
-        <nav className="appNavbar">
-            <section className="navbarSection1">
-                <Link to="/" className="navLink"><h3>MediaHub</h3></Link>
-            </section>
+      <section className="navbarSection2">
+        {/* Links for logged-in user */}
+        <Link to="/termekek" className="navLink">
+          Termékek
+        </Link>
+        <Link to="/lista" className="navLink">
+          Lista
+        </Link>
 
-            <section className="navbarSection2">
-                {/* Links for logged-in user */}
-                <Link to="/termekek" className="navLink">Termékek</Link>
-                <Link to="/lista" className="navLink">Lista</Link>
+        {/* User profile */}
 
-                {/* User profile */}
-                <div className="userProfile" onClick={() => setDropdownOpen(!dropdownOpen)}>
-                    <p>{username || "Profil"} <img className="userIcon" src={userIcon} alt="user" /></p>
-
-                    {dropdownOpen && (
-                        <div className="dropdownMenu">
-                            <button disabled className="dropdownItem button_text">Beállítások</button>
-                            <button className="dropdownItem button_text" onClick={handleLogout}>Kilépés</button>
-                        </div>
-                    )}
-                </div>
-            </section>
-        </nav>
-    );
+        <div className="dropdown userProfile">
+          <p
+            className="dropdown-toggle"
+            data-bs-toggle="dropdown"
+            data-bs-offset="10,20"
+          >
+            {username || "Profil"}{" "}
+          </p>
+          <ul className="dropdown-menu" data-bs-theme="dark">
+            <li>
+              <button
+                className="dropdownItem dropdown-item button_text logOutButton"
+                onClick={handleLogout}
+              >
+                Kilépés
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </nav>
+  );
 }

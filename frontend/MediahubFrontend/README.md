@@ -1,18 +1,38 @@
-# React + Vite
+# 📚 Mediahub Webalkalmazás – Feladatok/Célok
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. Külön termékek weblapja
+- A weblap betölti a könyv képét, vagy annak hiányában egy pótló képet
+- A weblap betölti a könyvhöz tartozó véleményeket sablon alapján
+- A termék kölcsönözhető a weblapon
+- A vélemények szabálysértés esetén bejelenthetők
+- Új vélemény írása a weblapon
 
-Currently, two official plugins are available:
+## 2. Modal
+- Kölcsönzéshez szükséges modal létrehozása
+- A modal működéséhez tartozó függvény(ek) megvalósítása
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 3. Adminisztrátor
+- Felhasználók kezelési weblapja
+- Felhasználók módosítása (jogosultságok, nevek, jelszavak stb.)
+- Vélemények törlése
+- Termékek létrehozása, módosítása és törlése
+- Vélemények kezelési weblapja
 
-## React Compiler
+## 4. Könyvtáros
+- Kölcsönzések kezelési weblapja
+- Kölcsönzések elfogadása és elutasítása
+- Felhasználók részleges módosítása
+- Termékek kezelése weblapja
+- Termékek hozzáadása, törlése és módosítása
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 5. Egyéb
+- Maximális kölcsönzési szám beállítása jogosultság szerint
+- Külön weblap a kölcsönzések megtekintésére
+- Teljes UI fejlesztés
+- Fájlstruktúra és elrendezés kialakítása
+- Értesítési (Notify) oldal, ahol a felhasználó figyelmeztetést kap a kölcsönzés lejárta előtt
+- Kölcsönzés meghosszabbításának kérelmezése
+- Beállítások oldal:
+  - Éjszakai mód
+  - Név módosítása
+  - Jelszó módosítása

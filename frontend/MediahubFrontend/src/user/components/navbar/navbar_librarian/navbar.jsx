@@ -1,6 +1,4 @@
 import "./navbar.css";
-import userIcon from '../../../../assets/circle-user-pic.png';
-import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 export function Navbar_Librarian() {
@@ -8,7 +6,6 @@ export function Navbar_Librarian() {
 
     // Read username from localStorage
     const username = localStorage.getItem('username') || '';
-    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const handleLogout = () => {
         // Clear token and user info
@@ -31,16 +28,22 @@ export function Navbar_Librarian() {
                 <Link to="/rendelesek" className="navLink">Kölcsönzések</Link>
 
                 {/* User profile */}
-                <div className="userProfile" onClick={() => setDropdownOpen(!dropdownOpen)}>
-                    <p>{username || "Profil"} <img className="userIcon" src={userIcon} alt="user" /></p>
+                <div className="dropdown userProfile">
 
-                    {dropdownOpen && (
-                        <div className="dropdownMenu">
-                            <button disabled className="dropdownItem">Beállítások</button>
-                            <button className="dropdownItem" onClick={handleLogout}>Kilépés</button>
-                        </div>
-                    )}
-                </div>
+            <p className="dropdown-toggle" data-bs-toggle="dropdown"  data-bs-offset="10,20">
+              {username || "Profil"}{" "}
+            </p>
+          <ul className="dropdown-menu" data-bs-theme="dark">
+            <li>
+              <button
+                className="dropdownItem dropdown-item button_text logOutButton"
+                onClick={handleLogout}
+              >
+                Kilépés
+              </button>
+            </li>
+          </ul>
+        </div>
             </section>
         </nav>
     );

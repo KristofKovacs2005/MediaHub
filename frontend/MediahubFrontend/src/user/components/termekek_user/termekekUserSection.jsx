@@ -1,4 +1,5 @@
 import Termek_User from "./termekUser";
+import "./termekek.css";
 
 export default function TermekekSectionUser({items}) {
     return (

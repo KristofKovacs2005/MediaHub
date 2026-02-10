@@ -65,7 +65,6 @@ var items_1 = __importDefault(require("./items"));
 var config_1 = __importDefault(require("../config/config"));
 var promise_1 = __importDefault(require("mysql2/promise"));
 var upload_1 = require("../middleware/upload");
-
 function getItem(request, response) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, name, tags, sql, values, tagList, i, connection, _b, results, error_1;

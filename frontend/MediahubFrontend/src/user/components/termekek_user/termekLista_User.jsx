@@ -3,6 +3,7 @@ import { applyFilters, clearFilters } from "./termekekUserFilterFunction.jsx";
 import FilterUI from "./termekekUserFilter.jsx";
 import LoadItemsUser from "./loadTermekekUser.jsx";
 import TermekekSectionUser from "./termekekUserSection.jsx";
+import "./termekek.css";
 
 export default function TermekekUser() {
     const [items, setItems] = useState([]);
@@ -20,19 +21,23 @@ export default function TermekekUser() {
     if (error) return <section>Error loading items: {error}</section>;
 
     return (
-        <div className="termekekUserDiv">
-            <FilterUI
-                applyFilters={applyFilters}
-                clearFilters={clearFilters}
-                nameFilter={nameFilter}
-                setNameFilter={setNameFilter}
-                tagsFilter={tagsFilter}
-                setTagsFilter={setTagsFilter}
-                setLoading={setLoading}
-                setItems={setItems}
-                setError={setError}
-            />
-            <TermekekSectionUser items={items} />
+      <>
+      <div className="termekekUserHeader">
+        <FilterUI
+          applyFilters={applyFilters}
+          clearFilters={clearFilters}
+          nameFilter={nameFilter}
+          setNameFilter={setNameFilter}
+          tagsFilter={tagsFilter}
+          setTagsFilter={setTagsFilter}
+          setLoading={setLoading}
+          setItems={setItems}
+          setError={setError}
+        />
         </div>
+        <div className="termekekUserDiv">
+          <TermekekSectionUser items={items} />
+        </div>
+      </>
     );
 }

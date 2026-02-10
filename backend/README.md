@@ -3,6 +3,8 @@ DB_HOST = "localhost"
 DATABASE = "mediahub"
 DB_USER = "root"
 JWT_SECRET = "secret"
+UPLOAD_DIR_NAME = "/uploads"
+MAX_FILE_SIZE = "2097152"
 
 -- CREATE DATABASE
 CREATE DATABASE IF NOT EXISTS mediahub

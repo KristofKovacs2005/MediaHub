@@ -1,6 +1,6 @@
 import { Comment } from "./comment";
 
-export function CommentsSection({ comments, itemId, onOpenReviewModal }) {
+export function CommentsSection({ comments, onOpenReviewModal }) {
 	// Format comments date if needed
 	const formatDate = (date) => {
 		if (!date) return "";
@@ -25,7 +25,7 @@ export function CommentsSection({ comments, itemId, onOpenReviewModal }) {
 					<div className="commentsList">
 						{comments.map((comment) => (
 							<Comment
-								key={comment.review_id || Math.random()}
+								key={comment.review_id}
 								commentAuthor={comment.user_name || "Ismeretlen"}
 								commentDate={formatDate(comment.review_date)}
 								commentText={comment.review_text || "Nincs szöveg"}

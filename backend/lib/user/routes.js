@@ -11,5 +11,5 @@ router.get("/users", auths_1.default, usersController_1.getUsers); //moderátor
 router.get("/users/:id", auths_1.default, usersController_1.getUsersById); //moderátor v. könyvtáros
 router.post("/users", usersController_1.insertUser);
 router.post("/users/login", usersController_1.login);
-router.patch("/users/:id", usersController_1.modifyUser); //moderátor
+router.patch("/users/:id", auths_1.default, usersController_1.modifyUser); //moderátor
 exports.default = router;
