@@ -111,6 +111,34 @@ export async function getReviewsOfItem(request:Request, response:Response) {
     }
 }
 
+export async function getTagsOfItem(request:Request, response:Response) {
+    
+    let id:number = parseInt(request.params.id)
+    if (isNaN(id)) {
+        response.status(400).send({message:"Bad request"})
+        return;
+    }
+    
+    const connection = await mysql.createConnection(config.database)
+    try {
+        const [results] = await connection.query(
+                `SELECT tag.t_id, tag.t_name
+                from tag
+                inner join item_tag on tag.t_id = item_tag.t_id
+                inner join items on item_tag.i_id = items.i_id
+                WHERE items.i_id = ?;`, [id]
+        ) as Array<any>
+        if (results.affectedRows == 0) {
+            response.status(404).send({message:"Item not found"})
+            return
+        }
+        response.status(200).send(results)
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
 export async function deleteItem(request:any, response:Response) {
     if (request.user.status != 4) {
         response.status(401).send({message:"bad status"})
