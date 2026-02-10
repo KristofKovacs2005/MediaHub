@@ -1,6 +1,6 @@
 import { tokenLoader } from "../../../util/auth";
 
-export default async function postReview(itemId, rating, commentText, onSuccess) {
+export default async function postReview(itemId, stars, comment, onSuccess) {
 	try {
 		const token = tokenLoader();
 		if (!token) {
@@ -9,11 +9,11 @@ export default async function postReview(itemId, rating, commentText, onSuccess)
 		}
 
 		const payload = {
-			item_id: itemId,
-			review_rating: rating,
-			review_text: commentText || "",
+			i_id: itemId,
+			stars: stars,
+			comment: comment || "" || null || undefined, // ensure it's a string or null, not empty string
 		};
-
+		console.log("Submitting review with payload:", payload);
 		const response = await fetch("http://localhost:3000/reviews", {
 			method: "POST",
 			headers: {

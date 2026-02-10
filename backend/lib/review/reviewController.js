@@ -79,15 +79,15 @@ function insertReview(request, response) {
             response.status(401).send({ message: "bad status" });
         }
         let review = new review_1.default(request.body);
-        if (!review.i_id || !review.u_id || !review.flagged || !review.stars) {
+        if (!review.i_id || !review.stars) {
             return response.status(400).send({ error: "Missing data" });
         }
-        if (review.i_id == null || review.u_id == null || review.flagged == null || review.stars == null) {
+        if (review.i_id == null || review.stars == null) {
             return response.status(400).send({ error: "Missing data" });
         }
         const connection = yield promise_1.default.createConnection(config_1.default.database);
         try {
-            const [results] = yield connection.query("insert into reviews values (null, ?, ?, ?, ?, ?)", [review.i_id, review.u_id, review.flagged, review.stars, review.comment]);
+            const [results] = yield connection.query("insert into reviews values (null, ?, ?, ?, ?, ?)", [review.i_id, request.user.id, false, review.stars, review.comment]);
             if (results.affectedRows > 0) {
                 response.status(201).send({ message: "Created" });
                 return;

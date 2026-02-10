@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getItem = getItem;
 exports.getOneItem = getOneItem;
 exports.getReviewsOfItem = getReviewsOfItem;
+exports.getTagsOfItem = getTagsOfItem;
 exports.deleteItem = deleteItem;
 exports.insertItem = insertItem;
 exports.modifyItem = modifyItem;
@@ -39,7 +40,7 @@ function getItem(request, response) {
         }
         if (name) {
             sql = sql + "items.i_name LIKE ? ";
-            values.push(name.toString());
+            values.push("%" + name + "%");
         }
         if (name && tags) {
             sql = sql + "AND ";
@@ -51,11 +52,12 @@ function getItem(request, response) {
                 if (i != 0) {
                     sql = sql + "AND ";
                 }
-                sql = sql + "tagek like ?";
+                sql = sql + " tagek like ? ";
                 values.push("%" + tagList[i].toString() + "%");
             }
         }
         sql = sql + ";";
+        console.log(sql);
         const connection = yield promise_1.default.createConnection(config_1.default.database);
         try {
             const [results] = yield connection.query(sql, values);
@@ -104,6 +106,31 @@ function getReviewsOfItem(request, response) {
                 FROM reviews 
                 INNER JOIN items ON reviews.i_id = items.i_id 
                 INNER JOIN users ON reviews.u_id = users.u_id
+                WHERE items.i_id = ?;`, [id]);
+            if (results.affectedRows == 0) {
+                response.status(404).send({ message: "Item not found" });
+                return;
+            }
+            response.status(200).send(results);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+function getTagsOfItem(request, response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let id = parseInt(request.params.id);
+        if (isNaN(id)) {
+            response.status(400).send({ message: "Bad request" });
+            return;
+        }
+        const connection = yield promise_1.default.createConnection(config_1.default.database);
+        try {
+            const [results] = yield connection.query(`SELECT tag.t_id, tag.t_name
+                from tag
+                inner join item_tag on tag.t_id = item_tag.t_id
+                inner join items on item_tag.i_id = items.i_id
                 WHERE items.i_id = ?;`, [id]);
             if (results.affectedRows == 0) {
                 response.status(404).send({ message: "Item not found" });

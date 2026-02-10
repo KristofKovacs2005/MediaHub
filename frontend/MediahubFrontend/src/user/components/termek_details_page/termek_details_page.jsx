@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { LoadThisItem } from "./load_this_item_function";
+import { useLoadThisItem } from "./load_this_item_function";
 import { TermekDetails } from "./termek_details";
 import { CommentsSection } from "./commentsSection";
 import { Footer } from "../footer/footer";
@@ -11,7 +11,7 @@ import "./termek_details_page.css";
 
 export default function TermekDetailsPage() {
 	const { id } = useParams(); // Get item_id from route parameter
-	const { item, comments, tags, loading, error } = LoadThisItem({ id });
+	const { item, comments, tags, loading, error } = useLoadThisItem({ id });
 	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
 	// Loading state

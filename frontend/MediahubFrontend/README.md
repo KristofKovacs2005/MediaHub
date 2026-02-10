@@ -1,8 +1,8 @@
 # 📚 Mediahub Webalkalmazás – Feladatok/Célok
 
 ## 1. Külön termékek weblapja
-- A weblap betölti a könyv képét, vagy annak hiányában egy pótló képet
-- A weblap betölti a könyvhöz tartozó véleményeket sablon alapján
+- A weblap betölti a könyv képét, vagy annak hiányában egy pótló képet ✅
+- A weblap betölti a könyvhöz tartozó véleményeket sablon alapján ✅
 - A termék kölcsönözhető a weblapon
 - A vélemények szabálysértés esetén bejelenthetők
 - Új vélemény írása a weblapon

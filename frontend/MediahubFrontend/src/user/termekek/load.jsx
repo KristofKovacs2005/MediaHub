@@ -1,3 +1,5 @@
+import { decodeBuffer } from "../util/decoder";
+
 export default async function LoadItems({ name, tags, setLoading, setError, setItems } = {}) {
     const base = "http://localhost:3000/items";// Base URL for fetching items
     const sp = new URLSearchParams();// Initialize URLSearchParams to build query string
@@ -22,14 +24,10 @@ export default async function LoadItems({ name, tags, setLoading, setError, setI
         const raw = Array.isArray(data) ? data : [];// Ensure data is an array
 
         // Normalize i_description field
-
-        const normalized = raw.map((it) => {
-            const desc =
-                typeof it?.i_description === "object" && it?.i_description?.data
-                    ? String.fromCharCode(...it.i_description.data)
-                    : it?.i_description || "";
-            return { ...it, i_description: desc };
-        });
+        const normalized = raw.map(item => ({
+            ...item,
+            i_description: item.i_description ? decodeBuffer(item.i_description) : ""
+        }));
 
         setItems(normalized);
     } catch (err) {

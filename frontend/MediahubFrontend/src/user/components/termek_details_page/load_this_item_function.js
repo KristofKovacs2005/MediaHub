@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { tokenLoader } from "../../util/auth";
+import { decodeBuffer } from "../../util/decoder";
 
-export function LoadThisItem({ id }) {
+export function useLoadThisItem({ id }) {
 	const [item, setItem] = useState(null);
 	const [comments, setComments] = useState([]); // <-- new: comments for this item
 	const [tags, setTags] = useState([]); // best-effort tags for this item
@@ -15,23 +16,33 @@ export function LoadThisItem({ id }) {
 				setLoading(true);
 
 				// fetch item
-				const itemRes = await fetch(`http://localhost:3000/items/${id}`, {
+				const itemRes = await fetch(`http://localhost:3000/item/${id}`, {
 					headers: { "x-access-token": token }
 				});
 				if (!itemRes.ok) throw new Error("Nem sikerült lekérni az elemet.");
 				const itemData = await itemRes.json();
 				const itemObj = Array.isArray(itemData) ? itemData[0] : itemData;
-				setItem(itemObj);
+				const normalizedItem = {
+					...itemObj,
+					i_description: decodeBuffer(itemObj?.i_description)
+				};
+
+				setItem(normalizedItem);
 
 				// fetch reviews for this item using the item-specific endpoint (backend has getReviewsOfItem)
 				let reviews = [];
 				try {
-					const reviewsRes = await fetch(`http://localhost:3000/items/${id}/reviews`, {
+					const reviewsRes = await fetch(`http://localhost:3000/item/${id}/reviews`, {
 						headers: { "x-access-token": token }
 					});
+					;
 					if (reviewsRes.ok) {
 						const reviewsData = await reviewsRes.json();
 						reviews = Array.isArray(reviewsData) ? reviewsData : [];
+						reviews = reviews.map(r => ({
+							...r,
+							comment: decodeBuffer(r?.comment)
+						}));
 					}
 				} catch (e) {
 					// non-fatal: keep comments empty
@@ -42,7 +53,7 @@ export function LoadThisItem({ id }) {
 				// best-effort: try to fetch tags for this item from a possible endpoint
 				let foundTags = [];
 				try {
-					const tagsRes = await fetch(`http://localhost:3000/items/${id}/tags`, {
+					const tagsRes = await fetch(`http://localhost:3000/item/${id}/tags`, {
 						headers: { "x-access-token": tokenLoader() }
 					});
 					if (tagsRes.ok) {

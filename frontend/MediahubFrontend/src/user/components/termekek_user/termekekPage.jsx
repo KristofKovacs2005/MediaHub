@@ -2,7 +2,6 @@ import { renderNavbar } from "../navbar/renderNavbar";
 import TermekekUser from "./termekLista_User";
 import "./termekek.css";
 import { Footer } from "../footer/footer";
-import { Outlet } from "react-router-dom";
 
 export default function TermekekPage() {
     return (
@@ -12,7 +11,6 @@ export default function TermekekPage() {
                 <TermekekUser />
             </div>
             <Footer />
-            <Outlet />
         </div>
     );
 }

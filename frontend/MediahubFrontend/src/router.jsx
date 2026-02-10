@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
         loader: checkAuthLoader,
     },
     {
-        path: "/termekek:id",
+        path: "/termekek/:id",
         element: <TermekDetailsPage />,
         errorElement: <ErrorPage />,
         loader: checkAuthLoader,

@@ -3,13 +3,13 @@ import "../modal.css";
 import postReview from "./postReview";
 
 export default function NewCommentModal({ isClose, itemId }) {
-	const [rating, setRating] = useState(5);
+	const [stars, setStars] = useState(5);
 	const [comment, setComment] = useState("");
-	const [hoverRating, setHoverRating] = useState(0);
+	const [hoverStars, setHoverStars] = useState(0);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		postReview(itemId, rating, comment, isClose);
+		postReview(itemId, stars, comment, isClose);
 	};
 
 	return (
@@ -23,15 +23,15 @@ export default function NewCommentModal({ isClose, itemId }) {
 						<button
 							key={star}
 							type="button"
-							className={`star ${star <= (hoverRating || rating) ? 'active' : ''}`}
-							onClick={() => setRating(star)}
-							onMouseEnter={() => setHoverRating(star)}
-							onMouseLeave={() => setHoverRating(0)}
+							className={`star ${star <= (hoverStars || stars) ? 'active' : ''}`}
+							onClick={() => setStars(star)}
+							onMouseEnter={() => setHoverStars(star)}
+							onMouseLeave={() => setHoverStars(0)}
 						>
 							★
 						</button>
 					))}
-					<span className="ratingText">{rating}/5</span>
+					<span className="ratingText">{stars}/5</span>
 				</div>
 
 				<h5>Hozzászólás (nem kötelező)</h5>

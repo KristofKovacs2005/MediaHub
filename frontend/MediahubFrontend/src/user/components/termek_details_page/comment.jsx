@@ -7,7 +7,16 @@ export function Comment({ commentAuthor, commentDate, commentText, commentRating
             </div>
             <div className="commentBody">
                 <p>{commentText}</p>
-                <span className="commentRating">Értékelés: {commentRating}/5</span>
+                <div className="commentStars">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <span
+                            key={star}
+                            className={`star ${star <= commentRating ? "active" : ""}`}
+                        >
+                            ★
+                        </span>
+                    ))}
+                </div>
             </div>
         </div>
     );

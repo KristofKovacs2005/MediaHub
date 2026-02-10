@@ -20,6 +20,17 @@
     transition: box-shadow 120ms ease, border-color 120ms ease;
 }
 
+.termekekPageMainDiv {
+    min-height: 100vh;        /* Teljes viewport magasság */
+    display: flex;            /* Flex layout */
+    flex-direction: column;   /* Függőleges elrendezés */
+}
+
+.termekekPageContent {
+    margin-top: 64px;         /* same height as navbar */
+    flex: 1;                  /* Kitölti a maradék helyet a footerig */
+}
+
 .filter-input:focus{
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(100,108,255,0.06);

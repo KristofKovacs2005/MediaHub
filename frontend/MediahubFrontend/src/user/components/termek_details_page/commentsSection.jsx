@@ -25,11 +25,11 @@ export function CommentsSection({ comments, onOpenReviewModal }) {
 					<div className="commentsList">
 						{comments.map((comment) => (
 							<Comment
-								key={comment.review_id}
-								commentAuthor={comment.user_name || "Ismeretlen"}
+								key={comment.r_id}
+								commentAuthor={comment.username || "Ismeretlen"}
 								commentDate={formatDate(comment.review_date)}
-								commentText={comment.review_text || "Nincs szöveg"}
-								commentRating={comment.review_rating || 0}
+								commentText={comment.comment || "Nincs szöveg"}
+								commentRating={comment.stars || 0}
 							/>
 						))}
 					</div>

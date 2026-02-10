@@ -6,22 +6,22 @@ export function TermekDetails({ item, tags }) {
 					{/* Image Column */}
 					<div className="col-lg-4 col-md-5 d-flex justify-content-center">
 						<img 
-							src={item.item_image || "/default-image.png"} 
-							alt={item.item_name} 
+							src={"http://localhost:3000" + (item.img_url || "/uploads/images.jpeg")} 
+							alt={item.i_name} 
 							className="detailsImage img-fluid"
 						/>
 					</div>
 
 					{/* Details Column */}
 					<div className="col-lg-8 col-md-7">
-						<h1 className="detailsTitle mb-3">{item.item_name || "Nincs cím"}</h1>
+						<h1 className="detailsTitle mb-3">{item.i_name || "Nincs cím"}</h1>
 
 						<p className="detailsCreator mb-2">
-							<strong>Szerző:</strong> {item.owner_name || "Ismeretlen"}
+							<strong>Szerző:</strong> {item.author || "Ismeretlen"}
 						</p>
 
 						<p className="detailsDescription mb-3">
-							{item.item_description || "Nincs leírás"}
+							{item.i_description || "Nincs leírás"}
 						</p>
 
 						{tags && tags.length > 0 && (
