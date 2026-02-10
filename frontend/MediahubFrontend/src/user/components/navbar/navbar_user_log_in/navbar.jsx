@@ -1,9 +1,11 @@
 import "./navbar.css";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Navbar_User_Log_In() {
   // Read username from localStorage
   const username = localStorage.getItem("username") || "";
+
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     // Clear token and user info
@@ -14,7 +16,7 @@ export function Navbar_User_Log_In() {
       window.location.reload();
       return;
     }
-    redirect("/"); // Redirect to frontpage
+    navigate("/") // Redirect to frontpage
   };
 
   return (

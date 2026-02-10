@@ -78,7 +78,7 @@ CREATE Table reviews(
     u_id INT,
     flagged BOOLEAN,
     stars INT,
-    comment BLOB
+    comment TEXT
 );
 
 ALTER Table reviews AUTO_INCREMENT = 1;

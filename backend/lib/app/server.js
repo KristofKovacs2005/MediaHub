@@ -3,10 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var app_1 = __importDefault(require("./app"));
-var dotenv_1 = __importDefault(require("dotenv"));
+const app_1 = __importDefault(require("./app"));
+const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-var PORT = process.env.PORT || 3000;
-app_1.default.listen(PORT, function () {
-    console.log("A szerver ".concat(PORT, "-on fut."));
+const PORT = process.env.PORT || 3000;
+app_1.default.listen(PORT, () => {
+    console.log(`A szerver ${PORT}-on fut.`);
 });

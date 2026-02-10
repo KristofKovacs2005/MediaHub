@@ -4,17 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
-var dotenv_1 = __importDefault(require("dotenv"));
-var path_1 = __importDefault(require("path"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
-var DBConfig = /** @class */ (function () {
-    function DBConfig() {
+class DBConfig {
+    constructor() {
         return { host: process.env.DB_HOST, user: process.env.DB_USER, database: process.env.DATABASE };
     }
-    return DBConfig;
-}());
+}
 //password:process.env.DB_PASS,
-var config = {
+const config = {
     jwtSecret: process.env.JWT_SECRET,
     database: new DBConfig(),
     maxSize: parseInt((_a = process.env.MAX_FILE_SIZE) !== null && _a !== void 0 ? _a : "2097152"),

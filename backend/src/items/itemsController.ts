@@ -8,6 +8,8 @@ export async function getItem(request: Request, response: Response) {
 
     const { name, tags } = request.query;
 
+    
+
     let sql = "SELECT items.i_id, items.i_name, items.author, items.i_description, items.img_url ";
     let values = [];
     if (tags) {
@@ -22,7 +24,7 @@ export async function getItem(request: Request, response: Response) {
     }
     if (name) {
         sql = sql + "items.i_name LIKE ? "
-        values.push(name.toString())
+        values.push( "%"+ name + "%")
     }
     if (name && tags) {
         sql = sql + "AND "
@@ -34,12 +36,12 @@ export async function getItem(request: Request, response: Response) {
             if (i != 0) {
                 sql = sql + "AND "
             }
-            sql = sql + "tagek like ?";
+            sql = sql + " tagek like ? ";
             values.push("%" + tagList[i].toString() + "%")
         }
     }
     sql = sql + ";"
-
+    console.log(sql)
 
     const connection = await mysql.createConnection(config.database);
     try {

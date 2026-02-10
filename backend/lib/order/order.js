@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Order = /** @class */ (function () {
-    function Order(init) {
+class Order {
+    constructor(init) {
         this.o_id = init.o_id;
         this.s_id = init.s_id;
         this.u_id = init.u_id;
@@ -9,6 +9,5 @@ var Order = /** @class */ (function () {
         this.date = init.date;
         this.return_date = init.return_date;
     }
-    return Order;
-}());
+}
 exports.default = Order;
