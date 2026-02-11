@@ -2,12 +2,12 @@ import { tokenLoader } from "../../../util/auth";
 
 export default async function postReview(itemId, stars, comment, onSuccess) {
 	try {
-		const token = tokenLoader();
+		const token = tokenLoader()
 		if (!token) {
 			alert("Te nem vagy bejelentkezve!");
 			return;
 		}
-
+		console.log(token)
 		const payload = {
 			i_id: itemId,
 			stars: stars,
