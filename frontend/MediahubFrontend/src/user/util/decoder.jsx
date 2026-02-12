@@ -1,5 +1,9 @@
-
-//This file is used to decode Buffer objects received from the backend into strings for display in the frontend.
+/**
+ * Ennek a functionek a feladata hogy a buffer tipusú tömb szövegeket UTF-8 szöveggé alakítsa
+ * Paramétere az maga a buffer tömb
+ * A function megnézi hogy esetleg a megadott érték az mégis string amitől vissza adja a megadott értéket
+ * Ha a megadott buffer igenis objektum, vagy tömb akkor a bináris data-kat alakítja Uint8Array-re amit dekódol a textdecoder utf-8 text formára
+ */
 export function decodeBuffer(value) {
 	if (
 		value &&

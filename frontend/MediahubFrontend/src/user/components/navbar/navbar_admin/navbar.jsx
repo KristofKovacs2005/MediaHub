@@ -2,38 +2,38 @@ import "./navbar.css";
 import { useNavigate, Link } from "react-router-dom";
 
 export function Navbar_Admin() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    // Read username from localStorage
-    const username = localStorage.getItem('username') || '';
+  // Read username from localStorage
+  const username = localStorage.getItem('username') || '';
 
-    const handleLogout = () => {
-        // Clear token and user info
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('username');
-        localStorage.removeItem('status');
-        navigate("/"); // Redirect to frontpage
-    };
+  const handleLogout = () => {
+    // Clear token and user info
+    localStorage.clear()
+    navigate("/"); // Redirect to frontpage
+  };
 
-    return (
-        <nav className="appNavbar">
-            <section className="navbarSection1">
-                <h3>MediaHub</h3>
-            </section>
+  return (
+    <nav className="appNavbar">
+      <section className="navbarSection1">
+        <Link to="/" className="navLink">
+          <h3>MediaHub</h3>
+        </Link>
+      </section>
 
-            <section className="navbarSection2">
-                {/* Links for logged-in user */}
-                <Link to="/termekek" className="navLink">Termékek</Link>
-                <Link to="/termek_details" className="navLink">Új termék</Link>
-                <Link to="/rendelesek" className="navLink">Kölcsönzések</Link>
-                <Link to="/felhasznalok" className="navLink">Felhasználók</Link>
+      <section className="navbarSection2">
+        {/* Links for logged-in user */}
+        <Link to="/termekek" className="navLink">Termékek</Link>
+        <Link to="/termek_details" className="navLink">Termékek kezelése</Link>
+        <Link to="/rendelesek" className="navLink">Kölcsönzések</Link>
+        <Link to="/bejelentesek" className="navLink">Bejelentések</Link>
 
-                {/* User profile */}
-                <div className="dropdown userProfile">
+        {/* User profile */}
+        <div className="dropdown userProfile">
 
-            <p className="dropdown-toggle" data-bs-toggle="dropdown"  data-bs-offset="10,20">
-              {username || "Profil"}{" "}
-            </p>
+          <p className="dropdown-toggle" data-bs-toggle="dropdown" data-bs-offset="10,20">
+            {username || "Profil"}{" "}
+          </p>
           <ul className="dropdown-menu" data-bs-theme="dark">
             <li>
               <button
@@ -45,7 +45,7 @@ export function Navbar_Admin() {
             </li>
           </ul>
         </div>
-            </section>
-        </nav>
-    );
+      </section>
+    </nav>
+  );
 }

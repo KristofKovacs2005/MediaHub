@@ -1,0 +1,82 @@
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* full viewport height */
+}
+
+.page-content {
+    flex: 1; /* take remaining space between navbar and footer */
+    padding: 20px;
+    background-color: #f9f0d9; /* light background like your screenshot */
+}
+
+.items-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Container */
+.functional_cell-container {
+    padding: 2rem;
+}
+
+/* Table */
+
+.functional_cell-table {
+    width: 1500px;
+}
+
+/* Table cells */
+.functional_cell-cell {
+    border: 1px solid #ddd;
+    padding: 8px;
+    height: 100px;
+}
+
+/* Table row (optional hover effect) */
+.functional_cell-row:hover {
+    background-color: #f9f9f9;
+}
+
+/* Buttons */
+.functional_cell-button {
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.functional_cell-button-danger {
+    background-color: #d32f2f;
+    color: #fff;
+}
+
+.functional_cell-button-primary {
+    background-color: #1976d2;
+    color: #fff;
+}
+
+/* Icon inside button */
+.functional_cell-icon {
+    width: 16px;
+}
+
+/* Actions cell */
+.functional_cell-actions {
+    position: relative;
+}
+
+/* Modal/dropdown */
+.functional_cell-modal {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 10;
+    display: flex;
+    gap: 5px;
+}

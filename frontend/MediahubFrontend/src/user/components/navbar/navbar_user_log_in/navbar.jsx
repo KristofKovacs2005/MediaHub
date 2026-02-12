@@ -9,9 +9,7 @@ export function Navbar_User_Log_In() {
 
   const handleLogout = () => {
     // Clear token and user info
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("status");
+    localStorage.clear()
     if (window.location.pathname == "/") {
       window.location.reload();
       return;

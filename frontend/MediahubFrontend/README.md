@@ -5,7 +5,7 @@
 - A weblap betölti a könyvhöz tartozó véleményeket sablon alapján ✅
 - A termék kölcsönözhető a weblapon
 - A vélemények szabálysértés esetén bejelenthetők
-- Új vélemény írása a weblapon
+- Új vélemény írása a weblapon ✅
 
 ## 2. Modal
 - Kölcsönzéshez szükséges modal létrehozása

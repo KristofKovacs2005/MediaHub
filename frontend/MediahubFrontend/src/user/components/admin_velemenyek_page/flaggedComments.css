@@ -1,0 +1,85 @@
+/* Container */
+.flagged_cell-container {
+    padding: 2rem;
+}
+
+/* Table */
+
+.flagged_cell-table {
+    width: 1500px;
+}
+
+/* Table cells */
+.flagged_cell-cell {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+/* Table row (optional hover effect) */
+.flagged_cell-row:hover {
+    background-color: #f9f9f9;
+}
+
+/* Buttons */
+.flagged_cell-button {
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.flagged_cell-button-danger {
+    background-color: #d32f2f;
+    color: #fff;
+}
+
+.flagged_cell-button-primary {
+    background-color: #1976d2;
+    color: #fff;
+}
+
+/* Icon inside button */
+.flagged_cell-icon {
+    width: 16px;
+}
+
+/* Actions cell */
+.flagged_cell-actions {
+    position: relative;
+}
+
+/* Modal/dropdown */
+.flagged_cell-modal {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 10;
+    display: flex;
+    gap: 5px;
+}
+
+.starRating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.star {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 0;
+}
+
+.star.active {
+    color: #ffc107;
+}

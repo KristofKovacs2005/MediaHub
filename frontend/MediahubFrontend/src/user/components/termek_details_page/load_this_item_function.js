@@ -9,7 +9,7 @@ export function useLoadThisItem({ id }) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const token = localStorage.getItem("authToken"); // get token for auth
-
+	
 	useEffect(() => {
 		async function loadItemAndComments() {
 			try {

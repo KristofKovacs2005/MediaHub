@@ -24,6 +24,13 @@ html, body {
 }
 
 
+.commentReport {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	font-size: inherit;
+}
 
 .logo {
   height: 6em;

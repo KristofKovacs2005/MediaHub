@@ -40,6 +40,9 @@ export const handleLogIn = async (event) => {
             if (form && typeof form.reset === 'function') form.reset();
             document.dispatchEvent(new CustomEvent('user-loged-in', { detail: { email, token: json.token } }));
             alert(`Üdvözöljük a Mediahubon ${email}`);
+            const expiration = new Date();
+            expiration.setHours(expiration.getHours() + 1);
+            localStorage.setItem('expiration', expiration.toISOString());
             window.location.reload();
             return;
         }
