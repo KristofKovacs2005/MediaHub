@@ -2,11 +2,12 @@ import dotenv from "dotenv"
 import multer from "multer"
 import util from "util"
 import config from "../config/config"
+import path from "path"
 dotenv.config()
 
 const storage = multer.diskStorage({
     destination: (_req,_file,cb) => {
-        cb(null,config.baseDir + config.uploadDir)
+        cb(null, path.join(config.baseDir, config.uploadDir))
     }
 })
 

@@ -3,7 +3,8 @@ FROM node:20
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm i
+
+RUN npm install --ignore-scripts
 
 COPY . .
 

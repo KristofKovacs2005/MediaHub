@@ -1,0 +1,64 @@
+services:
+  backend:
+    build: ./backend
+    container_name: mediahub-backend
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_USER: mediahub
+      DB_PASSWORD: jelszo
+      DATABASE: mediahub
+      JWT_SECRET: secret
+      UPLOAD_DIR_NAME: /uploads
+      MAX_FILE_SIZE: "2097152"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend/uploads:/app/uploads
+    networks:
+      - mediahub-net
+
+  frontend:
+    build: ./frontend/MediahubFrontend
+    container_name: mediahub-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:3000
+    depends_on:
+      - backend
+    networks:
+      - mediahub-net
+
+  db:
+    image: mysql:8.0
+    container_name: mediahub-db
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_hungarian_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mediahub
+      MYSQL_USER: mediahub
+      MYSQL_PASSWORD: jelszo
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db-data:/var/lib/mysql
+    networks:
+      - mediahub-net
+
+networks:
+  mediahub-net:
+    driver: bridge
+
+volumes:
+  db-data:
