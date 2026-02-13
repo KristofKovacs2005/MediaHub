@@ -61,7 +61,7 @@ export async function insertReview(request: any, response: Response) {
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
     }
-    if (request.user.status != 1) {
+    if (request.user.status == 3) {
         response.status(401).send({message:"bad status"})
     }
 

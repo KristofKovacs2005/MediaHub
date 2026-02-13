@@ -140,7 +140,7 @@ export async function getTagsOfItem(request:Request, response:Response) {
 }
 
 export async function deleteItem(request:any, response:Response) {
-    if (request.user.status != 4) {
+    if (request.user.status < 4) {
         response.status(401).send({message:"bad status"})
     }
     let id:number = parseInt(request.params.id)
@@ -177,7 +177,7 @@ export async function insertItem(request: any, response: Response) {
     if (!request.file) {
         return response.status(400).send({message:"No picture found"})
     }
-    if (request.user.status != 4) {
+    if (request.user.status < 4) {
         return response.status(401).send({message:"bad status"})
     }
     
@@ -232,7 +232,7 @@ export async function modifyItem(request:any, response:Response) {
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
     }
-    if (request.user.status != 4) {
+    if (request.user.status < 4) {
         response.status(401).send({message:"bad status"})
     }
     // let item:any = new Items(request.body)

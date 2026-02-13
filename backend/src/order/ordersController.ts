@@ -5,7 +5,7 @@ import mysql from "mysql2/promise";
 
 export async function getOrders(request: any, response: Response) {
     const connection = await mysql.createConnection(config.database);
-    if (request.user.status != 4) {
+    if (request.user.status < 4) {
         response.status(401).send({message:"bad status"})
     }
     try {
@@ -20,7 +20,7 @@ export async function getOrders(request: any, response: Response) {
 }
 export async function getUserOrders(request: any, response: Response) {
     const connection = await mysql.createConnection(config.database);
-    if (request.user.status != 1) {
+    if (request.user.status == 3) {
         response.status(401).send({message:"bad status"})
     }
     try {
@@ -38,7 +38,7 @@ export async function insertOrders(request: any, response: Response) {
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
     }
-    if (request.user.status != 1) {
+    if (request.user.status == 3) {
         response.status(401).send({message:"bad status"})
     }
     let order:Order = new Order(request.body);
@@ -74,7 +74,7 @@ export async function modifyOrder(request: any, response: Response) {
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
     }
-    if (request.user.status != 4) {
+    if (request.user.status < 4) {
         response.status(401).send({message:"bad status"})
     }
     let order:any = new Order(request.body)
