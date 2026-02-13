@@ -3,42 +3,46 @@ import { checkStatus, checkAuthAdminLoader } from "../../util/auth";
 import { decodeBuffer } from "../../util/decoder";
 
 
-export function useGetReportedReviews() {
-    const [loading, setLoading] = useState(false);
-    const [report, setReport] = useState([]);
-    const [error, setError] = useState(null);
-    const status = checkStatus();
-    const token = checkAuthAdminLoader();
+export function useModifyOrder(id, orderData) {
+    const [loading, setLoading] = useState(false); // betöltés állapot
+    const [error, setError] = useState(null); // hiba üzenet
+    const [success, setSuccess] = useState(false); // sikeres módosítás jelző
+    const token = checkAuthAdminLoader(); // admin auth token lekérdezése
 
-    useEffect(() => {
-        async function loadReviewsReported() {
-            const url = "http://localhost:3000/reviews/flagged";
-            let reports = [];
-            try {
-                setLoading(true);
+    /**
+     * A rendelés módosítását végző aszinkron függvény
+     */
+    async function modify() {
+        setLoading(true); // kezdődik a betöltés
+        setError(null);   // előző hiba törlése
+        setSuccess(false);// siker jelző nullázása
 
-                const reportRes = await fetch(`${url}`, {
-                    headers: { "x-access-token": token },
-                    method: "GET",
-                });
+        try {
+            // PATCH kérés az API végpont felé
+            const response = await fetch(`http://localhost:3000/orders/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "x-access-token": token,  // auth token
+                    "Content-Type": "application/json", // JSON küldése
+                },
+                body: JSON.stringify(orderData), // módosítandó mezők
+            });
 
-                if (reportRes.ok) {
-                    const reviewsData = await reportRes.json();
-                    reports = Array.isArray(reviewsData) ? reviewsData : [];//biztosra megy hogy a komment/vélemény az egy array
-                    reports = reports.map((r) => ({//végig jár a tömbön
-                        ...r,
-                        comment: decodeBuffer(r?.comment),//a komment/vélemény üzenetét dekodólja
-                    }));
-                }
-            } catch (err) {//elkapott error
-                console.error(err);
-                setError(err.message || String(err));
-            } finally {//loading befejeződött
-                setLoading(false);
+            // ha a válasz nem OK, dobjuk a hibát
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.message || "Hiba a módosítás során");
             }
-            setReport(reports);//a bejelentett üzenetek eltárolása
+
+            // sikeres módosítás
+            setSuccess(true);
+        } catch (err) {
+            console.error(err); // hibalogolás konzolra
+            setError(err.message || String(err)); // hiba tárolása state-be
+        } finally {
+            setLoading(false); // betöltés befejeződött
         }
-        if (status == 5) loadReviewsReported()
-    }, [token, status]);
-    return { report, loading, error };
+    }
+
+    return { modify, loading, error, success };
 }
