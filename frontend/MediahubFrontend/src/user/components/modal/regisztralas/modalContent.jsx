@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../modal.css";
 import postUser from "./postUser";
-import MediaHubTerms from "../EULA/EULA.JSX";
+import MediaHubTerms from "../EULA/eula.jsx";
 import Modal from "../modal.jsx";
 
 export default function ModalContent({isClose}) {

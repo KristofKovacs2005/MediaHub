@@ -7,19 +7,21 @@ interface IItems {
     i_name: string,
     img_url: string,
     i_description: string,
+    amount: number
     reviews: Array<Review>,
     tags: Array<Tag>
 }
-
+ 
 class Items implements IItems {
     i_id: number
     author: string
     i_name: string
     img_url: string
     i_description: string
+    amount: number
     reviews: Review[]
     tags: Tag[]
-
+ 
     constructor(init: IItems) {
         this.i_id = init.i_id
         this.author = init.author
@@ -28,7 +30,7 @@ class Items implements IItems {
         this.i_description = init.i_description
         this.reviews = init.reviews
         this.tags = init.tags
+        this.amount = init.amount
     }
 }
-
 export default Items;

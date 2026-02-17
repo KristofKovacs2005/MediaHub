@@ -56,10 +56,15 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`i_id`, `author`, `i_name`, `img_url`, `i_description`, `amount`) VALUES
-(1, 'teszt', 'dsa', '/uploads/images.jpeg', 'teszt', 2),
-(2, 'Más', 'dsa', '/uploads/images.jpeg', 'ez egy film', 1),
-(6, 'teszt', 'teszt', '/uploads/images.jpeg', 'teszt', 1),
-(7, 'teszt', 'teszt', '/uploads/images.jpeg', 'teszt', 1);
+(1, 'J. D. Salinger', 'Rozsban a fogó', '/uploads/raf.jpg', 'A Rozsban a fogó vagy Zabhegyező (eredeti angol címe: The Catcher in the Rye) J. D. Salinger korszakos regénye, melyet először 1945–1946 között publikáltak a The New Yorker hasábjain folytatásokban, majd 1951-ben jelent meg önálló könyvként.', 2),
+(2, 'Lev Nyikolajevics Tolszoj', 'Iván Iljics halála', '/uploads/iih.jpg', 'Az Ivan Iljics halála Lev Tolsztoj először 1886-ban megjelent nagy sikerű kisregénye. Témája az ember belső küzdelme az elkerülhetetlen halállal egészen a megbékélésig.', 1),
+(3, 'Umberto Eco', 'A rózsa neve', '/uploads/arn.jpg', 'A rózsa neve (Il nome della rosa) Umberto Eco olasz szemiotikaprofesszor első regénye, mely először 1980-ban jelent meg. ', 1),
+(4, 'Robert Merle', 'Majomábécé', '/uploads/mabc.jpg', 'A Majomábécé (Le propre de l’homme) Robert Merle Goncourt-díjas francia író 1989-ben írt regénye. Ez a tudományos tényeken alapuló fikció az ember és az állat, jelen esetben az ember és az egyik főemlős – egy csimpánz – kapcsolatát mutatja be.', 1),
+(5, 'Quentin Tarantino', 'Becstelen brigantyk', '/uploads/bb.jpg', 'A Becstelen brigantyk (Inglourious Basterds) Quentin Tarantino 2009 augusztusában bemutatott, második világháborús filmje, Brad Pitt-tel a főszerepben. A forgatás 2008 októberében kezdődött,[4] többek között Németországban és Franciaországban forgatták.', 1),
+(6, 'Quentin Tarantino', 'Ponyvaregény', '/uploads/pr.jpg', 'A Ponyvaregény (eredeti cím: Pulp Fiction) 1994-ben bemutatott amerikai bűnügyi film Quentin Tarantino rendezésében.', 1),
+(7, 'Christopher Nolan', 'Csillagok között', '/uploads/ck.jpg', 'A Csillagok között (eredeti cím: Interstellar) 2014-ben bemutatott sci-fi film, amely felvonultatja a 21. századi elméleti fizika elképzeléseit a világűrről, a téridőről, valamint felvázolja a zsákutcába jutott emberiség lehetséges jövőjét.', 1),
+(8, 'Francis Ford Coppola', 'A keresztapa', '/uploads/ka.png', 'A Keresztapa (The Godfather) Mario Puzo azonos című regényéből készült 1972-ben bemutatott világhírű filmdráma Francis Ford Coppola rendezésében Marlon Brando, Al Pacino, Robert Duvall és James Caan főszereplésével.', 1),
+(9, '	Frank Darabont', 'A remény rabjai', '/uploads/arr.jpeg', 'A remény rabjai (eredeti cím: The Shawshank Redemption) 1994-ben bemutatott amerikai filmdráma, melyet Frank Darabont írt és rendezett. A forgatókönyv alapjául Stephen King azonos című regénye szolgált.', 1);
 
 -- --------------------------------------------------------
 
@@ -77,15 +82,43 @@ CREATE TABLE `item_tag` (
 --
 
 INSERT INTO `item_tag` (`i_id`, `t_id`) VALUES
-(5, 1),
+(1, 1),
+(1, 7),
+
+(2, 1),
+(2, 5),
+
+(3, 1),
+(3, 5),
+(3, 8),
+(3, 10),
+
+(4, 1),
+(4, 9),
+
+
 (5, 2),
-(5, 3),
-(6, 1),
+(5, 5),
+(5, 6),
+(5, 7),
+(5, 10),
+
 (6, 2),
 (6, 3),
-(7, 4),
-(7, 5),
-(7, 6);
+(6, 6),
+(6, 7),
+(6, 8),
+(6, 10),
+
+(7, 2),
+(7, 9),
+
+(8, 2),
+(8, 8),
+
+(9, 2),
+(9, 8),
+(9, 10);
 
 -- --------------------------------------------------------
 
@@ -147,18 +180,18 @@ CREATE TABLE `reviews` (
   `u_id` int(11) DEFAULT NULL,
   `flagged` tinyint(1) DEFAULT NULL,
   `stars` int(11) DEFAULT NULL,
-  `comment` text DEFAULT NULL
+  `comment` text DEFAULT NULL,
+  `reason` VARCHAR(255) DEFAULT null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
 -- Dumping data for table `reviews`
 --
 
-INSERT INTO `reviews` (`r_id`, `i_id`, `u_id`, `flagged`, `stars`, `comment`) VALUES
-(1, 1, 2, 1, 3, 'A könyv közepes'),
-(2, 1, 1, 0, 5, NULL),
-(3, 2, 2, 0, 4, 'A film jó'),
-(4, 6, 6, 0, 1, 'valami');
+INSERT INTO `reviews` (`r_id`, `i_id`, `u_id`, `flagged`, `stars`, `comment`, `reason`) VALUES
+(1, 2, 2, 1, 3, 'A könyv közepes', "A vélemény rossz."),
+(2, 1, 1, 0, 5, NULL, NULL),
+(3, 6, 2, 1, 4, 'A film jó', "Ez nem igaz");
 
 -- --------------------------------------------------------
 
@@ -202,9 +235,13 @@ INSERT INTO `tag` (`t_id`, `t_name`) VALUES
 (2, 'movie'),
 (3, 'romance'),
 (4, 'horror'),
-(5, 'history'),
+(5, 'historical'),
 (6, 'action'),
-(7, 'comedy');
+(7, 'comedy'),
+(8, 'crime'),
+(9, 'sci-fi'),
+(10, 'thriller'),
+(11, 'fantasy');
 
 -- --------------------------------------------------------
 
@@ -221,6 +258,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
+-- Triggers `users`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_user` BEFORE INSERT ON `users` FOR EACH ROW set new.password = pwd_encrypt(new.password)
+$$
+DELIMITER ;
+
+--
 -- Dumping data for table `users`
 --
 
@@ -231,13 +276,7 @@ INSERT INTO `users` (`u_id`, `username`, `email`, `password`, `status`) VALUES
 (4, 'mod', 'f4@email.com', 'password123', 5),
 (6, 'en', 'en@gmail.com', 'password123', 1);
 
---
--- Triggers `users`
---
-DELIMITER $$
-CREATE TRIGGER `insert_user` BEFORE INSERT ON `users` FOR EACH ROW set new.password = pwd_encrypt(new.password)
-$$
-DELIMITER ;
+
 
 --
 -- Indexes for dumped tables

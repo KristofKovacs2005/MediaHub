@@ -4,7 +4,8 @@ interface IReview {
     u_id: number,
     flagged: number,
     stars: number,
-    comment: string
+    comment: string,
+    reason: string
 }
 
 class Review implements IReview {
@@ -14,6 +15,7 @@ class Review implements IReview {
     flagged: number
     stars: number
     comment: string
+    reason: string
 
     constructor(init:IReview) {
         this.r_id = init.r_id
@@ -22,6 +24,7 @@ class Review implements IReview {
         this.flagged = init.flagged
         this.stars = init.stars
         this.comment = init.comment
+        this.reason = init.reason
     }
 }
 

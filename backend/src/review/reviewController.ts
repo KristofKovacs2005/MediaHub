@@ -75,7 +75,7 @@ export async function insertReview(request: any, response: Response) {
     const connection = await mysql.createConnection(config.database)
     try {
         const [results] = await connection.query(
-            "insert into reviews values (null, ?, ?, ?, ?, ?)", [review.i_id, request.user.id, false, review.stars, review.comment]
+            "insert into reviews values (null, ?, ?, ?, ?, ?, null)", [review.i_id, request.user.id, false, review.stars, review.comment]
         ) as Array<any>
         if (results.affectedRows > 0) {
             response.status(201).send({message:"Created"})
@@ -90,7 +90,7 @@ export async function insertReview(request: any, response: Response) {
 }
 
 export async function modifyReview(request: any, response: Response) {
-    if (request.user.status != 5) {
+    if (request.user.status == 3) {
         response.status(401).send({message:"bad status"})
     }
     let id: number = parseInt(request.params.id)
@@ -101,7 +101,7 @@ export async function modifyReview(request: any, response: Response) {
         response.status(400).send({message:"Bad request"})
     }
     let review: any = new Review(request.body)
-    const allowedFields = [`r_id`, `i_id`, `u_id`, `flagged`, `stars`, `comment`] 
+    const allowedFields = [`r_id`, `i_id`, `u_id`, `flagged`, `stars`, `comment`, `reason`] 
     const keys = Object.keys(request.body).filter(key => allowedFields.includes(key))
     
     if (keys.length === 0 ) {

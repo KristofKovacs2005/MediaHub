@@ -10,7 +10,7 @@ export async function getItem(request: Request, response: Response) {
 
     
 
-    let sql = "SELECT items.i_id, items.i_name, items.author, items.i_description, items.img_url ";
+    let sql = "SELECT items.i_id, items.i_name, items.author, items.i_description, items.img_url, items.amount ";
     let values = [];
     if (tags) {
         sql = sql + ", GROUP_CONCAT(tag.t_name ORDER BY t_name SEPARATOR ', ') AS tagek "
@@ -94,7 +94,7 @@ export async function getReviewsOfItem(request:Request, response:Response) {
     const connection = await mysql.createConnection(config.database)
     try {
         const [results] = await connection.query(
-                `SELECT reviews.comment, reviews.stars, users.username
+                `SELECT reviews.comment, reviews.stars, users.username, reviews.r_id
                 FROM reviews 
                 INNER JOIN items ON reviews.i_id = items.i_id 
                 INNER JOIN users ON reviews.u_id = users.u_id
@@ -166,25 +166,24 @@ export async function deleteItem(request:any, response:Response) {
         console.log(error)
     }
 }
-
 export async function insertItem(request: any, response: Response) {
-    
+   
     await uploadMiddleware(request, response)
-
+ 
     if (!request.body) {
         return response.status(400).send({message:"Bad request"})
     }
     if (!request.file) {
         return response.status(400).send({message:"No picture found"})
     }
-    if (request.user.status < 4) {
+    if (request.user.status != 4) {
         return response.status(401).send({message:"bad status"})
     }
-    
+   
     let item:Items = new Items(request.body)
-
+ 
     const img_url = "/uploads/" + request.file.filename
-    
+   
     if (item.i_name == "" || !item.i_name || !item.author || item.author == "" || !item.i_description || item.i_description == "") {
         return response.status(400).send({error: "Missing data"})
     }
@@ -192,14 +191,14 @@ export async function insertItem(request: any, response: Response) {
     if (request.body.tags) {
         tags = request.body.tags.split(",")
     }
-    
+    let amount = item.amount || 1
     const connection = await mysql.createConnection(config.database)
     try {
         await connection.query("START TRANSACTION;")
         const [results] = await connection.query(
-            "insert into items values (null, ?, ?, ?, ?)", [item.author, item.i_name, img_url, item.i_description]
+            "insert into items values (null, ?, ?, ?, ?, ?)", [item.author, item.i_name, img_url, item.i_description, amount]
         ) as Array<any>
-        
+       
         for (let i = 0; i < tags.length; i++) {
             let asd: Array<any> = []
             asd.push(results.insertId)
@@ -221,7 +220,7 @@ export async function insertItem(request: any, response: Response) {
     }
     return response.status(400).send({error:"Something went wrong"});
 }
-
+ 
 export async function modifyItem(request:any, response:Response) {
     await uploadMiddleware(request, response)
     let id:number = parseInt(request.params.id)
@@ -232,45 +231,14 @@ export async function modifyItem(request:any, response:Response) {
     if (!request.body) {
         response.status(400).send({message:"Bad request"})
     }
-    if (request.user.status < 4) {
+    if (request.user.status != 4) {
         response.status(401).send({message:"bad status"})
     }
-    // let item:any = new Items(request.body)
-    // const allowedFields = ['author','i_name','img_url','i_description', 'tags'] 
-    // const keys = Object.keys(request.body).filter(key => allowedFields.includes(key))
-    
-    // if (keys.length === 0 ) {
-    //     response.status(400).send({ error: 103, messege: "Nothing to update" })
-    //     return
-    // }
-
-    // let updateString = ""
-    // for (let i = 0; i < keys.length; i++) {
-    //     if (keys[i] != "tags") {
-    //         updateString += keys[i] + " = ?"
-    //     }
-    //     if (keys[i] != keys[keys.length-1] && keys[i] != keys[keys.length-2]) {
-    //         updateString += ", "
-    //     }
-    // }
-
-    // const values = keys.map (key => item[key])
-    // let tags: any
-    // for (let i = 0; i < keys.length; i++) {
-    //     if (keys[i] == "tags") {
-    //         tags = values.pop()
-    //     }
-    // }
-    
-    // values.push(id)
-    // const sql = `update items set ${updateString} where i_id = ?`
-    
-    // if (tags) tags = tags.split(',')
-
+ 
     let update: string[] = []
     let values: any[] = []
     let tags: string[] = []
-    
+   
     if (request.body.i_name) {
         update.push("i_name = ?")
         values.push(request.body.i_name)
@@ -288,6 +256,10 @@ export async function modifyItem(request:any, response:Response) {
         const img_url = "/uploads/" + request.file.filename
         values.push(img_url)
     }
+    if (request.body.amount) {
+        update.push("amount = ?")
+        values.push(request.body.amount)
+    }
     if (request.body.tags) {
         const tagek = request.body.tags.split(',')
         for (let i = 0; i < tagek.length; i++) {
@@ -296,14 +268,14 @@ export async function modifyItem(request:any, response:Response) {
     }
     values.push(id)
     const updateString = update.join(',');
-
+ 
     let sql = `UPDATE items set ${updateString} where i_id = ?;`
-
+ 
     console.log(sql)
     console.log(values)
-
+ 
     const connection = await mysql.createConnection(config.database);
-
+ 
     try {
         await connection.query("START TRANSACTION;")
         const [results] = await connection.query(
@@ -327,8 +299,9 @@ export async function modifyItem(request:any, response:Response) {
             return
         }
         response.status(404).send({message:"Item not found"})
-
+ 
     } catch (err) {
         console.log(err);
     }
 }
+ 
