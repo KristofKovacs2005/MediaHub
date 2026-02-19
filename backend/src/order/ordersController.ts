@@ -33,6 +33,22 @@ export async function getUserOrders(request: any, response: Response) {
         console.log(error);
     }
 }
+
+export async function getAllActiveOrders(request: any, response: Response) {
+    const connection = await mysql.createConnection(config.database);
+    if (request.user.status == 3) {
+        response.status(401).send({message:"bad status"})
+    }
+    try {
+        const [results] = await connection.query(
+            "select * from orders inner join order_status on orders.s_id = order_status.os_id where u_id = ? and (os_name like 'awaiting acceptance' and os_name like 'accepted');", [request.user.id]
+        ) as Array<any>
+        response.status(200).send(results)
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
  
 export async function insertOrders(request: any, response: Response) {
     if (!request.body) {

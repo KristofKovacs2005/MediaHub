@@ -4,7 +4,7 @@ import verifyToken from "../middleware/auths";
 
 const router: Router = Router();
 
-router.get("/items{/:name}{/:tags}", getItem);
+router.get("/items{/:name}{/:tags}{/:author}", getItem);
 router.get("/item/:id", getOneItem)
 router.get("/item/:id/reviews", getReviewsOfItem);
 router.get("/item/:id/tags", getTagsOfItem);

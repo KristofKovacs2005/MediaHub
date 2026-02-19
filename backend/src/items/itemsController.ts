@@ -6,7 +6,7 @@ import { uploadMiddleware } from "../middleware/upload";
 
 export async function getItem(request: Request, response: Response) {
 
-    const { name, tags } = request.query;
+    const { name, tags, author } = request.query;
 
     
 
@@ -40,6 +40,16 @@ export async function getItem(request: Request, response: Response) {
             values.push("%" + tagList[i].toString() + "%")
         }
     }
+
+    if ( (name || tags) && author) {
+        sql = sql + "AND items.author like ?";
+        values.push("%" + author + "%")
+    }
+    else if (author) {
+        sql = sql + "HAVING items.author like ?";
+        values.push("%" + author + "%")
+    }
+
     sql = sql + ";"
     console.log(sql)
 
