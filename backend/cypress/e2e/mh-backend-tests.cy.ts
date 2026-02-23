@@ -142,34 +142,324 @@ describe('GET /items/:id/tags tesztek', () => {
 
 describe('POST /items tesztek', () => {
   let token: string = ""
+  let badToken: string = ""
   beforeEach(() => {
-    cy.request({
-      url:"http://localhost:3000/users/login",
-      method: "POST",
-      body: {
-        email: "f3@email.com",
-        password: "password123"
+    
+    cy.login("f3@email.com", "password123").then(
+      response => {
+        token = response.body.token
       }
-    }).then((response) => {
-      expect(response.status).to.eq(200)
-      token = response.body.token;
-    })
+    )
+    
+    cy.login("f1@email.com", "password123").then(
+      response => {
+        badToken = response.body.token
+      }
+    )
   })
   it("POST /items sikeres létrehozás", () => {
+    cy.fixture("test.jpg", "base64").then((base64) => {
+      const blob = Cypress.Blob.base64StringToBlob(base64, "image/jpg");
+  
+      const formData = new FormData();
+      formData.append("i_name", "Teszt Könyv");
+      formData.append("author", "Teszt író");
+      formData.append("i_description", "Teszt leírás");
+      formData.append("file", blob, "test.jpg");
+      formData.append("tags", "1,2,3");
+  
+      cy.request({
+        method: "POST",
+        url: "http://localhost:3000/items",
+        body: formData,
+        headers: {
+          "x-access-token": token,
+        },
+      }).then((response) => {
+        expect(response.status).to.eq(201)
+      })
+    })
+  })
+
+
+  it("POST /items token nélkül sikertelen", () => {
+    cy.fixture("test.jpg", "base64").then((base64) => {
+      const blob = Cypress.Blob.base64StringToBlob(base64, "image/jpg");
+  
+      const formData = new FormData();
+      formData.append("i_name", "Teszt Könyv");
+      formData.append("author", "Teszt író");
+      formData.append("i_description", "Teszt leírás");
+      formData.append("file", blob, "test.jpg");
+      formData.append("tags", "1,2,3");
+  
+      cy.request({
+        method: "POST",
+        url: "http://localhost:3000/items",
+        body: formData,
+        headers: {
+          "x-access-token": "rossz token",
+        },
+        failOnStatusCode: false
+      }).then((response) => {
+        expect(response.status).to.eq(401)
+      })
+    })
+  })
+
+  it("POST /items nem megfelelő felhasználóval sikertelen", () => {
+    cy.fixture("test.jpg", "base64").then((base64) => {
+      const blob = Cypress.Blob.base64StringToBlob(base64, "image/jpg");
+  
+      const formData = new FormData();
+      formData.append("i_name", "Teszt Könyv");
+      formData.append("author", "Teszt író");
+      formData.append("i_description", "Teszt leírás");
+      formData.append("file", blob, "test.jpg");
+      formData.append("tags", "1,2,3");
+  
+      cy.request({
+        method: "POST",
+        url: "http://localhost:3000/items",
+        body: formData,
+        headers: {
+          "x-access-token": badToken,
+        },
+        failOnStatusCode: false
+      }).then((response) => {
+        expect(response.status).to.eq(401)
+      })
+    })
+  })
+
+  it("POST /items hiányos adatokkal", () => {
+    cy.fixture("test.jpg", "base64").then((base64) => {
+      const blob = Cypress.Blob.base64StringToBlob(base64, "image/jpg");
+      const formData = new FormData();
+      formData.append("i_name", "Teszt Könyv");
+      formData.append("i_description", "Teszt leírás");
+      formData.append("file", blob, "test.jpg");
+
+  
+      cy.request({
+        method: "POST",
+        url: "http://localhost:3000/items",
+        body: formData,
+        headers: {
+          "x-access-token": token,
+        },
+        failOnStatusCode: false
+      }).then((response) => {
+        expect(response.status).to.eq(400)
+      })
+    })
+  })
+
+  it("POST /items kép nélkül", () => {
+    
+
+  
+      cy.request({
+        method: "POST",
+        url: "http://localhost:3000/items",
+        body: {
+          i_name: "ads",
+          i_description: "ads",
+          author: "ads",
+          tags: "1,2,3"
+        },
+        headers: {
+          "x-access-token": token,
+        },
+        failOnStatusCode: false
+      }).then((response) => {
+        expect(response.status).to.eq(400)
+      })
+    })
+  
+  
+})
+
+describe("PATCH /items tesztek", () => {
+  let token: string = ""
+  let badToken: string = ""
+  beforeEach(() => {
+    
+    cy.login("f3@email.com", "password123").then(
+      response => {
+        token = response.body.token
+      }
+    )
+    
+    cy.login("f1@email.com", "password123").then(
+      response => {
+        badToken = response.body.token
+      }
+    )
+  })
+  
+  it("PATCH /items részleges módosítás", () => {
     cy.request({
-      url: "http://localhost:3000/items",
-      method: "POST",
+      url: "http://localhost:3000/items/3",
+      method: "PATCH",
       body: {
-        i_name: "Teszt Könyv",
-        author: "Teszt író",
-        i_description: "Teszt leírás"
+        i_name: "valami",
+        i_description: "más"
       },
       headers: {
         "x-access-token": token
       }
-    }).then( (response) => {
+    }).then((response) => {
       expect(response.status).to.eq(201)
     })
   })
+
+  it("PATCH /items teljes módosítás", () => {
+    cy.fixture("test.jpg", "base64").then((base64) => {
+      const blob = Cypress.Blob.base64StringToBlob(base64, "image/jpg");
+      const formData = new FormData();
+      formData.append("i_name", "Teszt Könyv");
+      formData.append("i_description", "Teszt leírás");
+      formData.append("author", "Teszt leírás");
+      formData.append("amount", "3");
+      formData.append("file", blob, "test.jpg");
+ 
+  
+      cy.request({
+        method: "PATCH",
+        url: "http://localhost:3000/items/4",
+        body: formData,
+        headers: {
+          "x-access-token": token,
+        },
+      }).then((response) => {
+        expect(response.status).to.eq(201)
+      })
+    })
+  
+  })
+
+  it("PATCH /items rossz tokennel", () => {
+    cy.request({
+      url: "http://localhost:3000/items/3",
+      method: "PATCH",
+      body: {
+        i_name: "valami",
+        i_description: "más"
+      },
+      headers: {
+        "x-access-token": "token"
+      },
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.eq(401)
+    })
+  })
+
+  it("PATCH /items rossz felhasználóval", () => {
+    cy.request({
+      url: "http://localhost:3000/items/3",
+      method: "PATCH",
+      body: {
+        i_name: "valami",
+        i_description: "más"
+      },
+      headers: {
+        "x-access-token": badToken
+      },
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.eq(401)
+    })
+  })
+
+  
+
+})
+
+describe("DELETE /items törlések", () => {
+  let token: string = ""
+  let badToken: string = ""
+  beforeEach(() => {
+    
+    cy.login("f3@email.com", "password123").then(
+      response => {
+        token = response.body.token
+      }
+    )
+    
+    cy.login("f1@email.com", "password123").then(
+      response => {
+        badToken = response.body.token
+      }
+    )
+  })
+
+  it("DELETE /items/:id can delete successfully", () => {
+    cy.request({
+      url:`http://localhost:3000/items/5`,
+      method: "DELETE",
+      headers: {
+        "x-access-token": token
+      }
+    }).then(response => {
+      expect(response.status).to.eq(204)
+    })
+  })
+
+  it("DELETE /items/:id wont work with bad token", () => {
+    cy.request({
+      url:`http://localhost:3000/items/5`,
+      method: "DELETE",
+      headers: {
+        "x-access-token": "token"
+      },
+      failOnStatusCode: false
+    }).then(response => {
+      expect(response.status).to.eq(401)
+    })
+  })
+
+  it("DELETE /items/:id wont work with bad user", () => {
+    cy.request({
+      url:`http://localhost:3000/items/5`,
+      method: "DELETE",
+      headers: {
+        "x-access-token": badToken
+      },
+      failOnStatusCode: false
+    }).then(response => {
+      expect(response.status).to.eq(401)
+    })
+  })
+
+  it("DELETE /items/:id wont work with missing id", () => {
+    cy.request({
+      url:`http://localhost:3000/items/-1`,
+      method: "DELETE",
+      headers: {
+        "x-access-token": token
+      },
+      failOnStatusCode: false
+    }).then(response => {
+      expect(response.status).to.eq(404)
+    })
+  })
+
+  it("DELETE /items/:id wont work with bad id", () => {
+    cy.request({
+      url:`http://localhost:3000/items/asd`,
+      method: "DELETE",
+      headers: {
+        "x-access-token": token
+      },
+      failOnStatusCode: false
+    }).then(response => {
+      expect(response.status).to.eq(400)
+    })
+  })
+
+  
   
 })
+

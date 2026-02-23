@@ -12,5 +12,7 @@ export async function getTags(_request: Request, response: Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }

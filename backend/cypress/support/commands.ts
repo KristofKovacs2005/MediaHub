@@ -35,3 +35,14 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add("login", (email: string, password: string) => {
+    return cy.request({
+      method: "POST",
+      url: "http://localhost:3000/users/login",
+      body: {
+        email,
+        password
+      }
+    })
+  })

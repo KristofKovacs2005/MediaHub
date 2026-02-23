@@ -31,6 +31,8 @@ export async function getUserOrders(request: any, response: Response) {
     }
     catch (error) {
         console.log(error);
+    }finally {
+        connection.end()
     }
 }
 
@@ -47,6 +49,8 @@ export async function getAllActiveOrders(request: any, response: Response) {
     }
     catch (error) {
         console.log(error);
+    }finally {
+        connection.end()
     }
 }
  
@@ -86,6 +90,8 @@ export async function insertOrders(request: any, response: Response) {
     catch (error) {
         console.log(error)
         return response.status(400).send(error)
+    }finally {
+        connection.end()
     }
     return;
 }
@@ -141,5 +147,7 @@ export async function modifyOrder(request: any, response: Response) {
  
     } catch (err) {
         console.log(err);
+    }finally {
+        connection.end()
     }
 }

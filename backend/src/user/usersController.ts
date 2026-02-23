@@ -26,6 +26,8 @@ export async function getUsers(request:any, response:Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }
 
@@ -61,6 +63,8 @@ export async function getUsersById(request:any, response:Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }
 
@@ -91,6 +95,8 @@ export async function insertUser(request: Request, response: Response) {
     catch (error) {
         console.log(error)
         response.status(409).send({message:"Valszeg valami konfliktus, gitgud, próbáld újra más adatokkal, ha továbbra sem működik, akkor írj nekem. Remélem ez segít: " + error})
+    }finally {
+        connection.end()
     }
     return;
 }
@@ -120,12 +126,12 @@ export async function login(request: Request, response: Response) {
 
         const token = jwt.sign({username: jobbresults[0].username, email:jobbresults[0].email, id:jobbresults[0].u_id, status:jobbresults[0].status}, config.jwtSecret, {expiresIn: "2h"});
 
-        console.log(jobbresults[0])
-
         return response.status(200).send({token: token, status: jobbresults[0].status, username: jobbresults[0].username});
     }
     catch(error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
     return
     
@@ -172,5 +178,7 @@ export async function modifyUser(request:any, response:Response) {
 
     } catch (err) {
         console.log(err);
+    }finally {
+        connection.end()
     }
 }

@@ -14,6 +14,8 @@ export async function getReviews(_request:Request, response:Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }
 
@@ -30,6 +32,8 @@ export async function getFlaggedReviews(request:any, response:Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }
 
@@ -54,6 +58,8 @@ export async function deleteReviews(request:any, response:Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }
 
@@ -86,6 +92,8 @@ export async function insertReview(request: any, response: Response) {
     catch (error) {
         console.log(error)
         return response.status(400).send(error)
+    }finally {
+        connection.end()
     }
 }
 
@@ -127,5 +135,7 @@ export async function modifyReview(request: any, response: Response) {
 
     } catch (err) {
         console.log(err);
+    }finally {
+        connection.end()
     }
 }

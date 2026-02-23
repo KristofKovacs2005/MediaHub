@@ -69,6 +69,9 @@ export async function getItem(request: Request, response: Response) {
     catch (error) {
         console.log(error)
     }
+    finally {
+        connection.end()
+    }
 }
 
 export async function getOneItem(request: Request, response: Response) {
@@ -90,6 +93,8 @@ export async function getOneItem(request: Request, response: Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }
 
@@ -118,6 +123,8 @@ export async function getReviewsOfItem(request:Request, response:Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }
 
@@ -146,6 +153,8 @@ export async function getTagsOfItem(request:Request, response:Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }
 
@@ -174,6 +183,8 @@ export async function deleteItem(request:any, response:Response) {
     }
     catch (error) {
         console.log(error)
+    }finally {
+        connection.end()
     }
 }
 export async function insertItem(request: any, response: Response) {
@@ -182,6 +193,9 @@ export async function insertItem(request: any, response: Response) {
  
     if (!request.body) {
         return response.status(400).send({message:"Bad request"})
+    }
+    if (!request.file) {
+        return response.status(400).send({message:"No image"})
     }
     if (request.user.status != 4) {
         return response.status(401).send({message:"bad status"})
@@ -232,6 +246,8 @@ export async function insertItem(request: any, response: Response) {
     catch (error) {
         console.log(error)
         return response.status(400).send(error)
+    }finally {
+        connection.end()
     }
     return response.status(400).send({error:"Something went wrong"});
 }
@@ -317,6 +333,8 @@ export async function modifyItem(request:any, response:Response) {
  
     } catch (err) {
         console.log(err);
+    }finally {
+        connection.end()
     }
 }
  
