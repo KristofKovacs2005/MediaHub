@@ -25,14 +25,14 @@ DELIMITER $$
 --
 -- Functions
 --
-CREATE DEFINER=`root`@'%' FUNCTION `login` (`email` VARCHAR(255), `pwd` VARCHAR(100)) RETURNS INT(11) DETERMINISTIC BEGIN
+CREATE FUNCTION `login` (`email` VARCHAR(255), `pwd` VARCHAR(100)) RETURNS INT(11) DETERMINISTIC BEGIN
 DECLARE ok INTEGER;
 SET ok = 0;
 SELECT u_id INTO ok FROM users WHERE users.email = email AND users.password = pwd_encrypt(pwd);
 RETURN ok;
 END$$
 
-CREATE DEFINER=`root`@'%' FUNCTION `pwd_encrypt` (`pwd` VARCHAR(100)) RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_hungarian_ci DETERMINISTIC RETURN SHA2(concat(pwd,'valamivalami'),256)$$
+CREATE FUNCTION `pwd_encrypt` (`pwd` VARCHAR(100)) RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_hungarian_ci DETERMINISTIC RETURN SHA2(concat(pwd,'valamivalami'),256)$$
 
 DELIMITER ;
 
@@ -376,7 +376,7 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`root`@'%' EVENT `daily_date_update_for_order_status_if_late` ON SCHEDULE EVERY 1 DAY STARTS '2025-12-23 23:59:16' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE orders
+CREATE EVENT `daily_date_update_for_order_status_if_late` ON SCHEDULE EVERY 1 DAY STARTS '2025-12-23 23:59:16' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE orders
     SET s_id = 6
     WHERE return_date < CURDATE() AND (s_id != 4 OR s_id != 5)$$
 
