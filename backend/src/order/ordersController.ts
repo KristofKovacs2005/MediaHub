@@ -16,6 +16,8 @@ export async function getOrders(request: any, response: Response) {
     }
     catch (error) {
         console.log(error);
+    } finally {
+        connection.end()
     }
 }
 export async function getUserOrders(request: any, response: Response) {
