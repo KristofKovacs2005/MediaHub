@@ -110,7 +110,7 @@ export async function getReviewsOfItem(request:Request, response:Response) {
                 INNER JOIN users ON reviews.u_id = users.u_id
                 WHERE items.i_id = ?;`, [id]
         ) as Array<any>
-        if (results.affectedRows == 0) {
+        if (results.length == 0) {
             response.status(404).send({message:"Item not found"})
             return
         }
@@ -138,7 +138,7 @@ export async function getTagsOfItem(request:Request, response:Response) {
                 inner join items on item_tag.i_id = items.i_id
                 WHERE items.i_id = ?;`, [id]
         ) as Array<any>
-        if (results.affectedRows == 0) {
+        if (results.length == 0) {
             response.status(404).send({message:"Item not found"})
             return
         }
@@ -183,16 +183,18 @@ export async function insertItem(request: any, response: Response) {
     if (!request.body) {
         return response.status(400).send({message:"Bad request"})
     }
-    if (!request.file) {
-        return response.status(400).send({message:"No picture found"})
-    }
     if (request.user.status != 4) {
         return response.status(401).send({message:"bad status"})
     }
    
     let item:Items = new Items(request.body)
- 
-    const img_url = "/uploads/" + request.file.filename
+    let imgName
+    if (request.file.filename) {
+        imgName = request.file.filename 
+    }
+    imgName = "images.jpeg"
+
+    const img_url = "/uploads/" + imgName
    
     if (item.i_name == "" || !item.i_name || !item.author || item.author == "" || !item.i_description || item.i_description == "") {
         return response.status(400).send({error: "Missing data"})
@@ -200,6 +202,9 @@ export async function insertItem(request: any, response: Response) {
     let tags;
     if (request.body.tags) {
         tags = request.body.tags.split(",")
+    }
+    else {
+        return response.status(400).send("Nincsenek tagek")
     }
     let amount = item.amount || 1
     const connection = await mysql.createConnection(config.database)
@@ -219,7 +224,7 @@ export async function insertItem(request: any, response: Response) {
         }
         await connection.query("COMMIT;")
         if (results.affectedRows > 0) {
-            response.status(201).send({message:"Created"})
+            response.status(201).send({id: results.insertId})
             return
         }
         response.status(400).send({message:"Error, probably some conflict, try with different inputs or whatever"})
