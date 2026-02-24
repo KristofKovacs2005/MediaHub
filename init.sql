@@ -7,6 +7,11 @@
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
+CREATE DATABASE mediahub
+CHARACTER SET utf8mb4 COLLATE utf8mb4_hungarian_ci;
+
+use mediahub;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -64,7 +69,7 @@ INSERT INTO `items` (`i_id`, `author`, `i_name`, `img_url`, `i_description`, `am
 (6, 'Quentin Tarantino', 'Ponyvaregény', '/uploads/pr.jpg', 'A Ponyvaregény (eredeti cím: Pulp Fiction) 1994-ben bemutatott amerikai bűnügyi film Quentin Tarantino rendezésében.', 1),
 (7, 'Christopher Nolan', 'Csillagok között', '/uploads/ck.jpg', 'A Csillagok között (eredeti cím: Interstellar) 2014-ben bemutatott sci-fi film, amely felvonultatja a 21. századi elméleti fizika elképzeléseit a világűrről, a téridőről, valamint felvázolja a zsákutcába jutott emberiség lehetséges jövőjét.', 1),
 (8, 'Francis Ford Coppola', 'A keresztapa', '/uploads/ka.png', 'A Keresztapa (The Godfather) Mario Puzo azonos című regényéből készült 1972-ben bemutatott világhírű filmdráma Francis Ford Coppola rendezésében Marlon Brando, Al Pacino, Robert Duvall és James Caan főszereplésével.', 1),
-(9, '	Frank Darabont', 'A remény rabjai', '/uploads/arr.jpeg', 'A remény rabjai (eredeti cím: The Shawshank Redemption) 1994-ben bemutatott amerikai filmdráma, melyet Frank Darabont írt és rendezett. A forgatókönyv alapjául Stephen King azonos című regénye szolgált.', 1);
+(9, '	Frank Darabont', 'A remény rabjai', '/uploads/arr.jpeg', 'A remény rabjai (eredeti cím: The Shawshank Redemption) 1994-ben bemutatott amerikai filmdráma, melyet Frank Darabont írt és rendezett. A forgatókönyv alapjául Stephen King azonos című regénye szolgált.', 0);
 
 -- --------------------------------------------------------
 
@@ -140,8 +145,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`o_id`, `s_id`, `u_id`, `p_id`, `date`, `return_date`) VALUES
-(1, 1, 1, 0, '2025-11-12', '2026-11-19'),
-(2, 1, 2, 1, '2025-11-13', '2026-11-20'),
+(1, 1, 1, 3, '2025-11-12', '2026-11-19'),
+(2, 5, 2, 1, '2025-11-13', '2026-11-20'),
 (3, 4, 6, 1, '2026-02-11', '2026-02-25'),
 (4, 5, 6, 1, '2026-02-11', '2026-02-25');
 

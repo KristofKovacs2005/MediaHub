@@ -15,9 +15,8 @@ function verifyToken(req:any, res:any, next: any) {
         return next();
     }
     catch (error) {
-        console.log(error)
+        return res.status(401).send("Nem sikerült az autentikáció.")
     }
-    res.status(401).send("Nem sikerült az autentikáció.")
 }
 
 export default verifyToken;
