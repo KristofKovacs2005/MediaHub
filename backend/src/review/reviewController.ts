@@ -78,13 +78,16 @@ export async function insertReview(request: any, response: Response) {
     if (review.i_id == null || review.stars == null) {
         return response.status(400).send({error: "Missing data"})
     }
+    if (review.stars > 5 || review.stars < 1) {
+        return response.status(400).send("Bad stars")
+    }
     const connection = await mysql.createConnection(config.database)
     try {
         const [results] = await connection.query(
             "insert into reviews values (null, ?, ?, ?, ?, ?, null)", [review.i_id, request.user.id, false, review.stars, review.comment]
         ) as Array<any>
         if (results.affectedRows > 0) {
-            response.status(201).send({message:"Created"})
+            response.status(201).send({message:"Created", id: results.insertId})
             return
         }
         return response.status(400).send({message:"Error, probably some conflict, try with different input or whatever"})
@@ -116,7 +119,11 @@ export async function modifyReview(request: any, response: Response) {
         response.status(400).send({ error: 103, messege: "Nothing to update" })
         return
     }
-   
+    if (review.stars) {
+        if (review.stars > 5 || review.stars < 1) {
+            return response.status(400).send("Bad stars")
+        }
+    }
     const updateString = keys.map(key => `${key} = ?`).join(', ')
     const values = keys.map (key => review[key])
     values.push(id)
