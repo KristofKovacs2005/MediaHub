@@ -13,7 +13,12 @@ describe('GET review testek', () => {
 describe("GET /review/flagged tesztek", () => {
   let userToken: string = ""
   let modToken: string = ""
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
+
+
     cy.login("f1@email.com", "password123").then( (response: any) => {
       userToken = response.body.token
     } )
@@ -68,7 +73,12 @@ describe("GET /review/flagged tesztek", () => {
 describe("DELETE /review/:id tesztek", () => {
   let userToken: string = ""
   let modToken: string = ""
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
+
+
     cy.login("f1@email.com", "password123").then( (response: any) => {
       userToken = response.body.token
     } )
@@ -146,7 +156,12 @@ describe("DELETE /review/:id tesztek", () => {
 describe("POST /reviews tesztek", () => {
 
   let modToken: string = ""
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
+
+
 
     cy.login("f4@email.com", "password123").then( (response: any) => {
       modToken = response.body.token
@@ -270,8 +285,10 @@ it("POST /reviews sikertelen rossz token ", () => {
 })
 
 describe("PATCH /reviews tesztek", () => {
-  
   let modToken: string = ""
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
 
     cy.login("f4@email.com", "password123").then( (response: any) => {

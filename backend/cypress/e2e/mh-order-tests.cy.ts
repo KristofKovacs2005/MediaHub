@@ -3,8 +3,13 @@
 describe("GET /orders tesztek", () => {
   let userToken: string = ""
   let libToken: string = ""
-  
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
+
+
+
     cy.login("f1@email.com", "password123").then( (response: any) => {
       userToken = response.body.token
     } )
@@ -57,8 +62,13 @@ describe("GET /orders tesztek", () => {
 describe("GET /order tesztek", () => {
   let userToken: string = ""
   let libToken: string = ""
-  
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
+
+
+
     cy.login("f1@email.com", "password123").then( (response: any) => {
       userToken = response.body.token
     } )
@@ -112,8 +122,13 @@ describe("get /orders/active tesztek", () => {
   let userToken: string = ""
   let libToken: string = ""
   let otherUserToken: string = ""
-  
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
+
+
+
     cy.login("f1@email.com", "password123").then( (response: any) => {
       userToken = response.body.token
     } )
@@ -184,8 +199,13 @@ describe("get /orders/active tesztek", () => {
 describe("POST /orders tesztek", () => {
   let userToken: string = ""
   let libToken: string = ""
-  
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
+
+
+
     cy.login("f1@email.com", "password123").then( (response: any) => {
       userToken = response.body.token
     } )
@@ -344,8 +364,13 @@ describe("POST /orders tesztek", () => {
 describe("PATCH /orders tesztek", () => {
   let userToken: string = ""
   let libToken: string = ""
-  
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
+
+   
+
     cy.login("f1@email.com", "password123").then( (response: any) => {
       userToken = response.body.token
     } )

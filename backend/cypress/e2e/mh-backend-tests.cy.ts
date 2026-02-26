@@ -1,6 +1,9 @@
 /// <reference types="cypress" />
 
 describe('GET /items tesztek', () => {
+  before(() => {
+    cy.task("resetDb");
+  })
   it('GET /items lekéri az összes elemeket és 200-val tér vissza', () => {
     cy.request("http://localhost:3000/items").then( (response) => {
       expect(response.status).to.eq(200)
@@ -57,6 +60,9 @@ describe('GET /items tesztek', () => {
 
 describe('GET /item tesztek', () => {
   
+  before(() => {
+    cy.task("resetDb");
+  })
 
   it('GET /item tud lekérni egy specifikus elemet', () => {
     cy.request("http://localhost:3000/item/1").then( (response) => {
@@ -80,6 +86,11 @@ describe('GET /item tesztek', () => {
 })
 
 describe('GET /item/:id/reviews tesztek', () => {
+
+  before(() => {
+    cy.task("resetDb");
+  })
+
   it('GET /item/:id/reviews helyesen kéri le a review-okat', () => {
     cy.request({
       url:"http://localhost:3000/item/1/reviews"
@@ -110,6 +121,10 @@ describe('GET /item/:id/reviews tesztek', () => {
 })
 
 describe('GET /items/:id/tags tesztek', () => {
+
+  before(() => {
+    cy.task("resetDb");
+  })
 
   it('GET /item/:id/tags helyesen kéri le a tageket', () => {
     cy.request({
@@ -143,8 +158,12 @@ describe('GET /items/:id/tags tesztek', () => {
 describe('POST /items tesztek', () => {
   let token: string = ""
   let badToken: string = ""
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
-    
+
+   
     cy.login("f3@email.com", "password123").then(
       response => {
         token = response.body.token
@@ -281,10 +300,14 @@ describe('POST /items tesztek', () => {
 })
 
 describe("PATCH /items tesztek", () => {
+  before(() => {
+    cy.task("resetDb");
+  })
   let token: string = ""
   let badToken: string = ""
   beforeEach(() => {
-    
+
+
     cy.login("f3@email.com", "password123").then(
       response => {
         token = response.body.token
@@ -380,7 +403,12 @@ describe("PATCH /items tesztek", () => {
 describe("DELETE /items törlések", () => {
   let token: string = ""
   let badToken: string = ""
+  before(() => {
+    cy.task("resetDb");
+  })
   beforeEach(() => {
+
+    
     
     cy.login("f3@email.com", "password123").then(
       response => {

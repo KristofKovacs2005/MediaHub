@@ -7,6 +7,9 @@
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
+
+DROP Database if EXISTS mediahub;
+
 CREATE DATABASE IF NOT EXISTS mediahub
 CHARACTER SET utf8mb4 COLLATE utf8mb4_hungarian_ci;
 
@@ -26,20 +29,18 @@ SET time_zone = "+00:00";
 -- Database: `mediahub`
 --
 
-DELIMITER $$
 --
 -- Functions
 --
-CREATE FUNCTION `login` (`email` VARCHAR(255), `pwd` VARCHAR(100)) RETURNS INT(11) DETERMINISTIC BEGIN
+CREATE FUNCTION IF NOT EXISTS `login` (`email` VARCHAR(255), `pwd` VARCHAR(100)) RETURNS INT(11) DETERMINISTIC BEGIN
 DECLARE ok INTEGER;
 SET ok = 0;
 SELECT u_id INTO ok FROM users WHERE users.email = email AND users.password = pwd_encrypt(pwd);
 RETURN ok;
-END$$
+END;
 
-CREATE FUNCTION `pwd_encrypt` (`pwd` VARCHAR(100)) RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_hungarian_ci DETERMINISTIC RETURN SHA2(concat(pwd,'valamivalami'),256)$$
+CREATE FUNCTION IF NOT EXISTS `pwd_encrypt` (`pwd` VARCHAR(100)) RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_hungarian_ci DETERMINISTIC RETURN SHA2(concat(pwd,'valamivalami'),256);
 
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -47,7 +48,7 @@ DELIMITER ;
 -- Table structure for table `items`
 --
 
-CREATE TABLE `items` (
+CREATE TABLE IF NOT EXISTS `items` (
   `i_id` int(11) NOT NULL,
   `author` varchar(255) DEFAULT NULL,
   `i_name` varchar(255) DEFAULT NULL,
@@ -77,7 +78,7 @@ INSERT INTO `items` (`i_id`, `author`, `i_name`, `img_url`, `i_description`, `am
 -- Table structure for table `item_tag`
 --
 
-CREATE TABLE `item_tag` (
+CREATE TABLE IF NOT EXISTS `item_tag` (
   `i_id` int(11) NOT NULL,
   `t_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
@@ -131,7 +132,7 @@ INSERT INTO `item_tag` (`i_id`, `t_id`) VALUES
 -- Table structure for table `orders`
 --
 
-CREATE TABLE `orders` (
+CREATE TABLE IF NOT EXISTS `orders` (
   `o_id` int(11) NOT NULL,
   `s_id` int(11) NOT NULL,
   `u_id` int(11) NOT NULL,
@@ -156,7 +157,7 @@ INSERT INTO `orders` (`o_id`, `s_id`, `u_id`, `p_id`, `date`, `return_date`) VAL
 -- Table structure for table `order_status`
 --
 
-CREATE TABLE `order_status` (
+CREATE TABLE IF NOT EXISTS `order_status` (
   `os_id` int(11) NOT NULL,
   `os_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
@@ -179,7 +180,7 @@ INSERT INTO `order_status` (`os_id`, `os_name`) VALUES
 -- Table structure for table `reviews`
 --
 
-CREATE TABLE `reviews` (
+CREATE TABLE IF NOT EXISTS `reviews` (
   `r_id` int(11) NOT NULL,
   `i_id` int(11) DEFAULT NULL,
   `u_id` int(11) DEFAULT NULL,
@@ -204,7 +205,7 @@ INSERT INTO `reviews` (`r_id`, `i_id`, `u_id`, `flagged`, `stars`, `comment`, `r
 -- Table structure for table `status`
 --
 
-CREATE TABLE `status` (
+CREATE TABLE IF NOT EXISTS `status` (
   `s_id` int(11) NOT NULL,
   `s_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
@@ -226,7 +227,7 @@ INSERT INTO `status` (`s_id`, `s_name`) VALUES
 -- Table structure for table `tag`
 --
 
-CREATE TABLE `tag` (
+CREATE TABLE IF NOT EXISTS `tag` (
   `t_id` int(11) NOT NULL,
   `t_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
@@ -254,7 +255,7 @@ INSERT INTO `tag` (`t_id`, `t_name`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `u_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -265,10 +266,9 @@ CREATE TABLE `users` (
 --
 -- Triggers `users`
 --
-DELIMITER $$
-CREATE TRIGGER `insert_user` BEFORE INSERT ON `users` FOR EACH ROW set new.password = pwd_encrypt(new.password)
-$$
-DELIMITER ;
+
+CREATE TRIGGER IF NOT EXISTS `insert_user` BEFORE INSERT ON `users` FOR EACH ROW set new.password = pwd_encrypt(new.password);
+
 
 --
 -- Dumping data for table `users`
@@ -377,15 +377,14 @@ ALTER TABLE `tag`
 ALTER TABLE `users`
   MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
-DELIMITER $$
+
 --
 -- Events
 --
-CREATE EVENT `daily_date_update_for_order_status_if_late` ON SCHEDULE EVERY 1 DAY STARTS '2025-12-23 23:59:16' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE orders
+CREATE EVENT IF NOT EXISTS `daily_date_update_for_order_status_if_late` ON SCHEDULE EVERY 1 DAY STARTS '2025-12-23 23:59:16' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE orders
     SET s_id = 6
-    WHERE return_date < CURDATE() AND (s_id != 4 OR s_id != 5)$$
+    WHERE return_date < CURDATE() AND (s_id != 4 OR s_id != 5);
 
-DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

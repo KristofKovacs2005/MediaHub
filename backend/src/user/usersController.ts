@@ -32,13 +32,11 @@ export async function getUsers(request:any, response:Response) {
 }
 
 export async function getUsersById(request:any, response:Response) {
-    if (request.user.status != 4 || request.user.status == 5) {
-        response.status(401).send({message:"bad status"})
-    }
-    let id:number = parseInt(request.params.id)
+    if (request.user.status == 4 || request.user.status == 5) {
+        let id:number = parseInt(request.params.id)
     if (isNaN(id)) {
-        response.status(400).send({message:"Bad request"})
-        return;
+        return response.status(400).send({message:"Bad request"})
+ 
     }
     const connection = await mysql.createConnection(config.database)
     try {
@@ -54,11 +52,11 @@ export async function getUsersById(request:any, response:Response) {
             status: results[i].status
         })
         }
-        if (results.affectedRows > 0) {
-            response.status(200).send(res)
-            return
+        if (results.length > 0) {
+            return response.status(200).send(res)
+            
         }
-        response.status(404).send({message: "Item not found"})
+        return response.status(404).send({message: "Item not found"})
         
     }
     catch (error) {
@@ -66,6 +64,11 @@ export async function getUsersById(request:any, response:Response) {
     }finally {
         connection.end()
     }
+    return
+        
+    }
+    return response.status(401).send({message:"bad status"})
+    
 }
 
 
@@ -87,14 +90,14 @@ export async function insertUser(request: Request, response: Response) {
             "insert into users values (null, ?, ?, ?, ?)", [user.username, user.email, user.password, user.status]
         ) as Array<any>
         if (results.affectedRows > 0) {
-            response.status(201).send({message:"Created"})
+            response.status(201).send({message:"Created", id: results.insertId})
             return
         }
-        response.status(400).send({message:"Error, probably some conflict, try with different input or whatever"})
+        response.status(400).send({message:"Error"})
     }
     catch (error) {
         console.log(error)
-        response.status(409).send({message:"Valszeg valami konfliktus, gitgud, próbáld újra más adatokkal, ha továbbra sem működik, akkor írj nekem. Remélem ez segít: " + error})
+        return response.status(409).send({message:"Conflict " + error})
     }finally {
         connection.end()
     }
