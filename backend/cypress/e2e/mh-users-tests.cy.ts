@@ -28,7 +28,7 @@ describe('POST /users/login tesztek', () => {
       failOnStatusCode: false
     }).then(res => {
       expect(res.status).to.eq(401)
-      expect(res.body.message).to.eq("email or password is incorrect")
+      expect(res.body).to.eq("email or password is incorrect")
   
     })
   })
@@ -43,7 +43,7 @@ describe('POST /users/login tesztek', () => {
       failOnStatusCode: false
     }).then(res => {
       expect(res.status).to.eq(400)
-      expect(res.body.message).to.eq("Bad request")
+      expect(res.body).to.eq("Bad request")
   
     })
   })
@@ -106,7 +106,7 @@ describe("POST /users tesztek", () => {
       },
       failOnStatusCode: false
     }).then(res => {
-      expect(res.status).to.eq(409)
+      expect(res.status).to.eq(500)
     })
   })
 

@@ -3,142 +3,112 @@ import config from "../config/config";
 import User from "./user";
 import mysql from "mysql2/promise";
 import jwt from "jsonwebtoken"
+import { UserSer } from "../service/userSer";
+import { HttpException } from "../middleware/error";
 
-export async function getUsers(request:any, response:Response) {
-    if (request.user.status != 5) {
-        response.status(401).send({message:"bad status"})
-    }
-    const connection = await mysql.createConnection(config.database)
-    try {
-        const [results] = await connection.query(
-            "select * from users"
-        ) as Array<any>
-        let res: Array<any> = []
-        for (let i = 0; i < results.length; i++) {
-            res.push({
-            u_id: results[i].u_id,
-            username: results[i].username,
-            email: results[i].email,
-            status: results[i].status
-        })
-        }
-        response.status(200).send(res)
-    }
-    catch (error) {
-        console.log(error)
-    }finally {
-        connection.end()
-    }
-}
+const service: UserSer = new UserSer()
 
-export async function getUsersById(request:any, response:Response) {
-    if (request.user.status == 4 || request.user.status == 5) {
-        let id:number = parseInt(request.params.id)
-    if (isNaN(id)) {
-        return response.status(400).send({message:"Bad request"})
- 
-    }
-    const connection = await mysql.createConnection(config.database)
-    try {
-        const [results] = await connection.query(
-            "select * from users where u_id = ?", [id]
-        ) as Array<any>
-        let res: Array<any> = []
-        for (let i = 0; i < results.length; i++) {
-            res.push({
-            u_id: results[i].u_id,
-            username: results[i].username,
-            email: results[i].email,
-            status: results[i].status
-        })
+export class UserController {
+    async getUsers(request: any, response: Response) {
+        try {
+            if (request.user.status != 5) {
+                throw new HttpException(401, "Bad status")
+            }
+            const results = await service.getUsers()
+            return response.status(200).send(results)
         }
-        if (results.length > 0) {
-            return response.status(200).send(res)
+        catch(error: any) {
+            return response.status(error.status || 500).send(error.message || "hiba történt")
+        }
+    }
+
+    async getUsersById(request: any, response: Response) {
+        try {
+            if (request.user.status < 4) {
+                throw new HttpException(401, "Bad status")
+            }
+            let id:number = parseInt(request.params.id)
+            if (isNaN(id)) {
+                throw new HttpException(400, "Bad request")
+            }
+            const results = await service.getUsersById(id)
+            return response.status(200).send(results)
+        }
+        catch(error: any) {
+            return response.status(error.status || 500).send(error.message || "hiba történt")
+        }
+    }
+    async insertUser(request: any, response: Response) {
+        try {
+            if (!request.body) {
+                throw new HttpException(400, "Bad request")
+            }
+            let user:User = new User(request.body)
+            if (!user.username || !user.email || !user.password || !user.status ) {
+                throw new HttpException(400, "Bad request")
+            }
+            if (user.username == "" || user.email == "" || user.password == "" || user.status == null) {
+                throw new HttpException(400, "Bad request")
+            }
+            const results = await service.insertUser(user.username, user.email, user.password, user.status)
+            return response.status(201).send({message:"Created", id: results.insertId})
+        }
+        catch(error: any) {
+            return response.status(error.status || 500).send(error.message || "hiba történt")
+        }
+    }
+    async login(request: any, response: Response) {
+        try {
+            if (!request.body) {
+                throw new HttpException(400, "Bad request")
+            }
+            const {email, password} = request.body;
+            if (!(email && password)) {
+                throw new HttpException(400, "Bad request")
+            }
             
+            const results = await service.login(email, password)
+            return response.status(200).send({token: results.token, status: results.status, username: results.username});
         }
-        return response.status(404).send({message: "Item not found"})
+        catch(error: any) {
+            return response.status(error.status || 500).send(error.message || "hiba történt")
+        }
+    }
+    async modifyUser(request: any, response: Response) {
+        try {
+            if (request.user.status != 5) {
+                throw new HttpException(401, "Bad status")
+            }
+            let id:number = parseInt(request.params.id)
+            if (isNaN(id)) {
+                throw new HttpException(400, "Bad request")
+            }
+            if (!request.body) {
+                throw new HttpException(400, "Bad request")
+            }
+            
+            let user:any = new User(request.body)
+            const allowedFields = ['username','email','password','status'] 
+            const keys = Object.keys(request.body).filter(key => allowedFields.includes(key))
+            
+            if (keys.length === 0 ) {
+                throw new HttpException(400, "Bad request")
+            }
         
+            const updateString = keys.map(key => `${key} = ?`).join(', ')
+            const values = keys.map (key => user[key])
+            values.push(id)
+            const sql = `update users set ${updateString} where u_id = ?`
+            
+            const results = await service.modifyUser(sql, values)
+            return response.status(201).send({message:"Modified"})
+        }
+        catch(error: any) {
+            return response.status(error.status || 500).send(error.message || "hiba történt")
+        }
     }
-    catch (error) {
-        console.log(error)
-    }finally {
-        connection.end()
-    }
-    return
-        
-    }
-    return response.status(401).send({message:"bad status"})
-    
 }
 
-
-
-export async function insertUser(request: Request, response: Response) {
-    if (!request.body) {
-        response.status(400).send({message:"Bad request"})
-    }
-    let user:User = new User(request.body)
-    if (!user.username || !user.email || !user.password || !user.status ) {
-        return response.status(400).send({error:"Missing data"})
-    }
-    if (user.username == "" || user.email == "" || user.password == "" || user.status == null) {
-        return response.status(400).send({error:"Missing data"})
-    }
-    const connection = await mysql.createConnection(config.database)
-    try {
-        const [results] = await connection.query(
-            "insert into users values (null, ?, ?, ?, ?)", [user.username, user.email, user.password, user.status]
-        ) as Array<any>
-        if (results.affectedRows > 0) {
-            response.status(201).send({message:"Created", id: results.insertId})
-            return
-        }
-        response.status(400).send({message:"Error"})
-    }
-    catch (error) {
-        console.log(error)
-        return response.status(409).send({message:"Conflict " + error})
-    }finally {
-        connection.end()
-    }
-    return;
-}
-
-export async function login(request: Request, response: Response) {
-    const {email, password} = request.body;
-    if (!(email && password)) {
-        response.status(400).send({message:"Bad request"})
-    }
-    
-    const connection = await mysql.createConnection(config.database)
-
-    try {
-        const [results] = await connection.query(
-            'SELECT login(?, ?) AS id',
-            [email, password]
-        ) as Array<any>;
-        if (!results[0].id) {
-            return response.status(401).send({message:"email or password is incorrect"})
-        }
-        if (!config.jwtSecret) {
-            return response.status(400).send({message:"Secret key error"})
-        }
-        const [jobbresults] = await connection.query (
-            "select * from users where u_id = ?", [results[0].id]
-        ) as Array<any>
-
-        const token = jwt.sign({username: jobbresults[0].username, email:jobbresults[0].email, id:jobbresults[0].u_id, status:jobbresults[0].status}, config.jwtSecret, {expiresIn: "2h"});
-
-        return response.status(200).send({token: token, status: jobbresults[0].status, username: jobbresults[0].username});
-    }
-    catch(error) {
-        console.log(error)
-    }finally {
-        connection.end()
-    }
-    return
-    
-}
 
 
 export async function modifyUser(request:any, response:Response) {

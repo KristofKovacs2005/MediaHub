@@ -1,10 +1,9 @@
 import express from "express";
-//import router from "../routes/routes";
 import itemRouter from "../routes/itemRoutes"
-import orderRouter from "../order/routes";
-import reviewRouter from "../review/routes";
-import tagRouter from "../tag/routes"
-import userRouter from "../user/routes";
+import orderRouter from "../routes/orderRoutes";
+import reviewRouter from "../routes/reviewsRoutes";
+import tagRouter from "../routes/tagRoutes"
+import userRouter from "../routes/userRoutes";
 import cors from "cors";
 import bodyParser from "body-parser";
 import config from "../config/config";
@@ -18,7 +17,6 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-//app.use('/',router)
 app.use('/', itemRouter)
 app.use('/', orderRouter)
 app.use('/', reviewRouter)

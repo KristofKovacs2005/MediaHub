@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import Items from "./items";
-import config from "../config/config";
-import mysql from "mysql2/promise";
 import { uploadMiddleware } from "../middleware/upload";
 import { ItemSer } from "../service/itemSer";
 import { HttpException } from "../middleware/error";
