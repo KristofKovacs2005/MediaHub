@@ -1,6 +1,6 @@
 import express from "express";
 //import router from "../routes/routes";
-import itemRouter from "../items/routes"
+import itemRouter from "../routes/itemRoutes"
 import orderRouter from "../order/routes";
 import reviewRouter from "../review/routes";
 import tagRouter from "../tag/routes"

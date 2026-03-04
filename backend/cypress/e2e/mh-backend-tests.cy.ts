@@ -401,15 +401,14 @@ describe("PATCH /items tesztek", () => {
 })
 
 describe("DELETE /items törlések", () => {
-  let token: string = ""
-  let badToken: string = ""
   before(() => {
     cy.task("resetDb");
   })
+  let token: string = ""
+  let badToken: string = ""
+
   beforeEach(() => {
 
-    
-    
     cy.login("f3@email.com", "password123").then(
       response => {
         token = response.body.token
