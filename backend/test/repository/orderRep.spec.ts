@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise"
 import { OrderRep } from "../../src/repisotaries/orderRep"
-//import { HttpException } from "../../src/middleware/error"
+import { HttpException } from "../../src/middleware/error"
 
 jest.mock("mysql2/promise")
 
@@ -129,7 +129,46 @@ describe("insertItem", () => {
         expect(mockConnection.end).toHaveBeenCalled()
         expect(result).toEqual({ affectedRows: 1 })
     })
-  })
+    test("Item not available", async () => {
+  
+      mockQuery.mockResolvedValueOnce([{}, []])
+        .mockResolvedValueOnce([[{ amount: 0 }], []])
+        .mockResolvedValueOnce([{}, []]) 
+
+        await expect(repo.insertOrder(1, 3, new Date("2026-10-11"), new Date("2026-11-11"))).rejects.toThrow(HttpException)
+
+        expect(mockQuery).toHaveBeenNthCalledWith(1, "START TRANSACTION;")
+        expect(mockQuery).toHaveBeenNthCalledWith(
+            2,
+            "select orderable(?,?,?) as amount;",
+            [3, expect.any(Date), expect.any(Date)]
+        )
+        
+        expect(mockQuery).toHaveBeenNthCalledWith(3, "ROLLBACK;")
+
+        expect(mockConnection.end).toHaveBeenCalled()
+    })
+
+    test("Item does not exist", async () => {
+  
+      mockQuery.mockResolvedValueOnce([{}, []])
+        .mockResolvedValueOnce([[{ amount: null }], []])
+        .mockResolvedValueOnce([{}, []]) 
+
+        await expect(repo.insertOrder(1, 3, new Date("2026-10-11"), new Date("2026-11-11"))).rejects.toThrow(HttpException)
+
+        expect(mockQuery).toHaveBeenNthCalledWith(1, "START TRANSACTION;")
+        expect(mockQuery).toHaveBeenNthCalledWith(
+            2,
+            "select orderable(?,?,?) as amount;",
+            [3, expect.any(Date), expect.any(Date)]
+        )
+        
+        expect(mockQuery).toHaveBeenNthCalledWith(3, "ROLLBACK;")
+
+        expect(mockConnection.end).toHaveBeenCalled()
+    })
+})
 
 
 
