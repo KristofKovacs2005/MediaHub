@@ -31,7 +31,7 @@ export class ItemRep {
                 if (i != 0) {
                     sql = sql + "AND "
                 }
-                sql = sql + " tagek like ? ";
+                sql = sql + "tagek like ? ";
                 values.push("%" + tagList[i].toString() + "%")
             }
         }

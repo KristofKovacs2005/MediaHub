@@ -4,6 +4,34 @@ import { HttpException } from "../../src/middleware/error"
 
 jest.mock("mysql2/promise")
 
+describe("Get items test", () => {
+  let mockQuery: jest.Mock
+    let mockConnection: any
+    let repo: ItemRep
+
+    beforeEach(() => {
+        mockQuery = jest.fn()
+        mockConnection = {
+          query: mockQuery,
+          end: jest.fn(),
+        };
+        (mysql.createConnection as jest.Mock).mockResolvedValue(mockConnection)
+    
+        repo = new ItemRep()
+    })
+    test("three parameters", async () => {
+      const name = "valami"
+      const tags = ["book","movie"]
+      const autor = "valaki"
+      mockQuery.mockResolvedValueOnce([[{ i_id: 1, i_name: "item1",author: "Valaki", img_url: "kep", i_description: "valami", amount: 1 }], []])
+      const result = await repo.getItem(name,tags.join(','),autor)
+      expect(mockQuery).toHaveBeenCalledWith("SELECT items.i_id, items.i_name, items.author, items.i_description, items.img_url, items.amount , GROUP_CONCAT(tag.t_name ORDER BY t_name SEPARATOR ', ') AS tagek FROM items inner join item_tag on items.i_id = item_tag.i_id INNER JOIN tag on item_tag.t_id = tag.t_id GROUP BY items.i_id, items.i_name HAVING items.i_name LIKE ? AND tagek like ? AND tagek like ? AND items.author like ?;", [`%${name}%`, `%${tags[0]}%`, `%${tags[1]}%`, `%${autor}%`])
+      expect(mockConnection.end).toHaveBeenCalled()
+
+      expect(result).toEqual([{ i_id: 1, i_name: "item1",author: "Valaki", img_url: "kep", i_description: "valami", amount: 1 }])
+    })
+})
+
 describe("Get one item test", () => {
     test("returns item from db", async () => {
         const mockQuery = jest.fn().mockResolvedValue([
