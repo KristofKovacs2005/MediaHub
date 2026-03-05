@@ -36,8 +36,8 @@ export class OrderRep {
     async insertOrder(user_id: number, product_id: number, date: Date, r_date: Date) {
         const connection = await mysql.createConnection(config.database)
         await connection.query("START TRANSACTION;")
-        const [item] = await connection.query("select amount from items where i_id = ?", [product_id]) as any[]
-        if (item.length == 0) {
+        const [item] = await connection.query("select orderable(?,?,?) as amount;", [product_id, new Date(date), new Date(r_date)]) as any[]
+        if (item[0].amount == null) {
             await connection.query("ROLLBACK;")
             await connection.end()
             throw new HttpException(404, "Nem létező termék")
@@ -45,7 +45,7 @@ export class OrderRep {
         if (item[0].amount == 0) {
             await connection.query("ROLLBACK;")
             await connection.end()
-            throw new HttpException(400, "Nincs raktáron")
+            throw new HttpException(400, "Ekkor nem rendelhető")
         }
         const [results] = await connection.query(
             "insert into orders values (null, 1, ?, ?, ?, ?);", [ user_id, product_id, new Date(date), new Date(r_date)]

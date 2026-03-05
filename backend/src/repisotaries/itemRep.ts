@@ -101,6 +101,7 @@ export class ItemRep {
         ) as Array<any>
         if (results.affectedRows == 0) {
             await connection.query("ROLLBACK;")
+            await connection.end()
             throw new HttpException(404, "Nem létezik ilyen elem")
         }
         await connection.query("delete from item_tag where i_id = ?;", [id])
@@ -117,6 +118,7 @@ export class ItemRep {
         ) as Array<any>
         if (results.affectedRows === 0) {
             await connection.query("ROLLBACK;")
+            await connection.end()
             throw new HttpException(400, "Sikertelen")
         }
         for (let i = 0; i < tags.length; i++) {

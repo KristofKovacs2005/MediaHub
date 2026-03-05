@@ -37,6 +37,23 @@ SELECT u_id INTO ok FROM users WHERE users.email = email AND users.password = pw
 RETURN ok;
 END$$
 
+CREATE FUNCTION `orderable` (`item_id` INT, `startd` DATE, `endd` DATE) RETURNS INT(11) DETERMINISTIC BEGIN
+    DECLARE total_amount INT;
+    DECLARE ordered_amount INT;
+    SELECT amount
+    INTO total_amount
+    FROM items
+    WHERE i_id = item_id;
+    
+    SELECT COUNT(*)
+    INTO ordered_amount
+    FROM orders
+    WHERE orders.p_id = item_id
+      AND orders.date <= endd
+      AND orders.return_date >= startd;
+    RETURN total_amount - ordered_amount;
+END$$
+
 CREATE FUNCTION `pwd_encrypt` (`pwd` VARCHAR(100)) RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_hungarian_ci DETERMINISTIC RETURN SHA2(concat(pwd,'valamivalami'),256)$$
 
 DELIMITER ;

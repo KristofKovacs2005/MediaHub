@@ -6,6 +6,10 @@
 		"lib": [
 			"es2015"
 		],
+		"types":[
+			"jest",
+			"node"
+		],
 
 		"rootDir": "src",
 		"outDir": "lib",
@@ -33,6 +37,7 @@
 	},
 	"include": [
 		"typings/**/*",
-		"src/**/*"
+		"src/**/*",
+		"test/**/*"
 	]
 }

@@ -21,7 +21,7 @@
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "tsc",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "dev": "nodemon --exec tsx ./src/app/server.ts"
@@ -35,7 +35,10 @@
   "typings": "./lib/index.d.ts",
   "devDependencies": {
     "@types/express": "^5.0.5",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.10.14",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.6"
   }
