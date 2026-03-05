@@ -34,6 +34,7 @@ export class UserRep {
             "select login(?, ?) as id", [email, password]
         ) as any[]
         if (results[0].id == 0) {
+            await connection.end()
             throw new HttpException(401, "email or password is incorrect")
         }
         const [data] = await connection.query(
