@@ -21,7 +21,7 @@ export class ReviewController {
             if (request.user.status != 5) {
                 throw new HttpException(401, "Bad status")
             }
-            const results = await service.getReviews()
+            const results = await service.getFlaggedReviews()
             return response.status(200).send(results)
         }
         catch(error: any) {
@@ -105,5 +105,6 @@ export class ReviewController {
         }
     }
 }
+
 
 

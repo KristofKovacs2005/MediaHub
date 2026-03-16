@@ -170,6 +170,7 @@ export class ItemController {
             values.push(id)
             const updateString = update.join(',');
             const results = await service.modifyItem(updateString, values, tags)
+            console.log(results)
             return response.status(201).send({message:"Modified"})
         }
         catch(error: any) {
