@@ -42,7 +42,7 @@ export class ItemSer {
 
     async deleteItem(id: number) {
         const results = await this.repository.deleteItem(id)
-        if (results.length == 0 ) {
+        if (results.affectedRows == 0 ) {
             throw new HttpException(404, "Nem létezik elem")
         }
         return results

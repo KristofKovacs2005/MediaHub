@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1773657392149" clover="3.2.0">
-  <project timestamp="1773657392149" name="All files">
-    <metrics statements="478" coveredstatements="463" conditionals="231" coveredconditionals="174" methods="54" coveredmethods="52" elements="763" coveredelements="689" complexity="0" loc="478" ncloc="478" packages="7" files="15" classes="15"/>
+<coverage generated="1773736603923" clover="3.2.0">
+  <project timestamp="1773736603923" name="All files">
+    <metrics statements="597" coveredstatements="581" conditionals="305" coveredconditionals="237" methods="77" coveredmethods="75" elements="979" coveredelements="893" complexity="0" loc="597" ncloc="597" packages="9" files="19" classes="19"/>
     <package name="config">
       <metrics statements="6" coveredstatements="6" conditionals="8" coveredconditionals="6" methods="1" coveredmethods="1"/>
       <file name="config.ts" path="C:\Users\kovacs.kristof\Desktop\MediaHub\backend\src\config\config.ts">
@@ -140,10 +140,10 @@
       <metrics statements="17" coveredstatements="13" conditionals="5" coveredconditionals="0" methods="3" coveredmethods="1"/>
       <file name="error.ts" path="C:\Users\kovacs.kristof\Desktop\MediaHub\backend\src\middleware\error.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="6" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="11" count="38" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
+        <line num="1" count="9" type="stmt"/>
+        <line num="9" count="69" type="stmt"/>
+        <line num="11" count="69" type="stmt"/>
+        <line num="13" count="69" type="stmt"/>
       </file>
       <file name="upload.ts" path="C:\Users\kovacs.kristof\Desktop\MediaHub\backend\src\middleware\upload.ts">
         <metrics statements="13" coveredstatements="9" conditionals="5" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -533,6 +533,67 @@
         <line num="104" count="5" type="stmt"/>
       </file>
     </package>
+    <package name="service">
+      <metrics statements="52" coveredstatements="52" conditionals="20" coveredconditionals="20" methods="14" coveredmethods="14"/>
+      <file name="itemSer.ts" path="C:\Users\kovacs.kristof\Desktop\MediaHub\backend\src\service\itemSer.ts">
+        <metrics statements="28" coveredstatements="28" conditionals="10" coveredconditionals="10" methods="8" coveredmethods="8"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="8" count="12" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="29" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="45" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+      </file>
+      <file name="orderSer.ts" path="C:\Users\kovacs.kristof\Desktop\MediaHub\backend\src\service\orderSer.ts">
+        <metrics statements="24" coveredstatements="24" conditionals="10" coveredconditionals="10" methods="6" coveredmethods="6"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="8" count="10" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="20" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="28" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="36" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="43" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+      </file>
+    </package>
     <package name="tag">
       <metrics statements="7" coveredstatements="7" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
       <file name="tagController.ts" path="C:\Users\kovacs.kristof\Desktop\MediaHub\backend\src\tag\tagController.ts">
@@ -544,6 +605,82 @@
         <line num="9" count="2" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
         <line num="13" count="1" type="cond" truecount="4" falsecount="0"/>
+      </file>
+    </package>
+    <package name="user">
+      <metrics statements="67" coveredstatements="66" conditionals="54" coveredconditionals="43" methods="9" coveredmethods="9"/>
+      <file name="user.ts" path="C:\Users\kovacs.kristof\Desktop\MediaHub\backend\src\user\user.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+        <line num="21" count="7" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="7" type="stmt"/>
+        <line num="24" count="7" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+      </file>
+      <file name="usersController.ts" path="C:\Users\kovacs.kristof\Desktop\MediaHub\backend\src\user\usersController.ts">
+        <metrics statements="60" coveredstatements="59" conditionals="54" coveredconditionals="43" methods="8" coveredmethods="8"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="1" type="cond" truecount="2" falsecount="2"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="24" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="2" type="cond" truecount="2" falsecount="2"/>
+        <line num="39" count="4" type="stmt"/>
+        <line num="40" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="3" type="cond" truecount="6" falsecount="0"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="47" count="1" type="cond" truecount="5" falsecount="1"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="54" count="3" type="cond" truecount="2" falsecount="2"/>
+        <line num="58" count="3" type="stmt"/>
+        <line num="59" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="62" count="2" type="stmt"/>
+        <line num="63" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="71" count="2" type="cond" truecount="2" falsecount="2"/>
+        <line num="75" count="7" type="stmt"/>
+        <line num="76" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="79" count="6" type="stmt"/>
+        <line num="80" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="83" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="87" count="4" type="stmt"/>
+        <line num="88" count="4" type="stmt"/>
+        <line num="89" count="6" type="stmt"/>
+        <line num="91" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="92" count="1" type="stmt"/>
+        <line num="95" count="4" type="stmt"/>
+        <line num="96" count="4" type="stmt"/>
+        <line num="97" count="3" type="stmt"/>
+        <line num="98" count="3" type="stmt"/>
+        <line num="100" count="3" type="stmt"/>
+        <line num="101" count="3" type="stmt"/>
+        <line num="104" count="4" type="cond" truecount="2" falsecount="2"/>
       </file>
     </package>
   </project>
