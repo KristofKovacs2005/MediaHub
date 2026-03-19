@@ -7,8 +7,8 @@ export class TagSer {
         this.repository = new TagRep()
     }
     async getTags() {
-        const results = this.repository.getTags()
-        if (results.length == 0) {
+        const results = await this.repository.getTags()
+        if (!results || results.length === 0) {
             throw new HttpException(404, "Nincs ilyen elem")
         }
         return results

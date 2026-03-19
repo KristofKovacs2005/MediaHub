@@ -382,6 +382,32 @@ describe("insertItem test", () => {
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.send).toHaveBeenCalledWith("No Image");
   });
+  it("should return 400 if no body is provided", async () => {
+    req.body = null
+
+    await controller.insertItem(req as Request, res as Response);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith("Bad request");
+  });
+
+  it("should return 400 if data is missing", async () => {
+    req.body["i_name"] = ""
+
+    await controller.insertItem(req as Request, res as Response);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith("Missing data");
+  });
+
+   it("should return 400 if tags are missing", async () => {
+    req.body["tags"] = null
+
+    await controller.insertItem(req as Request, res as Response);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith("No tags");
+  });
 
   it("should return 401 if user status is too low", async () => {
     req.user.status = 3;

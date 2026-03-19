@@ -56,9 +56,6 @@ export class ReviewController {
             if (!review.i_id ||!review.stars ) {
                 return response.status(400).send({error: "Missing data"})
             }
-            if (review.i_id == null || review.stars == null) {
-                return response.status(400).send({error: "Missing data"})
-            }
             if (review.stars > 5 || review.stars < 1) {
                 return response.status(400).send("Bad stars")
             }

@@ -44,9 +44,7 @@ export class UserController {
             if (!user.username || !user.email || !user.password || !user.status ) {
                 throw new HttpException(400, "Bad request")
             }
-            if (user.username == "" || user.email == "" || user.password == "" || user.status == null) {
-                throw new HttpException(400, "Bad request")
-            }
+            
             const results = await service.insertUser(user.username, user.email, user.password, user.status)
             return response.status(201).send({message:"Created", id: results.insertId})
         }

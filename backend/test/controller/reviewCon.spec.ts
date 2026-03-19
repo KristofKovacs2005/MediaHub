@@ -44,6 +44,20 @@ describe("GET reviews", () => {
         expect(res.status).toHaveBeenCalledWith(200)
         expect(res.send).toHaveBeenCalledWith(results)
     })
+
+    it("should handle error", async () => {
+        const mockError = {
+            status: 500,
+            message: "Database error"
+        }
+        mockGetReviews.mockRejectedValue(mockError)
+
+        await controller.getReviews(req as Request, res as Response)
+
+        expect(mockGetReviews).toHaveBeenCalled()
+        expect(res.status).toHaveBeenCalledWith(500)
+        expect(res.send).toHaveBeenCalledWith("Database error")
+    })
 })
 
 describe("GET flagged reviews", () => {
@@ -187,8 +201,17 @@ describe("POST insert review", () => {
         expect(res.send).toHaveBeenCalledWith({ error: "Missing data" })
     })
 
-    it("should reject if stars out of range", async () => {
+    it("should reject if stars out of range higher", async () => {
         req.body.stars = 6
+
+        await controller.insertReview(req as Request, res as Response)
+
+        expect(mockInsertReview).not.toHaveBeenCalled()
+        expect(res.status).toHaveBeenCalledWith(400)
+        expect(res.send).toHaveBeenCalledWith("Bad stars")
+    })
+    it("should reject if stars out of range lower", async () => {
+        req.body.stars = -6
 
         await controller.insertReview(req as Request, res as Response)
 

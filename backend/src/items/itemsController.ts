@@ -98,8 +98,6 @@ export class ItemController {
             let imgName
             if (request.file.filename) {
                 imgName = request.file.filename 
-            }else {
-                imgName = "images.jpeg"
             }
             
 
