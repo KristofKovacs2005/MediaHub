@@ -56,16 +56,16 @@ export function useLoadThisItem({ id }) {
 					const tagsRes = await fetch(`http://localhost:3000/item/${id}/tags`, {
 						headers: { "x-access-token": tokenLoader() }
 					});
-					if (tagsRes.ok) {
-						const tagsData = await tagsRes.json();
-						// normalize different possible shapes:
-						if (Array.isArray(tagsData)) {
-							// array of { t_name } or plain strings
-							foundTags = tagsData.map(t => (t && typeof t === "object" ? t.t_name || t.name || "" : String(t))).filter(Boolean);
-						} else if (typeof tagsData === "string") {
-							foundTags = tagsData.split(",").map(s => s.trim()).filter(Boolean);
-						}
-					}
+					//if (tagsRes.ok) {
+					//	const tagsData = await tagsRes.json();
+					//	// normalize different possible shapes:
+					//	if (Array.isArray(tagsData)) {
+					//		// array of { t_name } or plain strings
+					//		foundTags = tagsData.map(t => (t && typeof t === "object" ? t.t_name || t.name || "" : String(t))).filter(Boolean);
+					//	} else if (typeof tagsData === "string") {
+					//		foundTags = tagsData.split(",").map(s => s.trim()).filter(Boolean);
+					//	}
+					//}
 				} catch (e) {
 					// ignore if endpoint doesn't exist
 					console.warn("Tags fetch failed (endpoint may not exist):", e);

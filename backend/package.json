@@ -11,7 +11,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "mysql2": "^3.15.3",
-    "nodemon": "^3.1.11",
+    "nodemon": "^3.1.14",
     "tslint": "^5.20.1",
     "typescript": "^5.9.3",
     "util": "^0.12.5"
