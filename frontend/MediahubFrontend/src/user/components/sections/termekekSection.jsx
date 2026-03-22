@@ -4,12 +4,13 @@ import { fetchOrders } from "../../functions/orders";
 import OrderCard from "../carouselCards/orderCard";
 import "./termekekSection.css";
 import TermekCard from "../carouselCards/termekUser";
-export async function termekekSectionUser() {
+import { useEffect } from "react";
+export function TermekekSectionUser() {
     const [orders, setOrders] = useState([]);
     const [books, setBooks] = useState([]);
     const [movies, setMovies] = useState([]);
 
-    useState(() => {
+    useEffect(() => {
         fetchOrders(setOrders);
         fetchItems({ tags: ["book"], setItems: setBooks });
         fetchItems({ tags: ["movie"], setItems: setMovies });

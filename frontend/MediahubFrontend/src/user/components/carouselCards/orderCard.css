@@ -3,8 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 5rem;
-    height: 2rem;
+    aspect-ratio: 4/5;
     font-size: 1.2rem;
     margin: 10px;
     border: 0.80rem solid #7e7e7eec;
@@ -15,8 +14,7 @@
     scroll-snap-align: start;
 }
 .order-card img{
-    width: 100%;
-    height: 150px;
+    aspect-ratio: 2/4;
     object-fit: cover;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -24,4 +22,10 @@
 .order-card:hover{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.308);
     transform: scale(1.05);
+}
+
+@media (max-width: 500px) {
+    .order-card {
+        flex: 0 0 8em;
+    }
 }

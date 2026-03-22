@@ -18,7 +18,7 @@ export default function OrderCard({ order }) {
     useEffect(() => {
         const fetchItem = async () => {
             try {
-                const itemRes = await fetch(`http://localhost:3000/item/${id}`, {
+                const itemRes = await fetch(`http://localhost:3000/item/${order.p_id}`, {
                     headers: { "x-access-token": token }
                 });
 
@@ -39,7 +39,7 @@ export default function OrderCard({ order }) {
         };
 
         fetchItem();
-    }, []);
+    }, [order.p_id]);
 
     return (
         <div className="order-card">
