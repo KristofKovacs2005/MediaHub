@@ -12,7 +12,7 @@ export function BarChart({ valuesArray, labelsArray, title, indexAxis, borderWid
           {
             label: labelsArray,
             data: valuesArray,
-            backgroundColor: 'rgba(178, 185, 190, 0.54)',
+            backgroundColor: 'rgba(79, 173, 240, 0.54)',
             borderColor: 'rgb(114, 119, 122)',
             borderWidth: borderWidth || 1,
           },
