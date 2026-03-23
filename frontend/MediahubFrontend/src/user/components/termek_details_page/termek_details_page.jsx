@@ -13,7 +13,10 @@ export default function TermekDetailsPage() {
 	const { id } = useParams(); // Get item_id from route parameter
 	const { item, comments, tags, loading, error } = useLoadThisItem({ id });
 	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-	const userHasCommented = comments.some(comment => comment.u_id === currentUserId);//visszatér true vagy false értékkel attól függően, hogy a user írt-e már véleményt az adott elemre
+	const currentUserId = localStorage.getItem("userId"); // stored as string
+	const userHasCommented = currentUserId
+		? comments.some(comment => comment.u_id === Number(currentUserId))
+		: false;//visszatér true vagy false értékkel attól függően, hogy a user írt-e már véleményt az adott elemre
 	// Loading state
 	if (loading) {
 		return (
@@ -65,8 +68,8 @@ export default function TermekDetailsPage() {
 
 			<div className="pageBelowNavbar">
 				<TermekDetails item={item} tags={tags} />
-				<CommentsSection 
-					comments={comments} 
+				<CommentsSection
+					comments={comments}
 					itemId={id}
 					userHasCommented={userHasCommented}
 					onOpenReviewModal={() => setIsReviewModalOpen(true)}
@@ -74,8 +77,8 @@ export default function TermekDetailsPage() {
 			</div>
 
 			<Modal isOpen={isReviewModalOpen} isClose={() => setIsReviewModalOpen(false)}>
-				<NewCommentModal 
-					itemId={id} 
+				<NewCommentModal
+					itemId={id}
 					isClose={() => setIsReviewModalOpen(false)}
 				/>
 			</Modal>

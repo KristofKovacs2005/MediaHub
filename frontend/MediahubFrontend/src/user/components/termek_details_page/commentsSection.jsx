@@ -1,5 +1,5 @@
 import { Comment } from "./comment";
-export function CommentsSection({ comments,userHasCommented, onOpenReviewModal }) {
+export function CommentsSection({ comments, userHasCommented, onOpenReviewModal }) {
 	// Format comments date if needed
 	return (
 		<section className="commentsSection">
@@ -10,7 +10,7 @@ export function CommentsSection({ comments,userHasCommented, onOpenReviewModal }
 						className="btn btn-success"
 						onClick={onOpenReviewModal}
 						disabled={userHasCommented} // Disable if user has already commented
-						title={userHasCommented ? "Már írt véleményt erre az elemre" : "Írj véleményt erre az elemre"}
+						title={userHasCommented ? "Már írtál véleményt erre az elemre" : "Írj véleményt"}
 					>
 						+ Új vélemény
 					</button>

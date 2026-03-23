@@ -1,4 +1,4 @@
-import { checkStatus } from "../../util/auth";
+import { getAuthStatus } from "../../util/auth";
 import { useState } from "react";
 import Modal from "../modal/modal";
 import ReportReviewModal from "../modal/reportReviewConfirmModal/reportReviewConfirmModal";
@@ -7,7 +7,9 @@ import three_dot from "../../../assets/dots.png"
 
 export function Comment({ commentAuthor, commentText, commentRating, r_id, u_id }) {
 
-	const isItAdmin = checkStatus() == 5;
+	const status = getAuthStatus();
+	const isLoggedIn = status !== null;
+	const isItAdmin = status === 5;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	return (
 		<div className="comment">
