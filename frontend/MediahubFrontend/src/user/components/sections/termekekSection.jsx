@@ -3,7 +3,7 @@ import { fetchItems } from "../../functions/items";
 import { fetchOrders } from "../../functions/orders";
 import OrderCard from "../carouselCards/orderCard";
 import "./termekekSection.css";
-import TermekCard from "../carouselCards/termekUser";
+import TermekCard from "../carouselCards/termekCard";
 import { useEffect } from "react";
 export function TermekekSectionUser() {
     const [orders, setOrders] = useState([]);
@@ -39,7 +39,7 @@ export function TermekekSectionUser() {
                 <div className="Carousel">
                     <div className="group">
                         {books.length > 0 ? (
-                            books.map(book => <TermekCard key={book.i_id} author={book.author} i_name={book.i_name} img_url={book.img_url} i_description={book.i_description} />)
+                            books.map(book => <TermekCard key={book.i_id} item={book} />)
                         ) : (
                             <div className="no-items">Nincsenek könyvek</div>
                         )}</div>
@@ -49,7 +49,7 @@ export function TermekekSectionUser() {
                 <div className="Carousel">
                     <div className="group">
                         {movies.length > 0 ? (
-                            movies.map(movie => <TermekCard key={movie.i_id} author={movie.author} i_name={movie.i_name} img_url={movie.img_url} i_description={movie.i_description} />)
+                            movies.map(movie => <TermekCard key={movie.i_id} item={movie} />)
                         ) : (
                             <div className="no-items">Nincsenek filmek</div>
                         )}

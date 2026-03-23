@@ -1,25 +1,37 @@
 import { tokenLoader } from "../../../util/auth";
 
-export default async function postReview(itemId, stars, comment, onSuccess) {
+export default async function postReview(itemId, stars, comment, comments, onSuccess) {
 	try {
 		const token = tokenLoader();
 		if (!token) {
 			alert("Te nem vagy bejelentkezve!");
 			return;
 		}
-		console.log(token)
-		const jogosultsag = localStorage.getItem("status")
-        if(jogosultsag === 3 ){
-            alert("Ez a felhasználó fel van függesztve");
-            return;
-        }
+
+		const jogosultsag = localStorage.getItem("status");
+		if (jogosultsag === "3") {
+			alert("Ez a felhasználó fel van függesztve");
+			return;
+		}
+		const currentUserId = localStorage.getItem("userId");
+
+		const alreadyCommented = comments.some(
+			c => String(c.u_id) === String(currentUserId)
+		);
+
+		if (alreadyCommented) {
+			alert("Már írtál véleményt ehhez az elemhez!");
+			return;
+		}
 
 		const payload = {
 			i_id: itemId,
 			stars: stars,
-			comment: comment || "" || null || undefined, // ensure it's a string or null, not empty string
+			comment: comment || null,
 		};
+
 		console.log("Submitting review with payload:", payload);
+
 		const response = await fetch("http://localhost:3000/reviews", {
 			method: "POST",
 			headers: {

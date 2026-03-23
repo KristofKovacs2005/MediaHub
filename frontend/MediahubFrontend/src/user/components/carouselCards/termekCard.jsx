@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import "./termekek.css";
-
-export default function TermekCard({ i_id, author, i_name, img_url, i_description }) {
+import "./termekekCard.css"
+export default function TermekCard({ item }) {
+    const { i_id, author, i_name, img_url, i_description } = item;
     const navigate = useNavigate();
 
     const handleClick = () => {
