@@ -36,7 +36,6 @@ export const handleLogIn = async (event) => {
                 localStorage.setItem('authToken', json.token);
                 localStorage.setItem('username', json.username);
                 localStorage.setItem('status', json.status);
-                localStorage.setItem('userId', json.userId);
             }
             if (form && typeof form.reset === 'function') form.reset();
             document.dispatchEvent(new CustomEvent('user-loged-in', { detail: { email, token: json.token } }));

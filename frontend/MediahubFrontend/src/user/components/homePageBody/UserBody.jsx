@@ -1,4 +1,4 @@
-import Header from "../sections/header";
+import { Header } from "../header/header";
 import { TermekekSectionUser } from "../sections/termekekSection";
 
 export default function UserBody() {

@@ -4,7 +4,7 @@ import { useLoadThisItem } from "./load_this_item_function";
 import { TermekDetails } from "./termek_details";
 import { CommentsSection } from "./commentsSection";
 import { Footer } from "../footer/footer";
-import { renderNavbar } from "../navbar/renderNavbar";
+import RenderNavbar from "../navbar/renderNavbar";
 import Modal from "../modal/modal";
 import NewCommentModal from "../modal/newComment/modalContent";
 import "./termek_details_page.css";
@@ -21,7 +21,7 @@ export default function TermekDetailsPage() {
 	if (loading) {
 		return (
 			<div className="detailsPageMainDiv">
-				{renderNavbar()}
+				<RenderNavbar />
 				<div className="pageBelowNavbar">
 					<div className="loadingContainer">
 						<p>Betöltés...</p>

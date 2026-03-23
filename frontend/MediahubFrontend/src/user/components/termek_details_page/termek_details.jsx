@@ -1,5 +1,5 @@
 export function TermekDetails({ item, tags }) {
-	const stockNumber = Number(item.stock) || 0;//biztosra megy hogy a item.stock szám legyen, ha nem parse-olható akkor 0 lesz belőle
+	const stockNumber = Number(item.amount) || 0;//biztosra megy hogy a item.amount szám legyen, ha nem parse-olható akkor 0 lesz belőle
 	const itemStock = stockNumber > 0 ? true:false; // ha stockNumber nagyobb mint 0 akkor true lesz az itemStock értéke, egyébként false
 	return (
 		<section className="detailsSection">
@@ -26,7 +26,7 @@ export function TermekDetails({ item, tags }) {
 							{item.i_description || "Nincs leírás"}
 						</p>
 						<p>
-							{itemStock ? (<span className="text-success">Raktáron: {item.stock} db</span>) : (
+							{itemStock ? (<span className="text-success">Raktáron: {item.amount} db</span>) : (
 								<span className="text-danger">Nincs raktáron</span>
 							)}
 						</p>

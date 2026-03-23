@@ -1,4 +1,4 @@
-export async function fetchOrdersLibrarian(setOrders){
+export default async function fetchOrdersLibrarian(setOrders){
     try {
         const res = await fetch("http://localhost:3000/orders", {
             method: "GET",

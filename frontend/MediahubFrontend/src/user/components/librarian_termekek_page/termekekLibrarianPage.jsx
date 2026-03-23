@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import LoadItems from "../../termekek/load";
+import { fetchItems } from "../../functions/items";
 import InsertTermekModal from "../modal/termekek_handling/termekek_hozzaAdasa";
 import Modal from "../modal/modal";
 import TermekTable from "./termekTable"; // renamed for PascalCase
 import { Footer } from "../footer/footer";
-import { renderNavbar } from "../navbar/renderNavbar";
+import RenderNavbar from "../navbar/renderNavbar";
 import "./termekek_page.css"
 
 export default function TermekekLibrarianPage() {
@@ -14,18 +14,18 @@ export default function TermekekLibrarianPage() {
     const [isInsertOpen, setIsInsertOpen] = useState(false);
 
     // fetch items using your async function
-    const fetchItems = async () => {
-        await LoadItems({ setLoading, setError, setItems });
+    const fetchingItems = async () => {
+        await fetchItems({ setLoading, setError, setItems });
     };
 
     useEffect(() => {
-        fetchItems();
+        fetchingItems();
     }, []);
 
     return (
         <div className="pageMainDiv">
             {/* Navbar */}
-            {renderNavbar()}
+            <RenderNavbar />
 
             {/* Main page content */}
             <div className="pageBelowNavbar">
@@ -42,7 +42,7 @@ export default function TermekekLibrarianPage() {
                 {error && <p>Hiba: {error}</p>}
 
                 {!loading && !error && (
-                    <TermekTable items={items} onActionComplete={fetchItems} />
+                    <TermekTable items={items} onActionComplete={fetchingItems} />
                 )}
 
                 {/* Insert Modal */}
@@ -50,7 +50,7 @@ export default function TermekekLibrarianPage() {
                     <Modal isOpen={isInsertOpen} isClose={() => setIsInsertOpen(false)}>
                         <InsertTermekModal
                             isClose={() => setIsInsertOpen(false)}
-                            onSubmit={fetchItems} // reload table after insert
+                            onSubmit={fetchingItems} // reload table after insert
                         />
                     </Modal>
                 )}

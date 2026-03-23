@@ -1,6 +1,8 @@
 export async function fetchComments(itemId, setComments) {
     try {
-        const res = await fetch(`http://localhost:3000/item/${itemId}/comments`);
+        const res = await fetch(`http://localhost:3000/item/${itemId}/comments`,{
+            method: "GET"
+        });
         if (!res.ok) {
             throw new Error("Comments fetch failed");
         }

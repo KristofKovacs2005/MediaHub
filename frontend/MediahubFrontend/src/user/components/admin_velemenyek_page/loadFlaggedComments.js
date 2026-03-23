@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { checkStatus, checkAuthAdminLoader } from "../../util/auth";
+import { authLoader } from "../../util/auth";
 import { decodeBuffer } from "../../util/decoder";
 
 
@@ -7,7 +7,7 @@ export function useGetReportedReviews() {
     const [report, setReport] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const token = checkAuthAdminLoader();
+    const token = authLoader({ minRole: 5 });
 
     useEffect(() => {
         async function fetchReportedReviews() {

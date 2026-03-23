@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { fetchItems } from "../../functions/items";
-import { fetchOrders } from "../../functions/orders";
+import { fetchOrders } from "../../functions/getAllOrdersUser";
 import OrderCard from "../carouselCards/orderCard";
 import "./termekekSection.css";
 import TermekCard from "../carouselCards/termekCard";

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { decodeBuffer } from "../../functions/decoder";
+import { decodeBuffer } from "../../util/decoder";
 import "./orderCard.css";
 
 export default function OrderCard({ order }) {

@@ -1,7 +1,7 @@
-import { checkAuthKonyvtarosOrAdminLoader } from "../../../util/auth";
+import {authLoader} from "../../../util/auth";
 
 export function useDeleteTermek() {
-    const token = checkAuthKonyvtarosOrAdminLoader();
+    const token = authLoader({ minRole: 4 }); // 4 for konyvtaros, 5 for admin
 
     async function deleteTermek(i_id) {
         await fetch(`http://localhost:3000/items/${i_id}`, {

@@ -3,7 +3,7 @@ import GuestBody from "../components/homePageBody/GuestBody.jsx";
 import AdminBody from "../components/homePageBody/AdminBody.jsx";
 import UserBody from "../components/homePageBody/UserBody.jsx";
 import LibrarianBody from "../components/homePageBody/LibrarianBody.jsx";
-import Footer from "../components/footer/footer.jsx";
+import {Footer} from "../components/footer/footer.jsx";
 
 export default function HomePage() {
     const userRole = localStorage.getItem('status') || 'guest';

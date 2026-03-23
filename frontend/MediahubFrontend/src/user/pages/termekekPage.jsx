@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/navbar/Navbar";
-import Footer from "../components/footer/footer";
-import ItemsGrid from "../components/termekek/ItemsGrid";
+import {Footer} from "../components/footer/footer.jsx";
+import ItemsGrid from "../components/sections/item-grid.jsx";
 import FilterBar from "../components/filter/filterBar.jsx";
 import { fetchItems } from "../functions/items";
 import { fetchTags } from "../functions/getAllTags";
 import { applyFilters } from "../functions/useFilter";
 import {sortItemsAZ, sortItemsZA} from "../functions/sortingItems.js"
+import RenderNavbar from "../components/navbar/renderNavbar.jsx";
 
 const TermekekPage = () => {
   const [tags, setTags] = useState([]);
@@ -67,7 +67,7 @@ const TermekekPage = () => {
 
   return (
     <div className="termekek-page">
-      <Navbar />
+      <RenderNavbar/>
       
       <FilterBar
         searchInput={searchInput}

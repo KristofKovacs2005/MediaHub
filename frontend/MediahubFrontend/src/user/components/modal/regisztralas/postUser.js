@@ -27,7 +27,7 @@ export default async function postUser(event) {
         password: password,
         status: 1 // Default status
     };
-
+    console.log(JSON.stringify(userData));
     try {
         const response = await fetch(url, {
             method: "POST",

@@ -1,7 +1,28 @@
+import { authLoader, getAuthStatus } from "../../functions/tokenLoader";
+import { getAllOrdersUser } from "../../functions/getAllOrdersUser";
 export async function insertOrder(p_id, return_date) {
+    const status = getAuthStatus();
+
+    if (status === null) {
+        throw new Error("Vendég nem kölcsönözhet!");
+    }
+
+    const MAX = (status === 2) ? 1 : 3;
+
+    // lekérjük a user összes aktív rendelését
+    const orders = await getAllOrdersUser();
+    const activeOrders = orders.filter(o => [1, 2, 6].includes(o.status));// csak az aktív rendeléseket számoljuk, a visszahozottakat nem
+
+    if (activeOrders.length >= MAX) {// ha elérte a limitet, nem engedélyezzük a kölcsönzést
+        throw new Error("Elérted a maximális kölcsönzési limitet!");// a 2-es státuszú user csak 1 darab kölcsönzést tarthat egyszerre, a 1-es státuszú user pedig 3-at
+    }
+
     try {
-        const token = localStorage.getItem("authToken");
-        const date = new Date().toLocaleDateString("en-CA");
+        // csak bejelentkezett user lehet (1 vagy 2)
+        const token = await authLoader({ minRole: 1 }); //a minimum role 1, mert a 2-es státuszú user is kölcsönözhet, csak kevesebbet
+
+        const date = new Date().toLocaleDateString("en-CA"); // amiatt angol és észak-amerikai formátum, hogy a backend helyesen értelmezze a dátumot (YYYY-MM-DD)
+
         const res = await fetch("http://localhost:3000/orders", {
             method: "POST",
             headers: {

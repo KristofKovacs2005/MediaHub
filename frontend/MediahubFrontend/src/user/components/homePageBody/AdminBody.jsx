@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchUsers } from "../../functions/users";
+import { fetchUsers } from "../../functions/getAllUsers.js";
 import { Header } from "../header/header";
 import ReportedReviews from "../sections/reportedReviews";
 export default function AdminBody() {

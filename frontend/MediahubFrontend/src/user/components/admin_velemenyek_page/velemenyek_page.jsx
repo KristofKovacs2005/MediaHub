@@ -1,16 +1,16 @@
-import { checkStatus } from "../../util/auth";
+import { authLoader } from "../../util/auth";
 import FlaggedCommentsTable from "./flaggedCommentsTable";
 import { Footer } from "../footer/footer";
-import { renderNavbar } from "../navbar/renderNavbar";
+import  RenderNavbar  from "../navbar/renderNavbar";
 
 export default function FlaggedCommentsPage() {
-    const status = checkStatus();
+    const status = authLoader({ minRole: 5 });
 
     // Only admins can see this page
     if (status !== 5) {
         return (
             <div className="pageMainDiv">
-                {renderNavbar()}
+                <RenderNavbar />
                 <div className="pageBelowNavbar">
                     <p>Hozzáférés megtagadva</p>
                 </div>
@@ -21,7 +21,7 @@ export default function FlaggedCommentsPage() {
 
     return (
         <div className="pageMainDiv">
-            {renderNavbar()}
+            <RenderNavbar />
 
             <div className="pageBelowNavbar">
                 <h2>Bejelentett vélemények</h2>

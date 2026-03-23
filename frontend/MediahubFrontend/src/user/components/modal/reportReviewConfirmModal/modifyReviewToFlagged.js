@@ -1,4 +1,4 @@
-import { getAuthToken, checkStatus } from "../../../util/auth";
+import { getAuthToken, getAuthStatus } from "../../../util/auth";
 
 export default async function modifyReviewToFlagged(r_id) {
     try {
@@ -8,7 +8,7 @@ export default async function modifyReviewToFlagged(r_id) {
             return;
         }
 
-        const status = checkStatus();
+        const status = getAuthStatus();
         if(status === 3 ){
             alert("Ez a felhasználó fel van függesztve");
             return;

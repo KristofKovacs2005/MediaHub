@@ -1,6 +1,6 @@
-import { checkAuthAdminLoader } from "../../../util/auth";
+import { authLoader } from "../../../util/auth";
 export function useDeleteReportedReview() {
-    const token = checkAuthAdminLoader();
+    const token = authLoader({ minRole: 5 });
 
     async function deleteReview(r_id) {
         await fetch(`http://localhost:3000/reviews/${r_id}`, {

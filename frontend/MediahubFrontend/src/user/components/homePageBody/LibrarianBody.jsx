@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
-import Header from "../sections/header";
+import { Header } from "../header/header";
 import fetchOrdersLibrarian from "../../functions/getAllOrdersLibrarian"
-
-import { useEffect, useState } from "react";
-import Header from "../sections/header";
-import fetchOrdersLibrarian from "../../functions/getAllOrdersLibrarian";
-import { PieChart } from "../components/PieChart";
 
 export default function LibrarianBody() {
     const [orders, setOrders] = useState([]);
