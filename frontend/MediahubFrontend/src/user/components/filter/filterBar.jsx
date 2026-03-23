@@ -1,50 +1,71 @@
+import { useState } from "react";
 import "./filterBar.css";
 
 const FilterBar = ({
     searchInput,
     setSearchInput,
     tags,           // all available tags
-    selectedTags,   // tags currently applied / selected
-    showDropdown,
-    setShowDropdown,
     handleSearch
 }) => {
+    const [selectedTags, setSelectedTags] = useState([]); // state for selected tags
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    // add tag to selectedTags
     const handleTagClick = (tag) => {
-        if (!searchInput.includes(`tag:${tag}`)) {
-            setSearchInput((prev) => `${prev} tag:${tag}`.trim());
+        if (!selectedTags.includes(tag)) {
+            setSelectedTags((prev) => [...prev, tag]);
         }
         setShowDropdown(false);
     };
 
+    // remove tag from selectedTags
     const handleTagRemove = (tag) => {
-        setSearchInput((prev) => prev.replace(new RegExp(`tag:${tag}\\b`, "g"), "").trim());
+        setSelectedTags((prev) => prev.filter((t) => t !== tag));
+    };
+
+    // update the search input with free text + tags when submitting
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const tagString = selectedTags.map((t) => `tag:${t}`).join(" ");
+        setSearchInput(`${searchInput} ${tagString}`.trim());
+        handleSearch(e);
     };
 
     return (
         <div className="filter-bar">
-            <form onSubmit={handleSearch} className="filter-form">
+            <form onSubmit={onSubmit} className="filter-form">
                 <input
                     type="text"
-                    placeholder="Keresés: author:John tag:Science ..."
+                    placeholder="Keresés: author:John ..."
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                 />
 
                 <div className="tags-input">
-                    {/* Show currently selected tags */}
+                    {/* selected tags as chips */}
                     {selectedTags.map((tag) => (
                         <span key={tag} className="tag-chip">
                             {tag}
-                            <button type="button" onClick={() => handleTagRemove(tag)}>×</button>
+                            <button
+                                type="button"
+                                className="removeTagBtn"
+                                onClick={() => handleTagRemove(tag)}
+                            >
+                                ×
+                            </button>
                         </span>
                     ))}
 
                     {/* Dropdown toggle */}
-                    <button type="button" onClick={() => setShowDropdown((v) => !v)}>
+                    <button
+                        type="button"
+                        className="tagRollDownBtn"
+                        onClick={() => setShowDropdown((v) => !v)}
+                    >
                         Taggek ▼
                     </button>
 
-                    {/* Dropdown list of all tags */}
+                    {/* Dropdown list */}
                     {showDropdown && (
                         <div className="tags-dropdown">
                             {tags.map((tag) => {
@@ -67,7 +88,9 @@ const FilterBar = ({
                     )}
                 </div>
 
-                <button type="submit" className="search-btn">🔍</button>
+                <button type="submit" className="search-btn">
+                    🔍
+                </button>
             </form>
         </div>
     );

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { fetchUsers } from "../../functions/getAllUsers.js";
 import { Header } from "../header/header";
 import ReportedReviews from "../sections/reportedReviews";
+import { BarChart } from "../charts/barChart/barChart.jsx";
+import { useGetReportedReviews } from "../admin_velemenyek_page/loadFlaggedComments.js";
 export default function AdminBody() {
     const [users, setUsers] = useState([]);
     const { report, loading, error } = useGetReportedReviews();

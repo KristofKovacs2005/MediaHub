@@ -14,7 +14,10 @@ export function getAuthToken() {
     if (!token) return null;
 
     const duration = getTokenDuration();
-    if (duration < 0) return null; // expired treated as no token
+    if (duration < 0){ 
+        localStorage.clear(); // clear expired token and user info
+        redirect("/"); // token expired, redirect to frontpage
+        return null}; // expired treated as no token
     return token;
 }
 

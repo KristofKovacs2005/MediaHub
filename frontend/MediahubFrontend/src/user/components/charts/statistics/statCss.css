@@ -17,6 +17,8 @@
 .stat-content {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin: auto;
 }
 
 .stat-value {
@@ -42,4 +44,6 @@
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 20px;
     padding: 20px;
+    margin: auto;
+    align-items: center;
 }

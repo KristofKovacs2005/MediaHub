@@ -9,10 +9,10 @@ export function StatCard({ value, title, image, color }) {
             }}
         >
             <div className="stat-content">
+                {image && <img src={image} alt={title} className="stat-image" />}
                 <p className="stat-value">{value}</p>
                 <p className="stat-title">{title}</p>
             </div>
-            {image && <img src={image} alt={title} className="stat-image" />}
         </div>
     );
 }
