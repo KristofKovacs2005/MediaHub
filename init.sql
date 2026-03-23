@@ -86,8 +86,32 @@ INSERT INTO `items` (`i_id`, `author`, `i_name`, `img_url`, `i_description`, `am
 (6, 'Quentin Tarantino', 'Ponyvaregény', '/uploads/pr.jpg', 'A Ponyvaregény (eredeti cím: Pulp Fiction) 1994-ben bemutatott amerikai bűnügyi film Quentin Tarantino rendezésében.', 1),
 (7, 'Christopher Nolan', 'Csillagok között', '/uploads/ck.jpg', 'A Csillagok között (eredeti cím: Interstellar) 2014-ben bemutatott sci-fi film, amely felvonultatja a 21. századi elméleti fizika elképzeléseit a világűrről, a téridőről, valamint felvázolja a zsákutcába jutott emberiség lehetséges jövőjét.', 1),
 (8, 'Francis Ford Coppola', 'A keresztapa', '/uploads/ka.png', 'A Keresztapa (The Godfather) Mario Puzo azonos című regényéből készült 1972-ben bemutatott világhírű filmdráma Francis Ford Coppola rendezésében Marlon Brando, Al Pacino, Robert Duvall és James Caan főszereplésével.', 1),
-(9, '	Frank Darabont', 'A remény rabjai', '/uploads/arr.jpeg', 'A remény rabjai (eredeti cím: The Shawshank Redemption) 1994-ben bemutatott amerikai filmdráma, melyet Frank Darabont írt és rendezett. A forgatókönyv alapjául Stephen King azonos című regénye szolgált.', 0);
-
+(9, '	Frank Darabont', 'A remény rabjai', '/uploads/arr.jpeg', 'A remény rabjai (eredeti cím: The Shawshank Redemption) 1994-ben bemutatott amerikai filmdráma, melyet Frank Darabont írt és rendezett. A forgatókönyv alapjául Stephen King azonos című regénye szolgált.', 0)
+(10, 'J. K. Rowling', 'Harry Potter és a bölcsek köve', '/uploads/hp1.jpg', 'Az első rész a híres Harry Potter sorozatból, mely bemutatja Harry és barátai első kalandját a Roxfortban.', 1),
+(11, 'J. K. Rowling', 'Harry Potter és a titkok kamrája', '/uploads/hp2.jpg', 'Harry második évét követi a Roxfortban, ahol új veszélyekkel és rejtélyekkel találkozik.', 1),
+(12, 'George Orwell', '1984', '/uploads/1984.jpg', 'George Orwell disztópikus regénye a totalitárius államok elnyomásáról és a személyes szabadság elvesztéséről.', 1),
+(13, 'Aldous Huxley', 'Szép új világ', '/uploads/brave.jpg', 'A jövő utópisztikus társadalma, amelyben az emberek génjeit és életét előre meghatározzák.', 1),
+(14, 'F. Scott Fitzgerald', 'A nagy Gatsby', '/uploads/gatsby.jpg', 'A 1920-as évek amerikai társadalmát bemutató regény a szerelemről, gazdagságról és árulásról.', 1),
+(15, 'Harper Lee', 'Ne bántsátok a feketerigót!', '/uploads/mockingbird.jpg', 'Egy amerikai déli kisváros története, a rasszizmus és az igazságosság kérdéseivel.', 1),
+(16, 'Stanley Kubrick', '2001: Űrodüsszeia', '/uploads/2001.jpg', 'Stanley Kubrick 1968-as sci-fi filmje, amely az emberiség és a mesterséges intelligencia kapcsolatát vizsgálja.', 1),
+(17, 'Peter Jackson', 'A Gyűrűk Ura: A Gyűrű Szövetsége', '/uploads/lotr1.jpg', 'A fantasy trilógia első része, ahol a hobbitok, varázslók és harcosok együtt indulnak megmenteni Középföldét.', 1),
+(18, 'Peter Jackson', 'A Gyűrűk Ura: A két torony', '/uploads/lotr2.jpg', 'A második részben folytatódik a gyűrű pusztító erejének megállítása a harcosok és hobbitok által.', 1),
+(19, 'Peter Jackson', 'A Gyűrűk Ura: A király visszatér', '/uploads/lotr3.jpg', 'A trilógia befejező része, ahol a végső harc a Sötét Úr ellen lezárul.', 1),
+(20, 'Suzanne Collins', 'Az éhezők viadala', '/uploads/hunger1.jpg', 'Katniss Everdeen életét követhetjük, aki túlél a diktatórikus Panem országában a halálos játékokban.', 1),
+(21, 'Suzanne Collins', 'Az éhezők viadala: Futótűz', '/uploads/hunger2.jpg', 'Katniss a halálos viadal után a felkelés szimbólumává válik, és folytatódik a harc a diktatúra ellen.', 1),
+(22, 'Suzanne Collins', 'Az éhezők viadala: A kiválasztott', '/uploads/hunger3.jpg', 'A sorozat befejező része, amelyben Katniss és társai végső összecsapásra készülnek a Kapitólium ellen.', 1),
+(23, 'J. R. R. Tolkien', 'A Hobbit', '/uploads/hobbit.jpg', 'Bilbó kalandjai a sárkány Smaug és a kincsek világában, amely a Gyűrűk Ura előzménye.', 1),
+(24, 'Dan Brown', 'Da Vinci-kód', '/uploads/davinci.jpg', 'Robert Langdon professzor titkok és rejtélyek után kutatva a Louvre-ban és egész Európában.', 1),
+(25, 'Dan Brown', 'Az elveszett jel', '/uploads/lostsymbol.jpg', 'Langdon professzor Washington D.C.-ben folytatja a titkok feltárását, szimbólumok és összeesküvések közepette.', 1),
+(26, 'Jules Verne', '20 000 mérföld a tenger alatt', '/uploads/20000.jpg', 'Kapcsolódó sci-fi kaland a tengerek mélyén, a Nautilus kapitányával és legénységével.', 1),
+(27, 'Mary Shelley', 'Frankenstein', '/uploads/frankenstein.jpg', 'A klasszikus horrorregény a tudomány határairól és az ember teremtő erejéről.', 1),
+(28, 'Bram Stoker', 'Drakula', '/uploads/dracula.jpg', 'A híres vámpír történet, amely a misztikum és a horror alapműve.', 1),
+(29, 'H. G. Wells', 'Az időgép', '/uploads/time.jpg', 'Egy tudós időutazásai a jövőben, és az emberiség sorsa a távoli világokban.', 1),
+(30, 'Leo Tolstoy', 'Háború és béke', '/uploads/warpeace.jpg', 'A nagy klasszikus, amely a Napóleoni háborúk és az orosz arisztokrácia történetét meséli el.', 1),
+(31, 'Victor Hugo', 'A párizsi Notre-Dame', '/uploads/notredame.jpg', 'Quasimodo és Esmeralda tragikus története a középkori Párizsban.', 1),
+(32, 'Alexandre Dumas', 'A három testőr', '/uploads/3musketiers.jpg', 'A kalandregény D’Artagnan és három testőre küzdelmei a francia királyi udvarban.', 1),
+(33, 'Homer', 'Iliász', '/uploads/iliad.jpg', 'Az ókori görög eposz a trójai háború eseményeiről, hőseiről és istenek beavatkozásairól.', 1),
+(34, 'Homer', 'Odüsszeia', '/uploads/odyssey.jpg', 'Odüsszeusz hazatérési útja és kalandjai a mitológiai világban.', 1);
 -- --------------------------------------------------------
 
 --
@@ -118,7 +142,6 @@ INSERT INTO `item_tag` (`i_id`, `t_id`) VALUES
 (4, 1),
 (4, 9),
 
-
 (5, 2),
 (5, 5),
 (5, 6),
@@ -140,8 +163,82 @@ INSERT INTO `item_tag` (`i_id`, `t_id`) VALUES
 
 (9, 2),
 (9, 8),
-(9, 10);
+(9, 10)
 
+(10, 1), -- Harry Potter és a bölcsek köve → book
+(10, 11), -- fantasy
+
+(11, 1),
+(11, 11),
+
+(12, 1), -- 1984 → book
+(12, 5), -- historical / dystopian
+
+(13, 1),
+(13, 5),
+
+(14, 1),
+(14, 5),
+
+(15, 1),
+(15, 5),
+
+(16, 2), -- 2001: Űrodüsszeia → movie
+(16, 9), -- sci-fi
+
+(17, 2),
+(17, 11), -- fantasy
+
+(18, 2),
+(18, 11),
+
+(19, 2),
+(19, 11),
+
+(20, 1), -- Az éhezők viadala → book
+(20, 11), -- fantasy / dystopian
+
+(21, 1),
+(21, 11),
+
+(22, 1),
+(22, 11),
+
+(23, 1),
+(23, 11),
+
+(24, 1), -- Da Vinci-kód → book
+(24, 10), -- thriller
+
+(25, 1),
+(25, 10),
+
+(26, 1),
+(26, 9), -- sci-fi
+
+(27, 1),
+(27, 4), -- horror
+
+(28, 1),
+(28, 4),
+
+(29, 1),
+(29, 9),
+
+(30, 1),
+(30, 5),
+
+(31, 1),
+(31, 5),
+
+(32, 1),
+(32, 5),
+
+(33, 1),
+(33, 5),
+
+(34, 1),
+(34, 5);
 -- --------------------------------------------------------
 
 --

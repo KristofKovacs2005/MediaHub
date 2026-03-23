@@ -1,4 +1,4 @@
-export async function fetchOrders(setOrders){
+export async function fetchOrdersUser(setOrders){
     try {
         const res = await fetch("http://localhost:3000/order", {
             method: "GET",

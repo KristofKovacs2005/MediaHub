@@ -1,21 +1,49 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchItems } from "../../functions/items";
-import { fetchOrders } from "../../functions/getAllOrdersUser";
+import { fetchOrdersUser } from "../../functions/getAllOrdersUser";
 import OrderCard from "../carouselCards/orderCard";
-import "./termekekSection.css";
 import TermekCard from "../carouselCards/termekCard";
-import { useEffect } from "react";
+import "./termekekSection.css";
+
 export function TermekekSectionUser() {
+    // State for data
     const [orders, setOrders] = useState([]);
     const [books, setBooks] = useState([]);
     const [movies, setMovies] = useState([]);
 
-    useEffect(() => {
-        fetchOrders(setOrders);
-        fetchItems({ tags: ["book"], setItems: setBooks });
-        fetchItems({ tags: ["movie"], setItems: setMovies });
-    }, []);
+    // Loading states
+    const [loadingOrders, setLoadingOrders] = useState(false);
+    const [loadingBooks, setLoadingBooks] = useState(false);
+    const [loadingMovies, setLoadingMovies] = useState(false);
 
+    // Error states
+    const [errorOrders, setErrorOrders] = useState(null);
+    const [errorBooks, setErrorBooks] = useState(null);
+    const [errorMovies, setErrorMovies] = useState(null);
+
+    useEffect(() => {
+    // Fetch orders
+    setLoadingOrders(true);
+    fetchOrdersUser(setOrders)
+        .catch(err => setErrorOrders(err.message || "Hiba történt az rendelések betöltésekor"))
+        .finally(() => setLoadingOrders(false));
+
+    // Fetch books
+    fetchItems({
+        tags: ["book"],
+        setItems: setBooks,
+        setLoading: setLoadingBooks,
+        setError: setErrorBooks
+    });
+
+    // Fetch movies
+    fetchItems({
+        tags: ["movie"],
+        setItems: setMovies,
+        setLoading: setLoadingMovies,
+        setError: setErrorMovies
+    });
+}, []);
 
     return (
         <div className="termekek-section">
@@ -23,32 +51,41 @@ export function TermekekSectionUser() {
                 <h2>Kölcsönzött termékek</h2>
                 <div className="Carousel">
                     <div className="group">
-                        {orders.length > 0 ? (
+                        {loadingOrders ? (
+                            <div className="loading">Betöltés...</div>
+                        ) : errorOrders ? (
+                            <div className="error">{errorOrders}</div>
+                        ) : orders.length > 0 ? (
                             orders.map(order => <OrderCard key={order.o_id} order={order} />)
                         ) : (
                             <div className="no-orders">Nincsenek kölcsönzött termékek</div>
-                        )}</div>
-                        <div className="group" aria-hidden="true">
-                        {orders.length > 0 ? (
-                            orders.map(order => <OrderCard key={order.o_id} order={order} />)
-                        ) : (
-                            <div className="no-orders">Nincsenek kölcsönzött termékek</div>
-                        )}</div>
+                        )}
+                    </div>
                 </div>
+
                 <h2>Könyvek</h2>
                 <div className="Carousel">
                     <div className="group">
-                        {books.length > 0 ? (
+                        {loadingBooks ? (
+                            <div className="loading">Betöltés...</div>
+                        ) : errorBooks ? (
+                            <div className="error">{errorBooks}</div>
+                        ) : books.length > 0 ? (
                             books.map(book => <TermekCard key={book.i_id} item={book} />)
                         ) : (
                             <div className="no-items">Nincsenek könyvek</div>
-                        )}</div>
-
+                        )}
+                    </div>
                 </div>
+
                 <h2>Filmek</h2>
                 <div className="Carousel">
                     <div className="group">
-                        {movies.length > 0 ? (
+                        {loadingMovies ? (
+                            <div className="loading">Betöltés...</div>
+                        ) : errorMovies ? (
+                            <div className="error">{errorMovies}</div>
+                        ) : movies.length > 0 ? (
                             movies.map(movie => <TermekCard key={movie.i_id} item={movie} />)
                         ) : (
                             <div className="no-items">Nincsenek filmek</div>

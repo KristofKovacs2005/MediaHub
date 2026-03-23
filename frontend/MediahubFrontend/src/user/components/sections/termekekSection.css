@@ -7,6 +7,7 @@
     scroll-behavior: smooth;
     anchor-name: --carousel;
     scroll-snap-type: x mandatory;
+    
 }
 
 .Carousel::-webkit-scrollbar {

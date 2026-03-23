@@ -15,7 +15,7 @@ export default function TermekCard({ item }) {
             <img src={"http://localhost:3000" + img_url} alt={i_name} title={i_name} />
             <h2>{i_name}</h2>
             <p><strong>Author:</strong> {author}</p>
-            <p><strong>Description:</strong> {i_description}</p>
+            <p className="description"><strong>Description:</strong> {i_description}</p>
         </div>
     );
 }
