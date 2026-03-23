@@ -1,7 +1,6 @@
 import { Header } from "../header/header";
 import { AboutUs } from "../sections/about_us";
 import {StatisticContainer} from"../charts/statistics/statisticContainer.jsx";
-import { Footer } from "../../../../../../frontend2_0/mediahubFrontend/src/components/footer/footer";
 import { fetchItems } from "../../functions/items";
 import { fetchComments } from "../../functions/getComments.js";
 import { useState, useEffect } from "react";
@@ -36,7 +35,6 @@ export default function GuestBody() {
                 <AboutUs/>
                 <StatisticContainer stats={statistics}/>
             </main>
-            <Footer />
         </div>
     );
 }

@@ -1,6 +1,6 @@
-export async function fetchOrders(setOrders){
+export async function fetchOrdersLibrarian(setOrders){
     try {
-        const res = await fetch("http://localhost:3000/order", {
+        const res = await fetch("http://localhost:3000/orders", {
             method: "GET",
             headers: { "x-access-token": localStorage.getItem("token") }
         });

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchUsers } from "../../functions/users";
 import { Header } from "../header/header";
-import { Footer } from "../footer/footer";
 import ReportedReviews from "../sections/reportedReviews";
 export function AdminBody() {
     const [users, setUsers] = useState([]);
@@ -50,7 +49,6 @@ export function AdminBody() {
                 />
                 <ReportedReviews value={report.length} />
             </main>
-            <Footer />
         </div>
     );
 }
