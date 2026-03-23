@@ -33,7 +33,7 @@ export function BarChart({ valuesArray, labelsArray, title, indexAxis, borderWid
         onClick: (event, elements) => {
           if (elements.length > 0) {
             const index = elements[0].index;
-            const clickedLabel = labels[index];
+            const clickedLabel = labelsArray[index];
             onBarClick(clickedLabel);
           }
         }

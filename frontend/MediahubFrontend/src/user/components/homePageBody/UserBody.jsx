@@ -4,7 +4,7 @@ import { TermekekSectionUser } from "../sections/termekekSection";
 
 export function UserBody() {
     return (
-        <div className="guest-body">
+        <div className="user-body">
             <Header />
             <main className="body-content">
                 <TermekekSectionUser />
