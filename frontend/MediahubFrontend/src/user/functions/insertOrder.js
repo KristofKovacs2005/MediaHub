@@ -1,5 +1,5 @@
-import { authLoader, getAuthStatus } from "../../functions/tokenLoader";
-import { getAllOrdersUser } from "../../functions/getAllOrdersUser";
+import { authLoader, getAuthStatus } from "../util/auth";
+import { fetchOrdersUser } from "./getAllOrdersUser";
 export async function insertOrder(p_id, return_date) {
     const status = getAuthStatus();
 
@@ -10,7 +10,7 @@ export async function insertOrder(p_id, return_date) {
     const MAX = (status === 2) ? 1 : 3;
 
     // lekérjük a user összes aktív rendelését
-    const orders = await getAllOrdersUser();
+    const orders = await fetchOrdersUser();
     const activeOrders = orders.filter(o => [1, 2, 6].includes(o.status));// csak az aktív rendeléseket számoljuk, a visszahozottakat nem
 
     if (activeOrders.length >= MAX) {// ha elérte a limitet, nem engedélyezzük a kölcsönzést

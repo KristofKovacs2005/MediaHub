@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { insertOrder } from "../../functions/insertOrder";
+import { insertOrder } from "../../../functions/insertOrder.js";
 
-export default function ModalRentContent({ isClose, item, refreshOrders }) {
+export default function ModalOrderInsert({ isClose, termek }) {
     const [returnDate, setReturnDate] = useState(() => {
         const date = new Date();
         date.setDate(date.getDate() + 7); // default 7 days
@@ -11,9 +11,8 @@ export default function ModalRentContent({ isClose, item, refreshOrders }) {
     const handleRent = async (e) => {
         e.preventDefault();
         try {
-            await insertOrder(item.id, returnDate);
+            await insertOrder(termek.id, returnDate);
             alert("Sikeres kölcsönzés!");
-            if (refreshOrders) refreshOrders(); // optional: refresh order list
             isClose && isClose(); // close modal
         } catch (err) {
             alert(err.message);
@@ -24,7 +23,7 @@ export default function ModalRentContent({ isClose, item, refreshOrders }) {
         <div className="modalContent">
             <button className="closeButton" onClick={isClose}>X</button>
             <h2>Kölcsönzés</h2>
-            <p>Meddig szeretnéd kölcsönözni a(z) <strong>{item.name}</strong>?</p>
+            <p>Meddig szeretnéd kölcsönözni a(z) <strong>{termek.name}</strong>?</p>
             <form className="modalForm" onSubmit={handleRent}>
                 <input
                     type="date"
@@ -35,7 +34,7 @@ export default function ModalRentContent({ isClose, item, refreshOrders }) {
                 />
                 <div className="modalButtons">
                     <button type="submit">Kölcsönzés</button>
-                    <button type="button" onClick={isClose}>Vissza</button>
+                    <button type="button" onClick={isClose}>Mégse</button>
                 </div>
             </form>
         </div>

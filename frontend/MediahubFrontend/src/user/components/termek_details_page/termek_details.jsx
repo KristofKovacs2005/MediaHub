@@ -1,4 +1,8 @@
+import Modal from "../modal/modal";
+import ModalOrderInsert from "../modal/newOrders/newOrderModal";
+
 export function TermekDetails({ item, tags }) {
+	const [isOpenInsertOrder, setIsOpenInsertOrder] = useState(false);
 	const stockNumber = Number(item.amount) || 0;//biztosra megy hogy a item.amount szám legyen, ha nem parse-olható akkor 0 lesz belőle
 	const itemStock = stockNumber > 0 ? true:false; // ha stockNumber nagyobb mint 0 akkor true lesz az itemStock értéke, egyébként false
 	return (
@@ -45,6 +49,9 @@ export function TermekDetails({ item, tags }) {
 							<button className="btn btn-primary btn-lg btnBorrow" disabled={!itemStock}>
 								Kölcsönzés
 							</button>
+							<Modal isOpen={isOpenInsertOrder} isClose={() => setIsOpenInsertOrder(false)}>
+								<ModalOrderInsert isClose={() => setIsOpenInsertOrder(false)} termek={item} />
+							</Modal>
 						</div>
 					</div>
 				</div>

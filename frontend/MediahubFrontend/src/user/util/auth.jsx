@@ -3,8 +3,8 @@ import { redirect } from "react-router-dom";
 export function getTokenDuration() {
     const storedDate = localStorage.getItem('expiration');
     const now = new Date();
-
-    const duration =new Date(storedDate).getTime()- now.getTime();
+    const expirationDate = new Date(storedDate).getTime();
+    const duration = now.getTime()-expirationDate;
     console.log(duration)
     return duration;
 }
@@ -16,7 +16,7 @@ export function getAuthToken() {
     const duration = getTokenDuration();
     if (duration < 0){ 
         localStorage.clear(); // clear expired token and user info
-        redirect("/"); // token expired, redirect to frontpage
+        window.location.href = "/";
         return null}; // expired treated as no token
     return token;
 }

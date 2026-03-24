@@ -27,12 +27,13 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         loader: () => authLoader({ minRole: 1 }), // logged-in user
     },
-    /**{
+    {
         path: "/termek_details",
         element: <TermekekLibrarianPage />,
         errorElement: <ErrorPage />,
         loader: () => authLoader({ minRole: 4 }), // librarian or admin
     },
+    /**
     {
         path: "/bejelentesek",
         element: <FlaggedCommentsPage />,
