@@ -44,16 +44,6 @@ export default function TermekekLibrarianPage() {
                 {!loading && !error && (
                     <TermekTable items={items} onActionComplete={fetchingItems} />
                 )}
-
-                {/* Insert Modal */}
-                {isInsertOpen && (
-                    <Modal isOpen={isInsertOpen} isClose={() => setIsInsertOpen(false)}>
-                        <InsertTermekModal
-                            isClose={() => setIsInsertOpen(false)}
-                            onSubmit={fetchingItems} // reload table after insert
-                        />
-                    </Modal>
-                )}
             </div>
 
             {/* Footer */}
