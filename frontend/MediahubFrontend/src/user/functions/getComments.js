@@ -1,6 +1,6 @@
 export async function fetchComments(setComments) {
     try {
-        const res = await fetch(`http://localhost:3000/reviews`,{
+        const res = await fetch(`http://localhost:3000/item/${itemId}/reviews`,{
             method: "GET"
         });
         if (!res.ok) {

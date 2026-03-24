@@ -13,9 +13,9 @@ export default function TermekDetailsPage() {
 	const { id } = useParams(); // Get item_id from route parameter
 	const { item, comments, tags, loading, error } = useLoadThisItem({ id });
 	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-	const currentUserId = localStorage.getItem("userId"); // stored as string
-	const userHasCommented = currentUserId
-		? comments.some(comment => comment.u_id === Number(currentUserId))
+	const username = localStorage.getItem("username"); // stored as string
+	const userHasCommented = username
+		? comments.some(comment => comment.username === username)
 		: false;//visszatér true vagy false értékkel attól függően, hogy a user írt-e már véleményt az adott elemre
 	// Loading state
 	if (loading) {
@@ -36,7 +36,7 @@ export default function TermekDetailsPage() {
 	if (error) {
 		return (
 			<div className="detailsPageMainDiv">
-				{renderNavbar()}
+				<RenderNavbar />
 				<div className="pageBelowNavbar">
 					<div className="errorContainer">
 						<p>Hiba: {error}</p>
@@ -51,7 +51,7 @@ export default function TermekDetailsPage() {
 	if (!item) {
 		return (
 			<div className="detailsPageMainDiv">
-				{renderNavbar()}
+				<RenderNavbar />
 				<div className="pageBelowNavbar">
 					<div className="errorContainer">
 						<p>Az elem nem található.</p>
@@ -64,7 +64,7 @@ export default function TermekDetailsPage() {
 
 	return (
 		<div className="detailsPageMainDiv">
-			{renderNavbar()}
+			<RenderNavbar />
 
 			<div className="pageBelowNavbar">
 				<TermekDetails item={item} tags={tags} />

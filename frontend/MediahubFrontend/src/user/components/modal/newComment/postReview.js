@@ -13,11 +13,12 @@ export default async function postReview(itemId, stars, comment, comments, onSuc
 			alert("Ez a felhasználó fel van függesztve");
 			return;
 		}
-		const currentUserId = localStorage.getItem("userId");
+		const username = localStorage.getItem("username");
 
-		const alreadyCommented = comments.some(
-			c => String(c.u_id) === String(currentUserId)
-		);
+		const safeComments = Array.isArray(comments) ? comments : [];
+        const alreadyCommented = safeComments.some(
+            c => String(c.u_id) === String(username)
+        );
 
 		if (alreadyCommented) {
 			alert("Már írtál véleményt ehhez az elemhez!");

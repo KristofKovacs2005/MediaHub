@@ -6,7 +6,7 @@ import Modal from "../modal/modal";
 import ModalContent from "../modal/regisztralas/modalContent";
 import { useState } from "react";
 
-export function Header({ title, subtitle, cta }) {
+export function Header({ title, subtitle }) {
     const [isOpenRegisztralas, setIsOpenRegisztralas] = useState(false);
     const navigate = useNavigate();
     return (
@@ -14,11 +14,6 @@ export function Header({ title, subtitle, cta }) {
             <div className="header-content">
                 <h1 className="header-title">{title}</h1>
                 {subtitle && <p className="header-subtitle">{subtitle}</p>}
-                {cta && (
-                    <Link to={cta.link} className="header-cta-button">
-                        {cta.text}
-                    </Link>
-                )}
                 <button className="register-btn" onClick={() => setIsOpenRegisztralas(true)}>
                     Regisztrálás
                 </button>

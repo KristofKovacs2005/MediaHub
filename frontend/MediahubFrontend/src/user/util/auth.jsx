@@ -4,7 +4,7 @@ export function getTokenDuration() {
     const storedDate = localStorage.getItem('expiration');
     const now = new Date();
     const expirationDate = new Date(storedDate).getTime();
-    const duration = now.getTime()-expirationDate;
+    const duration = expirationDate - now.getTime();
     console.log(duration)
     return duration;
 }

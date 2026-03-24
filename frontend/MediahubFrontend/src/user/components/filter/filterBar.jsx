@@ -14,6 +14,7 @@ const FilterBar = ({
     const handleTagClick = (tag) => {
         if (!selectedTags.includes(tag)) {
             setSelectedTags((prev) => [...prev, tag]);
+            setSearchInput((prev) => `${prev} tag:${tag}`.trim()); // append tag to input
         }
         setShowDropdown(false);
     };
@@ -21,14 +22,16 @@ const FilterBar = ({
     // remove tag from selectedTags
     const handleTagRemove = (tag) => {
         setSelectedTags((prev) => prev.filter((t) => t !== tag));
+        setSearchInput((prev) => prev.replace(`tag:${tag}`, "").trim()); // remove tag from input
     };
 
     // update the search input with free text + tags when submitting
     const onSubmit = (e) => {
-        e.preventDefault();
-        const tagString = selectedTags.map((t) => `tag:${t}`).join(" ");
-        setSearchInput(`${searchInput} ${tagString}`.trim());
-        handleSearch(e);
+    e.preventDefault();
+    const tagString = selectedTags.map((t) => `tag:${t}`).join(" ");
+    const fullSearch = `${searchInput} ${tagString}`.trim();
+    setSearchInput(fullSearch);
+    handleSearch(fullSearch); // <-- pass string, not event
     };
 
     return (

@@ -6,6 +6,7 @@ import { fetchItems } from "../functions/items";
 import { fetchTags } from "../functions/getAllTags";
 import { sortItemsAZ, sortItemsZA } from "../functions/sortingItems.js";
 import RenderNavbar from "../components/navbar/renderNavbar.jsx";
+import { applyFilters } from "../functions/useFilter.js";
 import "./dontBeInNavbar.css";
 
 const TermekekPage = () => {
@@ -28,11 +29,38 @@ const TermekekPage = () => {
     : sortItemsZA(items);
 
   // Handle search submission
-  const handleSearch = (input) => {
-    // input comes directly from FilterBar
-    // you can parse tags or author here if needed
-    fetchItems({ setItems, setLoading, setError, search: input });
-  };
+  // Handle search submission
+const handleSearch = (input) => {
+  // parse tags and author from the search string
+  const tagRegex = /tag:([^\s]+)/gi;
+  const authorRegex = /author:([^\s]+)/i;
+
+  let tagsArray = [];
+  let author = "";
+  let name = input;
+
+  let match;
+  while ((match = tagRegex.exec(input))) {
+    tagsArray.push(match[1]);
+  }
+
+  const authorMatch = authorRegex.exec(input);
+  if (authorMatch) author = authorMatch[1];
+
+  // remove parsed tags and author from the text search
+  name = name.replace(tagRegex, "").replace(authorRegex, "").trim();
+
+  // call your existing applyFilters helper
+  applyFilters({
+    nameFilter: name,
+    tagsFilter: tagsArray,
+    authorFilter: author,
+    setLoading,
+    setItems,
+    setError,
+    fetchFn: fetchItems,
+  });
+};
 
   return (
     <div className="termekek-page">

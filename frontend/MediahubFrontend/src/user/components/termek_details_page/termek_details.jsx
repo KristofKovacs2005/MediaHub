@@ -1,5 +1,6 @@
 import Modal from "../modal/modal";
 import ModalOrderInsert from "../modal/newOrders/newOrderModal";
+import { useState } from "react";
 
 export function TermekDetails({ item, tags }) {
 	const [isOpenInsertOrder, setIsOpenInsertOrder] = useState(false);
