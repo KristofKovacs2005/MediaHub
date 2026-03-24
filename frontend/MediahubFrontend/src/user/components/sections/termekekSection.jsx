@@ -23,8 +23,14 @@ export function TermekekSectionUser() {
 
     useEffect(() => {
     // Fetch orders
-    setLoadingOrders(true);
-    fetchOrdersUser().then(setOrders);
+    const loadOrders = async () => {
+        setLoadingOrders(true);
+        const ordersData = await fetchOrdersUser();
+        setOrders(ordersData);
+        setLoadingOrders(false);
+    };
+
+    loadOrders();
 
     // Fetch books
     fetchItems({

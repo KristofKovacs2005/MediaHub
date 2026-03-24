@@ -45,17 +45,24 @@ export default function OrderCard({ order }) {
         <div className="order-card">
             {isItReturned ? (
                 <div className="returnedOrderCard">
-                    <img src={"http://localhost:3000" + (item.img_url || "/uploads/images.jpeg")} alt={item.i_name} className="detailsImage img-fluid" />
-                    <h3>{order.i_name}</h3>
+                    <img
+                    src={"http://localhost:3000" + (item?.img_url || "/uploads/images.jpeg")}
+                    alt={item?.i_name || "Nincs név"}
+                    className="detailsImage img-fluid"
+                    />
+                    <h2>{order.i_name}</h2>
                     <p>{orderStatus[order.o_returned]}</p>
                 </div>
             ) : (
                 <div className="activeOrderCard">
-                    <img src={"http://localhost:3000" + (item.img_url || "/uploads/images.jpeg")} alt={item.i_name} className="detailsImage img-fluid" />
-                    <h3>{order.i_name}</h3>
+                    <img
+                    src={"http://localhost:3000" + (item?.img_url || "/uploads/images.jpeg")}
+                    alt={item?.i_name || "Nincs név"}
+                    className="detailsImage img-fluid"
+                    />
+                    <h2>{order.i_name}</h2>
                     <p>{orderStatus[order.o_status]}</p>
                     <p>Visszahozás határideje: {new Date(order.o_return_date).toLocaleDateString()}</p>
-                    <p><button>Visszavitel</button></p>
                 </div>
             )}
         </div>
