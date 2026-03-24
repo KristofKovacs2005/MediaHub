@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchUsers } from "../../functions/getAllUsers.js";
+import { fetchUsers } from "../../functions/users.js";
 import { Header } from "../header/header";
 import ReportedReviews from "../sections/reportedReviews";
 import { BarChart } from "../charts/barChart/barChart.jsx";

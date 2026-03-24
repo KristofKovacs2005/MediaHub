@@ -3,7 +3,7 @@ import { Footer } from "../components/footer/footer.jsx";
 import ItemsGrid from "../components/sections/item-grid.jsx";
 import FilterBar from "../components/filter/filterBar.jsx";
 import { fetchItems } from "../functions/items";
-import { fetchTags } from "../functions/getAllTags";
+import { fetchTags } from "../functions/tags.js";
 import { sortItemsAZ, sortItemsZA } from "../functions/sortingItems.js";
 import RenderNavbar from "../components/navbar/renderNavbar.jsx";
 import { applyFilters } from "../functions/useFilter.js";

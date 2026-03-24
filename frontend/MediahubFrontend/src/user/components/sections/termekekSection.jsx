@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchItems } from "../../functions/items";
-import { fetchOrdersUser } from "../../functions/getAllOrdersUser";
+import { fetchOrdersUser } from "../../functions/orders";
 import OrderCard from "../carouselCards/orderCard";
 import TermekCard from "../carouselCards/termekCard";
 import "./termekekSection.css";

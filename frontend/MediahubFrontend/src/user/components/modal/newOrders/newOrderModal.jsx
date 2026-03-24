@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { insertOrder } from "../../../functions/insertOrder.js";
+import { insertOrder } from "../../../functions/orders.js";
 
 export default function ModalOrderInsert({ isClose, termekId,termek }) {
     const [returnDate, setReturnDate] = useState(() => {
@@ -9,7 +9,7 @@ export default function ModalOrderInsert({ isClose, termekId,termek }) {
     });
 
     const handleRent = async (e) => {
-        console.log("Attempting to insert order for product ID:", termek.id, "with return date:", returnDate);
+        console.log("Attempting to insert order for product ID:", termekId, "with return date:", returnDate);
         e.preventDefault();
         try {
             await insertOrder(termekId, returnDate);

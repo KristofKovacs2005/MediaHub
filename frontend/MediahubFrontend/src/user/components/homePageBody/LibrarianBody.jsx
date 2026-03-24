@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
 import { Header } from "../header/header";
-import fetchOrdersLibrarian from "../../functions/getAllOrdersLibrarian"
+import {getOrdersForLibrarian} from "../../functions/orders.js"
 
 export default function LibrarianBody() {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        fetchOrdersLibrarian(setOrders);
+        const fetchOrders = async () => {
+            try {
+                const data = await getOrdersForLibrarian();
+                setOrders(data);
+            } catch (err) {
+                console.error(err);
+                setError(err.message || "Failed to fetch orders");
+            }
+        };
+        fetchOrders();
     }, []);
 
     // fixed structure like AdminBody
