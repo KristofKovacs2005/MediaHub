@@ -1,15 +1,18 @@
-export async function fetchOrdersUser(setOrders){
+export async function fetchOrdersUser() {
     try {
+        const token = localStorage.getItem("authToken"); // or getAuthToken()
+
         const res = await fetch("http://localhost:3000/order", {
             method: "GET",
-            headers: { "x-access-token": localStorage.getItem("token") }
+            headers: { "x-access-token": token }
         });
-        if(!res.ok){
-            throw new Error("Orders fetch failed");
-        }
+
+        if (!res.ok) throw new Error("Orders fetch failed");
+
         const orders = await res.json();
-        setOrders(orders);
+        return orders;
     } catch (error) {
         console.error("Error fetching orders:", error);
+        return [];
     }
 }

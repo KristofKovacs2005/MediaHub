@@ -72,7 +72,6 @@ export class OrderController {
     catch(error: any) {
         return response.status(error.status || 500).send(error.message || "hiba történt")
     }
-
  }
 
  async modifyOrder(request: any, response: Response) {

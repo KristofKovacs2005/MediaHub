@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { insertOrder } from "../../../functions/insertOrder.js";
 
-export default function ModalOrderInsert({ isClose, termek }) {
+export default function ModalOrderInsert({ isClose, termekId,termek }) {
     const [returnDate, setReturnDate] = useState(() => {
         const date = new Date();
         date.setDate(date.getDate() + 7); // default 7 days
@@ -9,13 +9,15 @@ export default function ModalOrderInsert({ isClose, termek }) {
     });
 
     const handleRent = async (e) => {
+        console.log("Attempting to insert order for product ID:", termek.id, "with return date:", returnDate);
         e.preventDefault();
         try {
-            await insertOrder(termek.id, returnDate);
+            await insertOrder(termekId, returnDate);
             alert("Sikeres kölcsönzés!");
             isClose && isClose(); // close modal
         } catch (err) {
             alert(err.message);
+            console.error("Error inserting order:", err);
         }
     };
 

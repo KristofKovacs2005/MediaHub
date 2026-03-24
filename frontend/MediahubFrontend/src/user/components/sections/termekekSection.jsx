@@ -24,9 +24,7 @@ export function TermekekSectionUser() {
     useEffect(() => {
     // Fetch orders
     setLoadingOrders(true);
-    fetchOrdersUser(setOrders)
-        .catch(err => setErrorOrders(err.message || "Hiba történt az rendelések betöltésekor"))
-        .finally(() => setLoadingOrders(false));
+    fetchOrdersUser().then(setOrders);
 
     // Fetch books
     fetchItems({
