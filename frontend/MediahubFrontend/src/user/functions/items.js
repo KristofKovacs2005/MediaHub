@@ -73,3 +73,33 @@ export async function handleModifyItem(id, formData) {
         throw err;
     }
 }
+
+export async function handleInsertItem(formData) {
+    try {
+        const token = localStorage.getItem("authToken");
+        const url = `http://localhost:3000/items`;
+
+        const res = await fetch(url, {
+            method: "PATCH",
+            headers: {
+                "x-access-token": token || ""
+            },
+            body: formData // FormData must be sent as-is
+        });
+
+        if (!res.ok) {
+            let errMsg = "Hiba történt";
+            throw new Error(errMsg);
+        }
+
+        const contentType = res.headers.get("content-type") || "";
+        if (contentType.includes("application/json")) {
+            return await res.json(); // returns full JSON from backend
+        }
+
+        return null; // no content
+    } catch (err) {
+        console.error("Modify item error:", err);
+        throw err;
+    }
+}
