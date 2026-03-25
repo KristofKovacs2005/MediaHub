@@ -4,10 +4,11 @@ import ConfirmNewItem from "../../../components/modal/confirmnewItem/confirmNewI
 import { handleInsertItem } from "../../../functions/items";
 import { fetchTags } from "../../../functions/tags";
 import "./termekekHozzadasaPage.css"
+import { useNavigate } from "react-router-dom";
 
 export function TermekHozzadas() {
     const [isOpenModal, setIsOpenModal] = useState(false);
-
+    const navigate = useNavigate();
     // Product inputs
     const [iName, setIName] = useState("");
     const [author, setAuthor] = useState("");
@@ -58,6 +59,7 @@ export function TermekHozzadas() {
         });
         console.log("Inserted item:", newItem);
         setIsOpenModal(false);
+        navigate("/termek_details")
     } catch (err) {
         alert(err.message || "Hiba történt");
     }

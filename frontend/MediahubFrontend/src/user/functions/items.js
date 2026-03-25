@@ -45,11 +45,11 @@ export async function handleDeleteItem(id) {
     }
 }
 
-export async function handleModifyItem(id, { iName, author, iDescription, amount, itemTags, imageFile }) {
+export async function handleModifyItem(id, { i_name, author, i_description, amount, tags, imageFile }) {
     try {
         const token = localStorage.getItem("authToken");
         const url = `http://localhost:3000/items/${id}`;
-        const formData = buildItemFormData({ iName, author, iDescription, amount, itemTags, imageFile });
+        const formData = buildItemFormData({ i_name, author, i_description, amount, tags, imageFile });
 
         const res = await fetch(url, {
             method: "PATCH",

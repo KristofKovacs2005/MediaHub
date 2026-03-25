@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/termekmodositas/:id',
-        element: <TermekModositas />,
+        element: <TermekModositas/>,
         errorElement: <ErrorPage />,
         loader: () => authLoader({ minRole: 4 })
     }

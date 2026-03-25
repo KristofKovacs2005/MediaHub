@@ -16,12 +16,9 @@ export default function TermekRow({ termek, onActionComplete }) {
             </td>
             <td>
                 {/* Use Link for navigation */}
-                <Link
-                    to={`/termek_details/termekmodositas/${termek.i_id}`} // <-- route to your modify page
-                    className="btn btn-primary"
-                >
-                    Módosítás
-                </Link>
+                <Link to={`/termekmodositas/${termek.i_id}`} state={{ item: termek, tags: termek.tags }} className="btn btn-primary">
+    Módosítás
+</Link>
 
                 {/* Delete button remains modal */}
                 <button className="btn btn-danger" onClick={() => setIsDeleteOpen(true)}>
