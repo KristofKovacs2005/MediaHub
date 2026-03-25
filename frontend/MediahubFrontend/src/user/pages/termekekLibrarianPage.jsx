@@ -4,6 +4,7 @@ import TermekTable from "../components/librarian_termekek_page/termekTable"; // 
 import { Footer } from "../components/footer/footer";
 import RenderNavbar from "../components/navbar/renderNavbar";
 import "../components/librarian_termekek_page/termekek_page.css"
+import { Link } from "react-router-dom";
 
 export default function TermekekLibrarianPage() {
     const [items, setItems] = useState([]);
@@ -29,12 +30,12 @@ export default function TermekekLibrarianPage() {
             <div className="pageBelowNavbar">
                 <h2>Elemek kezelése</h2>
 
-                <button
+                <Link
                     className="btn btn-success mb-3"
-                    onClick={() => setIsInsertOpen(true)}
+                    to="/ujtermek"
                 >
                     Új termék hozzáadása
-                </button>
+                </Link>
 
                 {loading && <p>Betöltés...</p>}
                 {error && <p>Hiba: {error}</p>}

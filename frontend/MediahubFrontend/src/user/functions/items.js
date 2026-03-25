@@ -1,4 +1,5 @@
 import { decodeBuffer } from "../util/decoder";
+import { buildItemFormData } from "./formDataBuilder";
 import { apiCall } from "./apiCall";
 export async function fetchItems({ name, tags, author, setLoading, setError, setItems } = {}) {
     const base = "http://localhost:3000/items";
@@ -44,62 +45,58 @@ export async function handleDeleteItem(id) {
     }
 }
 
-export async function handleModifyItem(id, formData) {
+export async function handleModifyItem(id, { iName, author, iDescription, amount, itemTags, imageFile }) {
     try {
         const token = localStorage.getItem("authToken");
         const url = `http://localhost:3000/items/${id}`;
+        const formData = buildItemFormData({ iName, author, iDescription, amount, itemTags, imageFile });
 
         const res = await fetch(url, {
             method: "PATCH",
             headers: {
                 "x-access-token": token || ""
             },
-            body: formData // FormData must be sent as-is
+            body: formData
         });
 
-        if (!res.ok) {
-            let errMsg = "Hiba történt";
-            throw new Error(errMsg);
-        }
+        if (!res.ok) throw new Error("Hiba történt az elem módosítása során");
 
         const contentType = res.headers.get("content-type") || "";
         if (contentType.includes("application/json")) {
-            return await res.json(); // returns full JSON from backend
+            return await res.json(); // full updated item JSON
         }
 
-        return null; // no content
+        return null;
     } catch (err) {
         console.error("Modify item error:", err);
         throw err;
     }
 }
 
-export async function handleInsertItem(formData) {
+export async function handleInsertItem({ iName, author, iDescription, amount, itemTags, imageFile }) {
     try {
         const token = localStorage.getItem("authToken");
         const url = `http://localhost:3000/items`;
+        const formData = buildItemFormData({ iName, author, iDescription, amount, itemTags, imageFile });
 
         const res = await fetch(url, {
-            method: "PATCH",
+            method: "POST", // must be POST for insert
             headers: {
                 "x-access-token": token || ""
             },
-            body: formData // FormData must be sent as-is
+            body: formData
         });
 
-        if (!res.ok) {
-            let errMsg = "Hiba történt";
-            throw new Error(errMsg);
-        }
+        if (!res.ok) throw new Error("Hiba történt az elem létrehozása során");
 
         const contentType = res.headers.get("content-type") || "";
         if (contentType.includes("application/json")) {
-            return await res.json(); // returns full JSON from backend
+            return await res.json(); // full inserted item JSON
         }
 
-        return null; // no content
+        return null;
     } catch (err) {
-        console.error("Modify item error:", err);
+        console.error("Insert item error:", err);
         throw err;
     }
 }

@@ -1,135 +1,117 @@
+import { useState, useEffect } from "react";
 import Modal from "../../../components/modal/modal";
-import { useState } from "react";
+import ConfirmNewItem from "../../../components/modal/confirmnewItem/confirmNewItem";
+import { handleInsertItem } from "../../../functions/items";
+import { fetchTags } from "../../../functions/tags";
+import "./termekekHozzadasaPage.css"
 
 export function TermekHozzadas() {
-	const [isOpenModal, setIsOpenModal] = useState(false);
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
-	// Empty initial state for a new product
-	const [iName, setIName] = useState(""); // termék neve
-	const [author, setAuthor] = useState(""); // szerző
-	const [iDescription, setIDescription] = useState(""); // leírás
-	const [amount, setAmount] = useState(0); // mennyiség
-	const [itemTags, setItemTags] = useState([]); // címkék
-	const [image, setImage] = useState(""); // kép URL
-	const [imageFile, setImageFile] = useState(null); // kép fájl
+    // Product inputs
+    const [iName, setIName] = useState("");
+    const [author, setAuthor] = useState("");
+    const [iDescription, setIDescription] = useState("");
+    const [amount, setAmount] = useState(0);
+    const [image, setImage] = useState("");
+    const [imageFile, setImageFile] = useState(null);
+    const [error, setError] = useState(null)
 
-	const itemStock = amount > 0;
+    // Tag state
+    const [availableTags, setAvailableTags] = useState([]); // local state
+    const [selectedTags, setSelectedTags] = useState([]);
 
-	// Tag handlers
-	const handleTagChange = (index, value) => {
-		const newTags = [...itemTags];
-		newTags[index] = value;
-		setItemTags(newTags);
-	};
 
-	const addTag = () => setItemTags([...itemTags, ""]);
-	const removeTag = (index) => setItemTags(itemTags.filter((_, i) => i !== index));
+    useEffect(() => {
+        const getTags = async () => {
+            await fetchTags(setAvailableTags, setError);
+        };
 
-	// Image handler
-	const handleImageChange = (e) => {
-		const file = e.target.files[0];
-		if (file) {
-			setImageFile(file);
-			setImage(URL.createObjectURL(file));
-		}
-	};
+        getTags();
+    }, []);
 
-	return (
-		<section className="detailsSection">
-			<div className="container-lg">
-				<div className="row g-4 align-items-start">
-					{/* Image Column */}
-					<div className="col-lg-4 col-md-5 d-flex flex-column align-items-center">
-						<img 
-							src={image || "/uploads/images.jpeg"} 
-							alt="Termék képe" 
-							className="detailsImage img-fluid mb-3"
-						/>
-						<input 
-							type="file" 
-							accept="image/*" 
-							onChange={handleImageChange} 
-							className="form-control"
-						/>
-					</div>
+    const handleTagClick = (tag) => {
+        if (!selectedTags.includes(tag)) setSelectedTags((prev) => [...prev, tag]);
+    };
 
-					{/* Details Column */}
-					<div className="col-lg-8 col-md-7">
-						{/* Name input */}
-						<input
-							type="text"
-							className="form-control mb-3"
-							value={iName}
-							onChange={(e) => setIName(e.target.value)}
-							placeholder="Termék neve"
-						/>
+    const handleTagRemove = (tag) => {
+        setSelectedTags((prev) => prev.filter((t) => t !== tag));
+    };
 
-						{/* Author input */}
-						<input
-							type="text"
-							className="form-control mb-2"
-							value={author}
-							onChange={(e) => setAuthor(e.target.value)}
-							placeholder="Szerző"
-						/>
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            setImage(URL.createObjectURL(file));
+        }
+    };
 
-						{/* Description input */}
-						<textarea
-							className="form-control mb-3"
-							value={iDescription}
-							onChange={(e) => setIDescription(e.target.value)}
-							placeholder="Leírás"
-							rows={4}
-						/>
+    const handleSubmit = async () => {
+    try {
+        const newItem = await handleInsertItem({
+            i_name: iName,           // snake_case for DB
+            author,
+            i_description: iDescription,
+            amount,
+            itemTags: selectedTags,  // make sure backend expects array of tag IDs or names
+            imageFile
+        });
+        console.log("Inserted item:", newItem);
+        setIsOpenModal(false);
+    } catch (err) {
+        alert(err.message || "Hiba történt");
+    }
+};
 
-						{/* Amount input */}
-						<input
-							type="number"
-							className="form-control mb-3"
-							value={amount}
-							onChange={(e) => setAmount(Number(e.target.value))}
-							min={0}
-							placeholder="Mennyiség"
-						/>
-						<p>
-							{itemStock ? (
-								<span className="text-success">Raktáron: {amount} db</span>
-							) : (
-								<span className="text-danger">Nincs raktáron</span>
-							)}
-						</p>
+    return (
+        <section className="detailsSection">
+            <div className="container-lg">
+                <div className="row g-4 align-items-start">
+                    {/* Image column */}
+                    <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center">
+                        <img src={image || "/uploads/images.jpeg"} alt="Termék" className="detailsImage img-fluid mb-3" />
+                        <input type="file" accept="image/*" onChange={handleImageChange} className="form-control" />
+                    </div>
 
-						{/* Tags */}
-						<div className="mb-3">
-							{itemTags.map((tag, index) => (
-								<div key={index} className="d-flex mb-2">
-									<input
-										type="text"
-										className="form-control me-2"
-										value={tag}
-										onChange={(e) => handleTagChange(index, e.target.value)}
-										placeholder="Tag"
-									/>
-									<button type="button" className="btn btn-danger" onClick={() => removeTag(index)}>
-										X
-									</button>
-								</div>
-							))}
-							<button type="button" className="btn btn-secondary btn-sm" onClick={addTag}>
-								Új tag hozzáadása
-							</button>
-						</div>
+                    {/* Details column */}
+                    <div className="col-lg-8 col-md-7">
+                        <input type="text" className="form-control mb-3" value={iName} onChange={(e) => setIName(e.target.value)} placeholder="Termék neve" />
+                        <input type="text" className="form-control mb-2" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Szerző" />
+                        <textarea className="form-control mb-3" value={iDescription} onChange={(e) => setIDescription(e.target.value)} placeholder="Leírás" rows={4} />
+                        <input type="number" className="form-control mb-3" value={amount} onChange={(e) => setAmount(Number(e.target.value))} min={0} placeholder="Mennyiség" />
 
-						{/* Modal */}
-						<Modal isOpen={isOpenModal} isClose={() => setIsOpenModal(false)}>
-							<div className="p-3">
-								<h5>Modal tartalom</h5>
-								<p>Itt bármit megjeleníthetsz.</p>
-							</div>
-						</Modal>
-					</div>
-				</div>
-			</div>
-		</section>
-	);
+                        {/* Tag box */}
+                        {/* Tag box */}
+                        <div className="tags-box">
+                            {availableTags.map(tagObj => (
+                                <button key={tagObj.t_id} className="tags" type="button" onClick={() => handleTagClick(tagObj.t_name)}>
+                                    {tagObj.t_name}  {/* <-- THIS is the string, not the object */}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Selected tags */}
+                        <div className="selected-tags mb-3">
+                            {selectedTags.map((tag) => (
+                                <span key={tag} className="tag-chip">
+                                    {tag}
+                                    <button type="button" className="removeTagBtn" onClick={() => handleTagRemove(tag)}>×</button>
+                                </span>
+                            ))}
+                        </div>
+
+                        <button className="btn btn-success" onClick={() => setIsOpenModal(true)}>Új termék hozzáadása</button>
+
+                        <Modal isOpen={isOpenModal} isClose={() => setIsOpenModal(false)}>
+                            <ConfirmNewItem
+                                termek={{ i_name: iName }}
+                                isClose={() => setIsOpenModal(false)}
+                                onConfirm={handleSubmit}
+                            />
+                        </Modal>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
 }
