@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../../components/modal/modal";
 import ConfirmModifyItem from "../../../components/modal/confirmModifyItem/confirmModifyItem.jsx";
 import { handleModifyItem } from "../../../functions/items";
@@ -8,7 +8,7 @@ export function TermekModositas() {
     const { id } = useParams() || {};
 	const location = useLocation();
     const { item, tags } = location.state || {};
-
+	const navigate = useNavigate()
     const [iName, setIName] = useState(item?.i_name || "");
     const [author, setAuthor] = useState(item?.author || "");
     const [iDescription, setIDescription] = useState(item?.i_description || "");
@@ -60,6 +60,7 @@ export function TermekModositas() {
             });
             alert("Sikeres módosítás!");
             setIsOpenModal(false);
+			navigate("/termek_details")
         } catch (err) {
             alert(err.message || "Hiba történt");
         }
@@ -72,7 +73,7 @@ export function TermekModositas() {
                     {/* Image column */}
                     <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center">
                         <img
-                            src={"http://localhost:3000" + image}
+                            src={image?"http://localhost:3000" + image:image}
                             alt={iName}
                             className="detailsImage img-fluid mb-3"
                         />

@@ -11,10 +11,9 @@ export default function TermekTable({ items, onActionComplete }) {
                 <tr>
                     <th className="functional_cell">Név</th>
                     <th className="functional_cell">Szerző/Rendező</th>
-                    <th className="functional_cell">Leírás</th>
                     <th className="functional_cell">Tagek</th>
-                    <th className="functional_cell">Kép</th>
-                    <th className="functional_cell">Műveletek</th>
+                    <th className="functional_cell">Raktáron</th>
+                    <th className="functional_cell" colSpan={2}>Műveletek</th>
                 </tr>
             </thead>
             <tbody>

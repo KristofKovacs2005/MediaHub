@@ -36,9 +36,10 @@ export async function fetchItems({ name, tags, author, setLoading, setError, set
 
 export async function handleDeleteItem(id) {
     try {
+        console.log(id)
         const token = localStorage.getItem("authToken")
         const url = `http://localhost:3000/items/${id}`;
-        const res = await apiCall(url, "DELETE",null,token)
+        return await apiCall(url, "DELETE",null,token);
     } catch (err) {
         console.error(err);
         alert("Váratlan hiba történt");
