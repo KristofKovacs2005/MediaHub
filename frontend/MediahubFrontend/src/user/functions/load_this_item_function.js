@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { tokenLoader } from "../../util/auth";
-import { decodeBuffer } from "../../util/decoder";
+import { tokenLoader } from "../util/auth";
+import { decodeBuffer } from "../util/decoder";
 
 export function useLoadThisItem({ id }) {
 	const [item, setItem] = useState(null);

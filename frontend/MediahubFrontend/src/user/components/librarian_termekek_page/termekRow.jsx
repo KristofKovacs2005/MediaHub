@@ -10,7 +10,6 @@ export default function TermekRow({ termek, onActionComplete }) {
         <tr>
             <td>{termek.i_name}</td>
             <td>{termek.author}</td>
-            <td>{termek.tags}</td>
             {termek.amount > 0 ? (
                 <td>{termek.amount}</td>
             ):(<td>Nincs raktáron</td>)}

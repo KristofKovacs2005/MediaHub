@@ -5,8 +5,8 @@ import TermekekPage from './user/pages/termekekPage.jsx';
 import TermekDetailsPage from './user/components/termek_details_page/termek_details_page';
 import TermekekLibrarianPage from './user/pages/termekekLibrarianPage.jsx';
 import { ErrorPage } from './user/pages/errorPage.jsx';
-import { TermekHozzadas } from './user/pages/childPages/termekekHozzaAdasa/termekekHozzadasaPage.jsx';
-import { TermekModositas } from './user/pages/childPages/termekekModositas/termekekModositasPage.jsx';
+import { TermekHozzadas } from './user/pages/termekekHozzaAdasa/termekekHozzadasaPage.jsx';
+import { TermekModositas } from './user/pages/termekekModositas/termekekModositasPage.jsx';
 
 export const router = createBrowserRouter([
     {

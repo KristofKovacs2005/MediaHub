@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Modal from "../../../components/modal/modal";
-import ConfirmNewItem from "../../../components/modal/confirmnewItem/confirmNewItem";
-import { handleInsertItem } from "../../../functions/items";
-import { fetchTags } from "../../../functions/tags";
+import Modal from "../../components/modal/modal";
+import ConfirmNewItem from "../../components/modal/confirmnewItem/confirmNewItem";
+import { handleInsertItem } from "../../functions/items";
+import { fetchTags } from "../../functions/tags";
 import "./termekekHozzadasaPage.css"
 import { useNavigate } from "react-router-dom";
 

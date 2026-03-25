@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { useLoadThisItem } from "./load_this_item_function";
+import { useLoadThisItem } from "../../functions/load_this_item_function";
 import { TermekDetails } from "./termek_details";
 import { CommentsSection } from "./commentsSection";
 import { Footer } from "../footer/footer";

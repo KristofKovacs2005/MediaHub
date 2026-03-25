@@ -1,4 +1,4 @@
-import  TermekRow from "./termekRow";
+import  OrderRow from "./orderRow";
 
 export default function TermekTable({ items, onActionComplete }) {
     if (!items || items.length === 0) {
@@ -9,15 +9,15 @@ export default function TermekTable({ items, onActionComplete }) {
         <table className="functional_cell-table table table-striped">
             <thead>
                 <tr>
-                    <th className="functional_cell">Név</th>
-                    <th className="functional_cell">Szerző/Rendező</th>
-                    <th className="functional_cell">Raktáron</th>
+                    <th className="functional_cell">Termék</th>
+                    <th className="functional_cell">Felhasználó</th>
+                    <th className="functional_cell">Státusz</th>
                     <th className="functional_cell" colSpan={2}>Műveletek</th>
                 </tr>
             </thead>
             <tbody>
-                {items.map((termek) => (
-                    <TermekRow key={termek.i_id} termek={termek} onActionComplete={onActionComplete} />
+                {items.map((order) => (
+                    <OrderRow key={order.o_id} order={order} user={order.user} />
                 ))}
             </tbody>
         </table>
