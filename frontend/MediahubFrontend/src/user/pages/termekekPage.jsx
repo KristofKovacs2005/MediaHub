@@ -59,6 +59,7 @@ const handleSearch = (input) => {
     setItems,
     setError,
     fetchFn: fetchItems,
+    
   });
 };
 
@@ -70,7 +71,9 @@ const handleSearch = (input) => {
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         tags={tags}
-        handleSearch={handleSearch} // input will be passed automatically
+        handleSearch={handleSearch}
+        sortOrder={sortOrder}
+        setSortOrder={setSortOrder} // input will be passed automatically
       />
 
       {/* Sort select */}

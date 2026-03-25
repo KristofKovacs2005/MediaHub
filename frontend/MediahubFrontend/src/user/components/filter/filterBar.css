@@ -40,6 +40,17 @@
     text-shadow: 0 0 5px rgba(0,0,0,0.2); /* optional subtle hint of text */
 }
 
+.sort-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sort-container select {
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
 .tag-chip button {
     margin-left: 4px;
     border: none;

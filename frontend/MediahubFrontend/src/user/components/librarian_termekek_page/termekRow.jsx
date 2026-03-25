@@ -1,11 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom"; // <-- import Link
 import Modal from "../modal/modal";
 
-import ModifyTermekModal from "../modal/termekek_handling/termek_modositas_modal";
-import DeleteTermekModal from "../modal/termekek_handling/termek_delete_modal";
-
 export default function TermekRow({ termek, onActionComplete }) {
-    const [isModifyOpen, setIsModifyOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
     return (
@@ -18,26 +15,18 @@ export default function TermekRow({ termek, onActionComplete }) {
                 {termek.img_url && <img src={"http://localhost:3000" + termek.img_url} alt={termek.i_name} />}
             </td>
             <td>
-                <button className="btn btn-primary" onClick={() => setIsModifyOpen(true)}>
+                {/* Use Link for navigation */}
+                <Link
+                    to={`/termek_details/termekmodositas/${termek.i_id}`} // <-- route to your modify page
+                    className="btn btn-primary"
+                >
                     Módosítás
-                </button>
+                </Link>
+
+                {/* Delete button remains modal */}
                 <button className="btn btn-danger" onClick={() => setIsDeleteOpen(true)}>
                     Törlés
                 </button>
-
-                {/* Modify Modal */}
-                {isModifyOpen && (
-                    <Modal isOpen={isModifyOpen} isClose={() => setIsModifyOpen(false)}>
-                        <ModifyTermekModal
-                            termek={termek}
-                            isClose={() => setIsModifyOpen(false)}
-                            onSubmit={() => {
-                                setIsModifyOpen(false);
-                                onActionComplete();
-                            }}
-                        />
-                    </Modal>
-                )}
 
                 {/* Delete Modal */}
                 {isDeleteOpen && (

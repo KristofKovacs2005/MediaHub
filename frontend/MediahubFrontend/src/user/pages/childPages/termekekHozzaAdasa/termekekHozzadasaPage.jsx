@@ -1,10 +1,8 @@
-import Modal from "../modal/modal";
+import Modal from "../../../components/modal/modal";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 
-export function TermekDetails() {
+export function TermekHozzadas() {
 	const [isOpenModal, setIsOpenModal] = useState(false);
-	const { id } = useParams() || {};
 
 	// Empty initial state for a new product
 	const [iName, setIName] = useState(""); // termék neve

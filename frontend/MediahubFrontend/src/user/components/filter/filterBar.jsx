@@ -4,34 +4,36 @@ import "./filterBar.css";
 const FilterBar = ({
     searchInput,
     setSearchInput,
-    tags,           // all available tags
-    handleSearch
+    tags,
+    handleSearch,
+    sortOrder,
+    setSortOrder
 }) => {
     const [selectedTags, setSelectedTags] = useState([]); // state for selected tags
     const [showDropdown, setShowDropdown] = useState(false);
 
     // add tag to selectedTags
     const handleTagClick = (tag) => {
-        if (!selectedTags.includes(tag)) {
-            setSelectedTags((prev) => [...prev, tag]);
-            setSearchInput((prev) => `${prev} tag:${tag}`.trim()); // append tag to input
-        }
+        setSelectedTags((prev) =>
+            prev.includes(tag) ? prev : [...prev, tag]
+        );
+
         setShowDropdown(false);
     };
 
     // remove tag from selectedTags
     const handleTagRemove = (tag) => {
         setSelectedTags((prev) => prev.filter((t) => t !== tag));
-        setSearchInput((prev) => prev.replace(`tag:${tag}`, "").trim()); // remove tag from input
     };
 
     // update the search input with free text + tags when submitting
     const onSubmit = (e) => {
-    e.preventDefault();
-    const tagString = selectedTags.map((t) => `tag:${t}`).join(" ");
-    const fullSearch = `${searchInput} ${tagString}`.trim();
-    setSearchInput(fullSearch);
-    handleSearch(fullSearch); // <-- pass string, not event
+        e.preventDefault();
+
+        const tagString = selectedTags.map((t) => `tag:${t}`).join(" ");
+        const fullSearch = `${searchInput} ${tagString}`.trim();
+
+        handleSearch(fullSearch);
     };
 
     return (
@@ -43,7 +45,6 @@ const FilterBar = ({
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                 />
-
                 <div className="tags-input">
                     {/* selected tags as chips */}
                     {selectedTags.map((tag) => (
@@ -90,7 +91,17 @@ const FilterBar = ({
                         </div>
                     )}
                 </div>
-
+                <div className="sort-container">
+                    <label htmlFor="sortOrder">Rendezés:</label>
+                    <select
+                        id="sortOrder"
+                        value={sortOrder}
+                        onChange={(e) => setSortOrder(e.target.value)}
+                    >
+                        <option value="AZ">A → Z</option>
+                        <option value="ZA">Z → A</option>
+                    </select>
+                </div>
                 <button type="submit" className="search-btn">
                     🔍
                 </button>

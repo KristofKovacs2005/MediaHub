@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { fetchItems } from "../../functions/items";
-import InsertTermekModal from "../modal/termekek_handling/termekek_hozzaAdasa";
-import Modal from "../modal/modal";
-import TermekTable from "./termekTable"; // renamed for PascalCase
-import { Footer } from "../footer/footer";
-import RenderNavbar from "../navbar/renderNavbar";
-import "./termekek_page.css"
+import { fetchItems } from "../functions/items";
+import TermekTable from "../components/librarian_termekek_page/termekTable"; // renamed for PascalCase
+import { Footer } from "../components/footer/footer";
+import RenderNavbar from "../components/navbar/renderNavbar";
+import "../components/librarian_termekek_page/termekek_page.css"
 
 export default function TermekekLibrarianPage() {
     const [items, setItems] = useState([]);

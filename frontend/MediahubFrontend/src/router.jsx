@@ -3,9 +3,10 @@ import HomePage from './user/pages/homepage';
 import { tokenLoader, authLoader } from './user/util/auth';
 import TermekekPage from './user/pages/termekekPage.jsx';
 import TermekDetailsPage from './user/components/termek_details_page/termek_details_page';
-import FlaggedCommentsPage from './user/components/admin_velemenyek_page/velemenyek_page';
-import TermekekLibrarianPage from './user/components/librarian_termekek_page/termekekLibrarianPage';
+import TermekekLibrarianPage from './user/pages/termekekLibrarianPage.jsx';
 import {ErrorPage} from './user/pages/errorPage.jsx';
+import { TermekHozzadas } from './user/pages/childPages/termekekHozzaAdasa/termekekHozzadasaPage.jsx';
+import { TermekModositas } from './user/pages/childPages/termekekModositas/termekekModositasPage.jsx';
 
 export const router = createBrowserRouter([
     {
@@ -32,6 +33,18 @@ export const router = createBrowserRouter([
         element: <TermekekLibrarianPage />,
         errorElement: <ErrorPage />,
         loader: () => authLoader({ minRole: 4 }), // librarian or admin
+        children:[
+            {
+                path:'/termek_details/ujtermek',
+                element: <TermekHozzadas/>,
+                errorElement: <ErrorPage />,
+            },
+            {
+                path:'/termek_details/termekmodositas/:id',
+                element: <TermekModositas/>,
+                errorElement: <ErrorPage />,
+            }
+        ]
     },
     /**
     {

@@ -1,8 +1,8 @@
-import Modal from "../modal/modal";
+import Modal from "../../../components/modal/modal";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-export function TermekDetails({ item, tags }) {
+export function TermekModositas({ item, tags }) {
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const { id } = useParams() || {};
 
