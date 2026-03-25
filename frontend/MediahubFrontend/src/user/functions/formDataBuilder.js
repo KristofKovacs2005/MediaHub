@@ -1,10 +1,10 @@
-export function buildItemFormData({ iName, author, iDescription, amount, itemTags, imageFile }) {
+export function buildItemFormData({ i_name, author, i_description, amount, tags, imageFile }) {
     const formData = new FormData();
-    if (iName) formData.append("i_name", iName);
+    if (i_name) formData.append("i_name", i_name);
     if (author) formData.append("author", author);
-    if (iDescription) formData.append("i_description", iDescription);
+    if (i_description) formData.append("i_description", i_description);
     if (amount != null) formData.append("amount", amount.toString());
-    if (itemTags && itemTags.length) formData.append("tags", itemTags.join(","));
+    if (tags && tags.length) formData.append("tags", tags.join(","));
     if (imageFile) formData.append("file", imageFile);
     return formData;
 }

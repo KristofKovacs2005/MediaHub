@@ -53,7 +53,7 @@ export function TermekHozzadas() {
             author,
             i_description: iDescription,
             amount,
-            itemTags: selectedTags,  // make sure backend expects array of tag IDs or names
+            tags: selectedTags,  // make sure backend expects array of tag IDs or names
             imageFile
         });
         console.log("Inserted item:", newItem);

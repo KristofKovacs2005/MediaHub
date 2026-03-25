@@ -73,11 +73,11 @@ export async function handleModifyItem(id, { iName, author, iDescription, amount
     }
 }
 
-export async function handleInsertItem({ iName, author, iDescription, amount, itemTags, imageFile }) {
+export async function handleInsertItem({ i_name, author, i_description, amount, tags, imageFile }) {
     try {
         const token = localStorage.getItem("authToken");
         const url = `http://localhost:3000/items`;
-        const formData = buildItemFormData({ iName, author, iDescription, amount, itemTags, imageFile });
+        const formData = buildItemFormData({ i_name, author, i_description, amount, tags, imageFile });
 
         const res = await fetch(url, {
             method: "POST", // must be POST for insert
@@ -87,7 +87,11 @@ export async function handleInsertItem({ iName, author, iDescription, amount, it
             body: formData
         });
 
-        if (!res.ok) throw new Error("Hiba történt az elem létrehozása során");
+        if (!res.ok) {
+        const text = await res.text();
+        console.error("SERVER ERROR:", text);
+        throw new Error(text || "Server error");
+        }
 
         const contentType = res.headers.get("content-type") || "";
         if (contentType.includes("application/json")) {
