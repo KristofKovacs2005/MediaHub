@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom"; // <-- import Link
 import Modal from "../modal/modal";
-import ConfirmDeleteItem from "../modal/deleteItem/confirmDeleteItem";
+import ConfirmDeleteItem from "../modal/confirmItemModal/deleteItem/confirmDeleteItem";
 
 export default function TermekRow({ termek, onActionComplete }) {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);

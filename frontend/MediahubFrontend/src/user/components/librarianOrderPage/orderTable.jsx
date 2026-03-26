@@ -1,7 +1,7 @@
 import  OrderRow from "./orderRow";
 
-export default function TermekTable({ items, onActionComplete }) {
-    if (!items || items.length === 0) {
+export default function OrderTable({ orders }) {
+    if (!orders || orders.length === 0) {
         return <p>Nincsenek elemek.</p>;
     }
 
@@ -16,8 +16,8 @@ export default function TermekTable({ items, onActionComplete }) {
                 </tr>
             </thead>
             <tbody>
-                {items.map((order) => (
-                    <OrderRow key={order.o_id} order={order} user={order.user} />
+                {orders.map((order) => (
+                    <OrderRow key={order.o_id} order={order}/>
                 ))}
             </tbody>
         </table>

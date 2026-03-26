@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../components/modal/modal.jsx";
-import ConfirmModifyItem from "../../components/modal/confirmModifyItem/confirmModifyItem.jsx";
+import ConfirmModifyItem from "../../components/modal/confirmItemModal/confirmModifyItem/confirmModifyItem.jsx";
 import { handleModifyItem } from "../../functions/items.js";
 import { useLocation } from "react-router-dom";
 export function TermekModositas() {

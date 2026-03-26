@@ -1,4 +1,4 @@
-const emailMessages = [
+export const emailMessages = [
     {
         id: 1,
         subject: "Kölcsönzés elfogadva",

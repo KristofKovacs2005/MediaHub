@@ -25,7 +25,7 @@ export function Navbar_Librarian() {
         {/* Links for logged-in user */}
         <Link to="/termekek" className="navLink">Termékek</Link>
         <Link to="/termek_details" className="navLink">Termékek kezelése</Link>
-        <Link to="/rendelesek" className="navLink">Kölcsönzések</Link>
+        <Link to="/kolcsonzesek" className="navLink">Kölcsönzések</Link>
 
         {/* User profile */}
         <div className="dropdown userProfile">

@@ -1,4 +1,4 @@
-import { handleDeleteItem } from "../../../functions/items";
+import { handleDeleteItem } from "../../../../functions/items";
 
 export default function ConfirmDeleteItem({i_id, isClose, onConfirm}){
     const handleDelete = async () => {

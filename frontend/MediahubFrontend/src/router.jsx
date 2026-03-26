@@ -7,6 +7,7 @@ import TermekekLibrarianPage from './user/pages/termekekLibrarianPage.jsx';
 import { ErrorPage } from './user/pages/errorPage.jsx';
 import { TermekHozzadas } from './user/pages/termekekHozzaAdasa/termekekHozzadasaPage.jsx';
 import { TermekModositas } from './user/pages/termekekModositas/termekekModositasPage.jsx';
+import HandleOrderPage from './user/pages/handleOrderPage.jsx';
 
 export const router = createBrowserRouter([
     {
@@ -44,6 +45,12 @@ export const router = createBrowserRouter([
         path: '/termekmodositas/:id',
         element: <TermekModositas/>,
         errorElement: <ErrorPage />,
+        loader: () => authLoader({ minRole: 4 })
+    },
+    {
+        path:'/kolcsonzesek',
+        element: <HandleOrderPage/>,
+        errorElement:<ErrorPage/>,
         loader: () => authLoader({ minRole: 4 })
     }
     /**

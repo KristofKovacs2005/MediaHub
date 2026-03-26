@@ -1,16 +1,15 @@
 import emailjs from "@emailjs/browser";
 
 /**
- * Meghívás gombb esetén ha elfogadjuk = ()=> sendEmailForKolcsonzesek(user_name, user_email, message[0], librarianEmail)
- * Meghívás gombb esetén ha elutasítjuk = ()=> sendEmailForKolcsonzesek(user_name, user_email, message[1], librarianEmail)
+ * Meghívás gombb esetén ha elfogadjuk = ()=> sendEmailForKolcsonzesek(user_name, user_email, message[0])
+ * Meghívás gombb esetén ha elutasítjuk = ()=> sendEmailForKolcsonzesek(user_name, user_email, message[1])
  * Meghívás gombb esetén ha hamarosan lejár a kölcsönzés = ()=> sendEmailForKolcsonzesek(user_name, user_email, message[2], librarianEmail)
  */
 
-export const sendEmailForKolcsonzesek = (user_name, user_email, message, librarianEmail) => {
+export const sendEmailForKolcsonzesek = (username, useremail, message) => {
     const templateParams = {
-        name: user_name,
-        email: user_email,
-        librarian_email: librarianEmail,
+        name: username,
+        email: useremail,
         message: message.body,
         subject: message.subject
     };

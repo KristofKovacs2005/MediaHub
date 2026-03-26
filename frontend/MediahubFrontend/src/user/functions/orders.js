@@ -51,7 +51,7 @@ export async function modifyOrderWithLibrarian(orderId, status) {
     return await apiCall(
         `http://localhost:3000/orders/${orderId}`,
         "PATCH",
-        { o_status: status },
+        { "s_id": status },
         token
     );
 }
