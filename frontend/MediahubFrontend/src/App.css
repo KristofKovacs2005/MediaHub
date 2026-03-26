@@ -18,8 +18,6 @@ html, body {
   height: 100%;          /* fill parent's height */
   min-height: 100vh;     /* ensure it at least fills the viewport vertically */
   margin: 0;
-  padding: 2rem;
-  text-align: center;
   background-color: #F2E2C8; /* slightly stronger / warmer parchment for the app root */
 }
 

@@ -1,24 +1,36 @@
-import React from "react";
-import headerImage from "../../../assets/ELTE-konyvtar.png";
-import { Link, useNavigate } from "react-router-dom"; // if you use React Router
-import "./headerCss.css";
+import { useState } from "react";
 import Modal from "../modal/modal";
 import ModalContent from "../modal/regisztralas/modalContent";
-import { useState } from "react";
+import headerImage from "../../../assets/ELTE-konyvtar.png";
+import "./headerCss.css";
 
 export function Header({ title, subtitle }) {
     const [isOpenRegisztralas, setIsOpenRegisztralas] = useState(false);
-    const navigate = useNavigate();
     return (
-        <header className="header-hero" style={{ backgroundImage: `url(${headerImage})` }}>
+        <header
+            className="header-hero"
+            style={{ backgroundImage: `url(${headerImage})` }}
+        >
             <div className="header-content">
-                <h1 className="header-title">{title}</h1>
-                {subtitle && <p className="header-subtitle">{subtitle}</p>}
-                <button className="register-btn" onClick={() => setIsOpenRegisztralas(true)}>
+                {title}
+
+                {subtitle && (
+                    <p className="header-subtitle">{subtitle}</p>
+                )}
+                <button
+                    className="register-btn"
+                    onClick={() => setIsOpenRegisztralas(true)}
+                >
                     Regisztrálás
                 </button>
-                <Modal isOpen={isOpenRegisztralas} isClose={() => setIsOpenRegisztralas(false)}>
-                    <ModalContent isClose={() => setIsOpenRegisztralas(false)} />
+
+                <Modal
+                    isOpen={isOpenRegisztralas}
+                    isClose={() => setIsOpenRegisztralas(false)}
+                >
+                    <ModalContent
+                        isClose={() => setIsOpenRegisztralas(false)}
+                    />
                 </Modal>
             </div>
         </header>

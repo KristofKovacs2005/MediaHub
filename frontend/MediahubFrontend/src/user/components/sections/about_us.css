@@ -1,0 +1,21 @@
+.about-us {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.about-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    transition: transform 0.2s ease;
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+}
+
+.about-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}

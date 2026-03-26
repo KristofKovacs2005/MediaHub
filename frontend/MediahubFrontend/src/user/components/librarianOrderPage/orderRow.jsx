@@ -13,7 +13,6 @@ export default function OrderRow({ order }) {
     const [isElfogadasOpen, setisElfogadasOpen] = useState(false);
     const [isElutasitasOpen, setisElutasitasOpen] = useState(false);
     const [user, setUser] = useState();
-    const user_name = user.email;
 
     const fetchingUsers = async () => {
             await fetchUsersById({u_id:order.u_id, setUsersById: setUser});
