@@ -29,7 +29,7 @@ export function Navbar_Admin() {
         {/* Links for logged-in user */}
         <Link to="/termekek" className="navLink">Termékek</Link>
         <Link to="/termek_details" className="navLink">Termékek kezelése</Link>
-        <Link to="/rendelesek" className="navLink">Kölcsönzések</Link>
+        <Link to="/kolcsonzesek" className="navLink">Kölcsönzések</Link>
         <Link to="/bejelentesek" className="navLink">Bejelentések</Link>
 
         {/* User profile */}

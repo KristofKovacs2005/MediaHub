@@ -1,82 +1,164 @@
+/* page wrapper */
 .page-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* full viewport height */
+    min-height: 100vh;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
 }
 
+/* content */
 .page-content {
-    flex: 1; /* take remaining space between navbar and footer */
-    padding: 20px;
-    background-color: #f9f0d9; /* light background like your screenshot */
-}
-
-.items-container {
-    max-width: 1200px;
+    flex: 1;
+    padding: 2rem 1rem;
+    max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
 }
 
-/* Container */
-.functional_cell-container {
+.piechart-section-wrapper {
+    width: 100%;
+    background-color: #f4f5f7; /* full-page background */
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* divider */
+.div-divider {
+    width: 100%;
+    height: 6px;
+    margin: 1rem 0 2rem 0;
+    background: linear-gradient(to right, #f37610, #ffb347);
+    border-radius: 6px;
+}
+
+/* sections */
+.section-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+/* PIE CHART CARD */
+.pie-chart-card {
+    background: #fff;
+    border-radius: 20px;
     padding: 2rem;
+    width: 100%;
+    max-width: 900px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Table */
+/* PieChart canvas responsive */
+.pie-chart-card canvas {
+    aspect-ratio: 2/3 !important;
+    max-width: 700px;
+}
 
+/* TABLE CARD */
+.table-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    overflow-x: auto;
+}
+
+.search-filter input {
+    transition: all 0.2s ease;
+}
+
+.search-filter input:focus {
+    border-color: #ff9800;
+    outline: none;
+    box-shadow: 0 0 6px rgba(255,152,0,0.3);
+}
+
+/* Table modern style */
 .functional_cell-table {
-    width: 1500px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-/* Table cells */
-.functional_cell-cell {
-    border: 1px solid #ddd;
-    padding: 8px;
-    height: 100px;
+.functional_cell-table th,
+.functional_cell-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
 }
 
-/* Table row (optional hover effect) */
-.functional_cell-row:hover {
+.functional_cell-table th {
+    font-weight: 600;
+    color: #222;
+    background: #fafafa;
+}
+
+.functional_cell-table tr:hover {
     background-color: #f9f9f9;
 }
 
-/* Buttons */
-.functional_cell-button {
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
+/* Buttons inside table */
+.btn {
+    padding: 0.5rem 1rem;
     font-size: 0.9rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.functional_cell-button-danger {
-    background-color: #d32f2f;
+.btn-success {
+    background-color: #4caf50;
     color: #fff;
 }
 
-.functional_cell-button-primary {
-    background-color: #1976d2;
+.btn-success:hover {
+    background-color: #45a049;
+}
+
+.btn-warning {
+    background-color: #ff9800;
     color: #fff;
 }
 
-/* Icon inside button */
-.functional_cell-icon {
-    width: 16px;
+.btn-warning:hover {
+    background-color: #fb8c00;
 }
 
-/* Actions cell */
-.functional_cell-actions {
-    position: relative;
+.btn-danger {
+    background-color: #f44336;
+    color: #fff;
 }
 
-/* Modal/dropdown */
-.functional_cell-modal {
-    position: absolute;
-    top: 30px;
-    right: 0;
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 4px;
-    z-index: 10;
-    display: flex;
-    gap: 5px;
+.btn-danger:hover {
+    background-color: #e53935;
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+
+    .pie-chart-card,
+    .table-card {
+        padding: 1rem;
+    }
+
+    .functional_cell-table th,
+    .functional_cell-table td {
+        padding: 0.5rem;
+    }
+
+    .pie-chart-card canvas {
+        height: 300px !important;
+    }
+}
+
+@media(max-width: 480px) {
+    .pie-chart-card canvas {
+        height: 250px !important;
+    }
 }
