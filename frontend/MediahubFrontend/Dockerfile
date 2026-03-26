@@ -1,6 +1,6 @@
 FROM node:20
 WORKDIR /MediaHubFrontend
-COPY package*.json ./
+COPY package.json ./
 RUN npm install
 
 COPY . .

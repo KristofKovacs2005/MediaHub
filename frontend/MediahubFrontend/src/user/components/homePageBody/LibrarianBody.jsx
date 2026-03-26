@@ -1,70 +1,67 @@
 import { useEffect, useState } from "react";
 import { Header } from "../header/header";
-import {getOrdersForLibrarian} from "../../functions/orders.js"
+import { getOrdersForLibrarian } from "../../functions/orders.js";
 import { PieChart } from "../charts/pieChart/pieChart.jsx";
+import HeaderText from "../header/headerTextUser.jsx";
+import "./librarianBody.css";
 
 export default function LibrarianBody() {
-    const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const data = await getOrdersForLibrarian();
-                setOrders(data);
-            } catch (err) {
-                console.error(err);
-                setError(err.message || "Failed to fetch orders");
-            }
-        };
-        fetchOrders();
-    }, []);
-
-    // fixed structure like AdminBody
-    const statusCounts = {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data = await getOrdersForLibrarian();
+        setOrders(data);
+      } catch (err) {
+        console.error(err);
+      }
     };
+    fetchOrders();
+  }, []);
 
-    const labels = [
-        "Várakozik",
-        "Elfogadva",
-        "Elutasítva",
-        "Visszahozva",
-        "Visszahozva késő",
-        "Késik"
-    ];
+  const statusCounts = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0 };
+  const labels = ["Várakozik", "Elfogadva", "Elutasítva", "Visszahozva", "Visszahozva késő", "Késik"];
 
-    // count orders
-    orders.forEach(order => {
-        if (statusCounts[order.s_id] !== undefined) {
-            statusCounts[order.s_id]++;
-        }
-    });
+  orders.forEach(order => {
+    if(statusCounts[order.s_id] !== undefined) statusCounts[order.s_id]++;
+  });
 
-    const values = [
-        statusCounts[1],
-        statusCounts[2],
-        statusCounts[3],
-        statusCounts[4],
-        statusCounts[5],
-        statusCounts[6]
-    ];
+  const values = Object.values(statusCounts);
 
-    return (
-        <div className="guest-body">
-            <Header />
-            <main className="body-content">
-                <PieChart
-                    valuesArray={values}
-                    labelsArray={labels}
-                    title="Rendelések státusz szerint"
-                    onSliceClick={(label) => console.log(label)}
-                />
-            </main>
+  return (
+    <div className="guest-body">
+      <Header title={<HeaderText/>} />
+      
+      {/* div divider */}
+      <div className="div-divider"></div>
+
+      {/* Pie chart section */}
+      <section className="section-container">
+        <div className="pie-chart-card">
+          <h3>Rendelések státusz szerint</h3>
+          <PieChart 
+            valuesArray={values} 
+            labelsArray={labels} 
+            onSliceClick={(label) => console.log(label)} 
+          />
         </div>
-    );
+      </section>
+
+      {/* Statistics section */}
+      <section className="section-container">
+        <div className="stats-card">
+          <h3>Statisztikák</h3>
+          {/* ide majd a stat card komponens jön */}
+        </div>
+      </section>
+      
+      {/* Footer */}
+      <footer className="appFooter">
+        <div className="footerInner">
+          {/* footer content */}
+        </div>
+      </footer>
+    </div>
+  );
 }

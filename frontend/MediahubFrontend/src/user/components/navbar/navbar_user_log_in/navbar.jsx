@@ -30,9 +30,6 @@ export function Navbar_User_Log_In() {
         <Link to="/termekek" className="navLink">
           Termékek
         </Link>
-        <Link to="/lista" className="navLink">
-          Lista
-        </Link>
 
         {/* User profile */}
 

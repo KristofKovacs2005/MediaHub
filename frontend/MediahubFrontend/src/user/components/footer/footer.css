@@ -1,11 +1,10 @@
 .appFooter{
     /* span the full viewport width (edge-to-edge) while keeping a centered inner container */
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
+    width: 100%;
     box-sizing: border-box;
     background: linear-gradient(180deg, #113a2f 0%, #0f3529 100%); /* forest green */
     color: #e6f3ec;
-    padding: 2.25rem 1.5rem;
+    
     box-shadow: 0 -2px 12px rgba(4,10,6,0.12);
 }
 
@@ -27,6 +26,7 @@
 .footerTitle{
     margin: 0 0 0.5rem 0;
     font-size: 1.1rem;
+    padding-top: 1rem;
     color: #dff6ec;
     font-family: 'Times New Roman', Times, serif;
 }
@@ -153,6 +153,13 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
+}
+
+.footerSection1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 🔥 THIS is what you're missing */
+    text-align: center;  /* center text too */
 }
 
 /* responsive adjustments */

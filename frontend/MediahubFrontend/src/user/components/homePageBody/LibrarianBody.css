@@ -1,0 +1,80 @@
+/* general body */
+.guest-body {
+  background-color: #9ca8ad;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+
+/* divider */
+.div-divider {
+  width: 100%;
+    margin-top: -10px;
+    height: 100px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1),
+        rgba(0,0,0,0.76)
+    );
+}
+
+/* sections */
+.section-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* Pie chart card */
+.pie-chart-card,
+.stats-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* card titles */
+.pie-chart-card h3,
+.stats-card h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 2rem;
+}
+
+/* PieChart canvas responsive */
+.pie-chart-card canvas {
+  width: 100% !important;
+  max-width: 700px;
+  height: auto !important;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .section-container {
+    padding: 1.5rem 0.5rem;
+  }
+  .pie-chart-card h3,
+  .stats-card h3 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pie-chart-card,
+  .stats-card {
+    padding: 1rem;
+  }
+  .pie-chart-card h3,
+  .stats-card h3 {
+    font-size: 1.2rem;
+  }
+}

@@ -4,6 +4,7 @@ import { fetchOrdersUser } from "../../functions/orders";
 import OrderCard from "../carouselCards/orderCard";
 import TermekCard from "../carouselCards/termekCard";
 import "./termekekSection.css";
+import { useRef } from "react";
 
 export function TermekekSectionUser() {
     // State for data
@@ -22,38 +23,37 @@ export function TermekekSectionUser() {
     const [errorMovies, setErrorMovies] = useState(null);
 
     useEffect(() => {
-    // Fetch orders
-    const loadOrders = async () => {
-        setLoadingOrders(true);
-        const ordersData = await fetchOrdersUser();
-        setOrders(ordersData);
-        setLoadingOrders(false);
-    };
+        // Fetch orders
+        const loadOrders = async () => {
+            setLoadingOrders(true);
+            const ordersData = await fetchOrdersUser();
+            setOrders(ordersData);
+            setLoadingOrders(false);
+        };
 
-    loadOrders();
+        loadOrders();
+        // Fetch books
+        fetchItems({
+            tags: ["book"],
+            setItems: setBooks,
+            setLoading: setLoadingBooks,
+            setError: setErrorBooks
+        });
 
-    // Fetch books
-    fetchItems({
-        tags: ["book"],
-        setItems: setBooks,
-        setLoading: setLoadingBooks,
-        setError: setErrorBooks
-    });
-
-    // Fetch movies
-    fetchItems({
-        tags: ["movie"],
-        setItems: setMovies,
-        setLoading: setLoadingMovies,
-        setError: setErrorMovies
-    });
-}, []);
+        // Fetch movies
+        fetchItems({
+            tags: ["movie"],
+            setItems: setMovies,
+            setLoading: setLoadingMovies,
+            setError: setErrorMovies
+        });
+    }, []);
 
     return (
         <div className="termekek-section">
             <section>
                 <h2>Kölcsönzött termékek</h2>
-                <div className="Carousel">
+                <div className="Carousel kolcsonzesCarousel">
                     <div className="group">
                         {loadingOrders ? (
                             <div className="loading">Betöltés...</div>
@@ -68,7 +68,7 @@ export function TermekekSectionUser() {
                 </div>
 
                 <h2>Könyvek</h2>
-                <div className="Carousel">
+                <div className="Carousel konyvCarousel">
                     <div className="group">
                         {loadingBooks ? (
                             <div className="loading">Betöltés...</div>
@@ -81,9 +81,8 @@ export function TermekekSectionUser() {
                         )}
                     </div>
                 </div>
-
                 <h2>Filmek</h2>
-                <div className="Carousel">
+                <div className="Carousel filmCarousel">
                     <div className="group">
                         {loadingMovies ? (
                             <div className="loading">Betöltés...</div>

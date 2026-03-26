@@ -1,7 +1,7 @@
 /* HERO FULL WIDTH FIX */
 .header-hero {
     width: 100%;
-    min-height: 60vh; /* responsive height instead of aspect-ratio */
+    min-height: 85vh; /* responsive height instead of aspect-ratio */
     
     background-size: cover;
     background-position: center;
@@ -25,23 +25,19 @@
 }
 
 /* CONTENT ABOVE OVERLAY */
-.header-content {
+.header-content, .header-user-content {
     position: relative;
     z-index: 1;
-
     max-width: 800px;
     padding: 20px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     animation: fadeIn 0.8s ease-in-out;
 }
-
 /* TEXT */
-.header-title {
+.header-title, .header-user-title {
     margin-bottom: 10px;
     font-size: clamp(28px, 4vw, 48px);
 }
@@ -79,5 +75,11 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 720px){
+    .header{
+        max-height: 85vh;
     }
 }

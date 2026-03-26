@@ -1,4 +1,6 @@
 import "./about_us.css"
+import kristof from "../../../assets/kristofPic.png"
+import marci from "../../../assets/marci.png"
 export function AboutUs() {
     return (
         <section className="about-us container">
@@ -6,17 +8,35 @@ export function AboutUs() {
 
                 {/* TEXT */}
                 <div className="col-12 col-lg-6">
-                    <h2 className="mb-3">Rólunk</h2>
+                    <h2 className="mb-3 text-header">Rólunk</h2>
                     <p className="text-muted">
-                        Ez a weboldal a Mediahub projektje. A webalkalmazás feladata a 
-                        felhasználók kölcsönzésének digitális könyvelése és kezelése.
+                        A MediaHub egy modern webalkalmazás, amely könyvtárak számára készült,
+                        hogy egyszerűen és hatékonyan kezelhessék digitális leltárukat és kölcsönzéseiket.
+                        A rendszer lehetővé teszi a könyvek és egyéb termékek nyilvántartását,
+                        azok adatainak kezelését, valamint a felhasználók számára az egyszerű böngészést és keresést.
+
                         <br /><br />
-                        A projekt két fő készítette:
-                        <strong> Kovács Kristóf</strong> (Backend) és 
+
+                        A felhasználók képesek véleményt írni, értékelni a termékeket, valamint
+                        kölcsönzési igényeket leadni, míg a könyvtárosok és moderátorok teljes körű
+                        kezelési lehetőségekkel rendelkeznek a kölcsönzések, felhasználók és visszajelzések felett.
+
+                        <br /><br />
+
+                        A célunk egy stabil, megbízható és könnyen bővíthető rendszer létrehozása,
+                        amely hosszú távon segíti a könyvtárak digitális fejlődését és javítja
+                        a felhasználói élményt.
+
+                        <br /><br />
+
+                        A projekt készítői:
+                        <strong> Kovács Kristóf</strong> (Backend) és
                         <strong> Lóránt Márton</strong> (Frontend).
+
                         <br /><br />
-                        A projekt a Szoftverfejlesztő és Tesztelő vizsga 
-                        projektremek beadandójaként készült.
+
+                        A MediaHub a Szoftverfejlesztő és Tesztelő képzés
+                        vizsgaprojektjeként készült.
                     </p>
                 </div>
 
@@ -27,9 +47,9 @@ export function AboutUs() {
                         {/* Kristóf */}
                         <div className="col-6 text-center">
                             <div className="about-card p-3 shadow-sm">
-                                <img 
-                                    src="/assets/kristof.jpg" 
-                                    alt="Kovács Kristóf" 
+                                <img
+                                    src={kristof}
+                                    alt="Kovács Kristóf"
                                     className="img-fluid rounded-circle mb-2"
                                 />
                                 <div className="fw-semibold">Kovács Kristóf</div>
@@ -40,9 +60,9 @@ export function AboutUs() {
                         {/* Márton */}
                         <div className="col-6 text-center">
                             <div className="about-card p-3 shadow-sm">
-                                <img 
-                                    src="/assets/marton.png" 
-                                    alt="Lóránt Márton" 
+                                <img
+                                    src={marci}
+                                    alt="Lóránt Márton"
                                     className="img-fluid rounded-circle mb-2"
                                 />
                                 <div className="fw-semibold">Lóránt Márton</div>

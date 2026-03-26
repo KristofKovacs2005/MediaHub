@@ -6,7 +6,8 @@ import { fetchComments } from "../../functions/getComments.js";
 import { useState, useEffect } from "react";
 import bookIcon from '../../../assets/illustration-of-book-icon-free-vector.jpg';
 import chatIcon from "../../../assets/chat.png";
-import HeaderText from "../header/headerText.jsx"
+import HeaderText from "../header/headerTextGuest.jsx"
+import "./GuestBody.css"
 
 export default function GuestBody() {
     const [items, setItems] = useState([]);       // lowercase setter
@@ -47,11 +48,10 @@ export default function GuestBody() {
         {/* ✅ FULL WIDTH HERO */}
         <Header 
             title={<HeaderText/>}
-            subtitle="Nincs még fiókód?"
         />
-
+        <div className="section-divider"></div>
         <main className="body-content">
-            <div className="section-divider"></div>
+            
             <AboutUs />
 
             <section className="container py-5">

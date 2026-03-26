@@ -3,11 +3,18 @@
     padding-bottom: 3rem;
 }
 
+.text-muted, .text-header{
+    color: rgb(19, 16, 16);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
 .about-card {
     background: white;
     border-radius: 20px;
     border: 1px solid #ddd;
     transition: transform 0.2s ease;
+    color: rgb(19, 16, 16);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .about-card:hover {

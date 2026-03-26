@@ -3,43 +3,57 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 220px;          /* slightly bigger fixed width */
-    height: 400px;         /* fixed height for uniformity */
-    font-size: 1rem;
-    margin: 10px;
-    border: 0.8rem solid #7e7e7eec;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.144);
-    background-color: rgba(172, 172, 172, 0.795);
-    scroll-snap-align: start;
+    width: 220px;
+    height: 400px;
+    margin: 12px;
+    border-radius: 16px; /* bigger rounded corners */
     overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #fff; /* cleaner white background */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); /* softer shadow */
+    transition: all 0.25s ease;
     cursor: pointer;
-    box-sizing: border-box; /* include padding/border in height/width */
+    box-sizing: border-box;
 }
 
+.termekDiv:hover {
+    transform: translateY(-6px); /* subtle lift effect */
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* IMAGE */
 .termekDiv img {
     width: 100%;
-    height: 150px; /* slightly bigger image */
+    height: 160px; /* slightly larger image */
     object-fit: cover;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    margin-bottom: 6px;
+    transition: transform 0.3s ease;
 }
 
+.termekDiv:hover img {
+    transform: scale(1.05); /* image zoom on hover */
+}
+
+/* TITLE */
 .termekDiv h2 {
     font-size: 1.1rem;
+    font-weight: 600;
     text-align: center;
-    margin: 4px 4px 2px 4px;
-    line-height: 1.2em;
+    margin: 8px 4px 4px 4px;
+    color: #222;
 }
 
-.termekDiv p.description {
-    font-size: 0.9rem;
-    text-align: center;
-    margin: 2px 4px;
-    word-wrap: break-word;
+/* AUTHOR */
+.termekDiv p {
+    font-size: 0.85rem;
+    margin: 2px 6px;
+    color: #555;
+}
 
+/* DESCRIPTION */
+.termekDiv p.description {
+    font-size: 0.8rem;
+    text-align: center;
+    margin: 4px 6px;
+    color: #666;
     display: -webkit-box;       
     -webkit-box-orient: vertical; 
     overflow: hidden;             
@@ -47,7 +61,11 @@
     text-overflow: ellipsis;     
 }
 
-.termekDiv:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.308);
-    transform: scale(1.05);
+/* RESPONSIVE */
+@media (max-width: 500px) {
+    .termekDiv {
+        flex: 0 0 45%;
+        width: 45%;
+        height: auto;
+    }
 }
