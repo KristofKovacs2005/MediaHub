@@ -10,7 +10,11 @@ export function Navbar_Admin() {
   const handleLogout = () => {
     // Clear token and user info
     localStorage.clear()
-    navigate("/"); // Redirect to frontpage
+    if (window.location.pathname == "/") {
+      window.location.reload();
+      return;
+    }
+    navigate("/") // Redirect to frontpage
   };
 
   return (

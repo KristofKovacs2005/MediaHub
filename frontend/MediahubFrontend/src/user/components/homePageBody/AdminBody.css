@@ -1,0 +1,83 @@
+
+/* body */
+.admin-body {
+    background-color: #9ca8ad;
+    min-height: 100%;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+
+.dashboard {
+    padding: 3rem 1rem;
+    max-width: 1400px;
+    /* ⬅️ BIGGER container */
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+/* BIG CARDS */
+.dashboard-card {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    /* ⬅️ taller = more “hero” feel */
+    border-radius: 24px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+
+    display: flex;
+    align-items: flex-end;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+}
+
+/* overlay */
+.overlay {
+    width: 100%;
+    padding: 2rem;
+    /* ⬅️ bigger spacing */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+}
+
+.overlay h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    /* ⬅️ bigger text */
+    font-weight: 700;
+}
+
+/* backgrounds */
+.products {
+    background: url("../../../assets/termekKezelesButtonBgi.jpg") center/cover no-repeat;
+}
+
+.orders {
+    background: url("../../../assets/kolcsonzesKezelesiButtonBgi.jpg") center/cover no-repeat;
+}
+
+.usersCard {
+    background: url("../../../assets/usersKezeles.png") center/cover no-repeat;
+}
+
+.reports {
+    background: url("../../../assets/bejelentesek.jpg") center/cover no-repeat;
+}
+/* responsive */
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-card {
+    height: 220px;
+  }
+}

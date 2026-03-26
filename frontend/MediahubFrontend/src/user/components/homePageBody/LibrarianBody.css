@@ -1,80 +1,83 @@
-/* general body */
-.guest-body {
-  background-color: #9ca8ad;
-  width: 100%;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  font-family: Inter, system-ui, -apple-system, sans-serif;
+/* DASHBOARD LAYOUT */
+.dashboard {
+    padding: 3rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* divider */
-.div-divider {
-  width: 100%;
-    margin-top: -10px;
-    height: 100px;
-    background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,1),
-        rgba(0,0,0,0.76)
-    );
+/* TOP ROW (2 cards side by side) */
+.top-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-/* sections */
-.section-container {
-  display: flex;
-  justify-content: center;
-  padding: 2rem 1rem;
+/* CARD BASE */
+.dashboard-card {
+    position: relative;
+    flex: 1;
+    height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
 }
 
-/* Pie chart card */
-.pie-chart-card,
-.stats-card {
-  background: #fff;
-  border-radius: 20px;
-  padding: 2rem;
-  max-width: 1000px;
-  width: 100%;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* 🔥 THIS FIXES YOUR ISSUE */
+.dashboard-card {
+    flex: 0 0 50%;
+    /* don't stretch full width */
+    max-width: 500px;
 }
 
-/* card titles */
-.pie-chart-card h3,
-.stats-card h3 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 2rem;
+/* HOVER */
+.dashboard-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
 }
 
-/* PieChart canvas responsive */
-.pie-chart-card canvas {
-  width: 100% !important;
-  max-width: 700px;
-  height: auto !important;
+/* TEXT OVERLAY */
+.overlay {
+    width: 100%;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
 }
 
-/* responsive */
+.overlay h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* BACKGROUNDS */
+.products {
+    background: url("../../../assets/termekKezelesButtonBgi.jpg") center/cover no-repeat;
+}
+
+.orders {
+    background: url("../../../assets/kolcsonzesKezelesiButtonBgi.jpg") center/cover no-repeat;
+}
+
+.users {
+    background: url("/images/users.jpg") center/cover no-repeat;
+}
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
-  .section-container {
-    padding: 1.5rem 0.5rem;
-  }
-  .pie-chart-card h3,
-  .stats-card h3 {
-    font-size: 1.4rem;
-  }
-}
+    .top-row {
+        flex-direction: column;
+    }
 
-@media (max-width: 480px) {
-  .pie-chart-card,
-  .stats-card {
-    padding: 1rem;
-  }
-  .pie-chart-card h3,
-  .stats-card h3 {
-    font-size: 1.2rem;
-  }
+    .dashboard-card {
+        flex: 1;
+        max-width: 100%;
+    }
+
+    .dashboard-card {
+        height: 180px;
+    }
 }

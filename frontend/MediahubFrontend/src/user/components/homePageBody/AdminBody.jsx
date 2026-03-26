@@ -1,41 +1,37 @@
-import { useEffect, useState } from "react";
-import { fetchUsers } from "../../functions/users.js";
 import { Header } from "../header/header";
-import ReportedReviews from "../sections/reportedReviews";
-import { BarChart } from "../charts/barChart/barChart.jsx";
-import { useGetReportedReviews } from "../admin_velemenyek_page/loadFlaggedComments.js";
+import { Link } from "react-router-dom";
+import "./AdminBody.css";
+import HeaderText from "../header/headerTextUser";
+
 export default function AdminBody() {
-    const [users, setUsers] = useState([]);
-    const { report, loading, error } = useGetReportedReviews();
-
-    useEffect(() => {
-        fetchUsers(setUsers);
-    }, []);
-
-    const labels = [
-        "Felhasználó",
-        "Figyelmeztetett",
-        "Tiltott",
-        "Könyvtáros",
-        "Admin"
-    ];
-
-    const values = [1, 2, 3, 4, 5].map(status =>
-        users.filter(user => user.status === status).length
-    );
-
     return (
         <div className="admin-body">
-            <Header />
-            <main className="body-content">
-                <BarChart
-                    valuesArray={values}
-                    labelsArray={labels}
-                    title="Felhasználók jogosultság szerint"
-                    onBarClick={(label) => console.log(label)}
-                />
+            <Header title={<HeaderText />} />
 
-                <ReportedReviews value={report?.length || 0} />
+            <main className="dashboard">
+                    <Link to="/termek_details" className="dashboard-card products">
+                        <div className="overlay">
+                            <h2>Termékek kezelése</h2>
+                        </div>
+                    </Link>
+
+                    <Link to="/kolcsonzesek" className="dashboard-card orders">
+                        <div className="overlay">
+                            <h2>Kölcsönzések</h2>
+                        </div>
+                    </Link>
+
+                    <Link to="/felhasznalok" className="dashboard-card usersCard">
+                        <div className="overlay">
+                            <h2>Felhasználók</h2>
+                        </div>
+                    </Link>
+
+                    <Link to="/bejelentesek" className="dashboard-card reports">
+                        <div className="overlay">
+                            <h2>Bejelentések</h2>
+                        </div>
+                    </Link>
             </main>
         </div>
     );

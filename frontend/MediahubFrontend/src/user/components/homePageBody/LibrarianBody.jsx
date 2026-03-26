@@ -1,67 +1,28 @@
-import { useEffect, useState } from "react";
 import { Header } from "../header/header";
-import { getOrdersForLibrarian } from "../../functions/orders.js";
-import { PieChart } from "../charts/pieChart/pieChart.jsx";
-import HeaderText from "../header/headerTextUser.jsx";
+import { Link } from "react-router-dom";
 import "./librarianBody.css";
+import HeaderText from "../header/headerTextUser.jsx";
 
 export default function LibrarianBody() {
-  const [orders, setOrders] = useState([]);
+    return (
+        <div className="guest-body">
+            <Header title={<HeaderText/>}/>
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const data = await getOrdersForLibrarian();
-        setOrders(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchOrders();
-  }, []);
+            <main className="dashboard">
+                <div className="top-row">
+                    <Link to="/termek_details" className="dashboard-card products">
+                        <div className="overlay">
+                            <h2>Termékek kezelése</h2>
+                        </div>
+                    </Link>
 
-  const statusCounts = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0 };
-  const labels = ["Várakozik", "Elfogadva", "Elutasítva", "Visszahozva", "Visszahozva késő", "Késik"];
-
-  orders.forEach(order => {
-    if(statusCounts[order.s_id] !== undefined) statusCounts[order.s_id]++;
-  });
-
-  const values = Object.values(statusCounts);
-
-  return (
-    <div className="guest-body">
-      <Header title={<HeaderText/>} />
-      
-      {/* div divider */}
-      <div className="div-divider"></div>
-
-      {/* Pie chart section */}
-      <section className="section-container">
-        <div className="pie-chart-card">
-          <h3>Rendelések státusz szerint</h3>
-          <PieChart 
-            valuesArray={values} 
-            labelsArray={labels} 
-            onSliceClick={(label) => console.log(label)} 
-          />
+                    <Link to="/kolcsonzesek" className="dashboard-card orders">
+                        <div className="overlay">
+                            <h2>Kölcsönzések</h2>
+                        </div>
+                    </Link>
+                </div>
+            </main>
         </div>
-      </section>
-
-      {/* Statistics section */}
-      <section className="section-container">
-        <div className="stats-card">
-          <h3>Statisztikák</h3>
-          {/* ide majd a stat card komponens jön */}
-        </div>
-      </section>
-      
-      {/* Footer */}
-      <footer className="appFooter">
-        <div className="footerInner">
-          {/* footer content */}
-        </div>
-      </footer>
-    </div>
-  );
+    );
 }
