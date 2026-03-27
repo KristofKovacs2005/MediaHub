@@ -1,5 +1,5 @@
 import "./about_us.css"
-import kristof from "../../../assets/kristofPic.png"
+import kristof from "../../../assets/kristofPic.jpg"
 import marci from "../../../assets/marci.png"
 export function AboutUs() {
     return (
@@ -9,7 +9,7 @@ export function AboutUs() {
                 {/* TEXT */}
                 <div className="col-12 col-lg-6">
                     <h2 className="mb-3 text-header">Rólunk</h2>
-                    <p className="text-muted">
+                    <p className="about-text">
                         A MediaHub egy modern webalkalmazás, amely könyvtárak számára készült,
                         hogy egyszerűen és hatékonyan kezelhessék digitális leltárukat és kölcsönzéseiket.
                         A rendszer lehetővé teszi a könyvek és egyéb termékek nyilvántartását,

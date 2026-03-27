@@ -1,9 +1,11 @@
 import "./navbar.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function Navbar_User_Log_In() {
   // Read username from localStorage
   const username = localStorage.getItem("username") || "";
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigate = useNavigate()
 
@@ -18,16 +20,27 @@ export function Navbar_User_Log_In() {
   };
 
   return (
-    <nav className="appNavbar">
+    <nav className={`appNavbar ${isMobileMenuOpen ? "mobileNavOpen" : ""}`}>
       <section className="navbarSection1">
         <Link to="/" className="navLink">
           <h3>MediaHub</h3>
         </Link>
+        <button
+          className="navbarMenuToggle"
+          type="button"
+          aria-label="Menü megnyitása"
+          aria-expanded={isMobileMenuOpen}
+          onClick={() => setIsMobileMenuOpen((open) => !open)}
+        >
+          <span className="navbarMenuIcon" />
+          <span className="navbarMenuIcon" />
+          <span className="navbarMenuIcon" />
+        </button>
       </section>
 
       <section className="navbarSection2">
         {/* Links for logged-in user */}
-        <Link to="/termekek" className="navLink">
+        <Link to="/termekek" className="navLink" onClick={() => setIsMobileMenuOpen(false)}>
           Termékek
         </Link>
 
@@ -45,7 +58,10 @@ export function Navbar_User_Log_In() {
             <li>
               <button
                 className="dropdownItem dropdown-item button_text logOutButton"
-                onClick={handleLogout}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleLogout();
+                }}
               >
                 Kilépés
               </button>

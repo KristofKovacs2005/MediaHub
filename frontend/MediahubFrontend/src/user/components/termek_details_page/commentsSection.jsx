@@ -1,5 +1,5 @@
 import { Comment } from "./comment";
-export function CommentsSection({ comments, itemName, userHasCommented, onOpenReviewModal }) {
+export function CommentsSection({ comments, itemName, userHasCommented, isLoggedIn, onOpenReviewModal }) {
 	// Format comments date if needed
 	return (
 		<section className="commentsSection">
@@ -9,8 +9,14 @@ export function CommentsSection({ comments, itemName, userHasCommented, onOpenRe
 					<button
 						className="btn btn-success"
 						onClick={onOpenReviewModal}
-						disabled={userHasCommented} // Disable if user has already commented
-						title={userHasCommented ? "Már írtál véleményt erre az elemre" : "Írj véleményt"}
+						disabled={!isLoggedIn || userHasCommented}
+						title={
+							!isLoggedIn
+								? "Vélemény írásához jelentkezz be"
+								: userHasCommented
+									? "Már írtál véleményt erre az elemre"
+									: "Írj véleményt"
+						}
 					>
 						+ Új vélemény
 					</button>

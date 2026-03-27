@@ -1,6 +1,7 @@
 .guest-body {
     background-color: #9ca8ad;
     width: 100%;
+    overflow: hidden;
 }
 
 /* About boxes (rounded small ones) */
@@ -9,13 +10,6 @@
     height: 120px;
     border-radius: 20px;
     background: rgb(255, 231, 231);
-    border: 2px solid #ccc;
-}
-
-/* Statistics big rounded container */
-.stats-box {
-    border-radius: 30px;
-    background: white;
     border: 2px solid #ccc;
 }
 
@@ -28,4 +22,115 @@
         rgba(0,0,0,1),
         rgba(0,0,0,0.76)
     );
+}
+
+.guest-preview-section {
+    padding: 1rem 0 4rem;
+}
+
+.guest-preview-header {
+    width: min(1200px, calc(100% - 2rem));
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.guest-preview-kicker {
+    margin: 0 0 0.35rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #17323f;
+    font-weight: 700;
+}
+
+.guest-preview-header h2 {
+    margin: 0 0 0.5rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #111;
+}
+
+.guest-preview-text {
+    margin: 0;
+    max-width: 720px;
+    color: #1e2d33;
+}
+
+.guest-preview-link {
+    flex-shrink: 0;
+    text-decoration: none;
+    background: #111;
+    color: #f6d77f;
+    padding: 0.85rem 1.1rem;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.guest-preview-feedback {
+    width: min(1200px, calc(100% - 2rem));
+    margin: 0 auto;
+}
+
+.guest-preview-viewport {
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+.guest-preview-track {
+    display: flex;
+    align-items: stretch;
+    width: max-content;
+    animation: guestPreviewRoll 36s linear infinite;
+}
+
+.guest-preview-track:hover {
+    animation-play-state: paused;
+}
+
+.guest-preview-card {
+    flex: 0 0 auto;
+}
+
+.guest-preview-card .termekDiv {
+    width: 240px;
+    height: 410px;
+}
+
+@keyframes guestPreviewRoll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 900px) {
+    .guest-preview-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 640px) {
+    .guest-preview-section {
+        padding-bottom: 3rem;
+    }
+
+    .guest-preview-viewport {
+        mask-image: none;
+    }
+
+    .guest-preview-card .termekDiv {
+        width: 200px;
+        height: 360px;
+    }
+
+    .guest-preview-link {
+        width: 100%;
+        text-align: center;
+    }
 }

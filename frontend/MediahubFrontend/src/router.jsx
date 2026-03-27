@@ -8,6 +8,7 @@ import { ErrorPage } from './user/pages/errorPage.jsx';
 import { TermekHozzadas } from './user/pages/termekekHozzaAdasa/termekekHozzadasaPage.jsx';
 import { TermekModositas } from './user/pages/termekekModositas/termekekModositasPage.jsx';
 import HandleOrderPage from './user/pages/handleOrderPage.jsx';
+import HandleUsersPage from './user/pages/handleUsersPage.jsx';
 import FlaggedCommentsPage from "./user/pages/velemenyek_page.jsx"
 
 export const router = createBrowserRouter([
@@ -22,13 +23,13 @@ export const router = createBrowserRouter([
         path: "/termekek",
         element: <TermekekPage />,
         errorElement: <ErrorPage />,
-        loader: () => authLoader({ minRole: 1 }), // logged-in user
+        loader: tokenLoader,
     },
     {
         path: "/termekek/:id",
         element: <TermekDetailsPage />,
         errorElement: <ErrorPage />,
-        loader: () => authLoader({ minRole: 1 }), // logged-in user
+        loader: tokenLoader,
     },
     {
         path: "/termek_details",
@@ -53,6 +54,12 @@ export const router = createBrowserRouter([
         element: <HandleOrderPage/>,
         errorElement:<ErrorPage/>,
         loader: () => authLoader({ minRole: 4 })
+    },
+    {
+        path: "/felhasznalok",
+        element: <HandleUsersPage />,
+        errorElement: <ErrorPage />,
+        loader: () => authLoader({ minRole: 5 }),
     },
     {
         path: "/bejelentesek",

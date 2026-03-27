@@ -8,6 +8,19 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
+.about-text {
+    margin: 0;
+    max-width: 720px;
+    color: #1e2d33;
+    font-size: 1rem;
+    line-height: 1.8;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.about-text strong {
+    color: #111;
+}
+
 .about-card {
     background: white;
     border-radius: 20px;
@@ -25,4 +38,11 @@
     width: 100px;
     height: 100px;
     object-fit: cover;
+}
+
+@media (max-width: 640px) {
+    .about-text {
+        font-size: 0.98rem;
+        line-height: 1.7;
+    }
 }

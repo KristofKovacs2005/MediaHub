@@ -14,6 +14,7 @@ export default function TermekDetailsPage() {
 	const { item, comments, tags, loading, error } = useLoadThisItem({ id });
 	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 	const username = localStorage.getItem("username"); // stored as string
+	const isLoggedIn = !!localStorage.getItem("authToken");
 	const userHasCommented = username
 		? comments.some(comment => comment.username === username)
 		: false;//visszatér true vagy false értékkel attól függően, hogy a user írt-e már véleményt az adott elemre
@@ -73,6 +74,7 @@ export default function TermekDetailsPage() {
 					itemName={item?.i_name || "Ismeretlen elem"}
 					itemId={id}
 					userHasCommented={userHasCommented}
+					isLoggedIn={isLoggedIn}
 					onOpenReviewModal={() => setIsReviewModalOpen(true)}
 				/>
 			</div>

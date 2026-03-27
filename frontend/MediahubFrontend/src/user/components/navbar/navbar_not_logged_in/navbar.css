@@ -80,3 +80,73 @@ a.navLink {
 .appNavbar .navbarSection2 p {
     cursor: pointer;
 }
+
+.appNavbar .navbarSection2 > button {
+    background: transparent;
+    border: 0;
+    padding: 0;
+}
+
+.navbarMenuToggle {
+    display: none;
+    margin-left: auto;
+    background: transparent;
+    border: 0;
+    padding: 0.25rem;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.navbarMenuIcon {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #d4af37;
+    border-radius: 999px;
+}
+
+@media (max-width: 768px) {
+    .appNavbar {
+        height: auto;
+        min-height: 64px;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.75rem 0;
+    }
+
+    .appNavbar .navbarSection1,
+    .appNavbar .navbarSection2 {
+        width: 100%;
+        flex: none;
+    }
+
+    .appNavbar .navbarSection1 {
+        justify-content: space-between;
+    }
+
+    .navbarMenuToggle {
+        display: inline-flex;
+    }
+
+    .appNavbar .navbarSection2 {
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding-top: 0.75rem;
+    }
+
+    .appNavbar.mobileNavOpen .navbarSection2 {
+        display: flex;
+    }
+
+    .appNavbar .navbarSection2 > * {
+        width: 100%;
+    }
+
+    .appNavbar .navbarSection2 p,
+    .appNavbar .navbarSection2 .navLink {
+        display: block;
+        width: 100%;
+    }
+}

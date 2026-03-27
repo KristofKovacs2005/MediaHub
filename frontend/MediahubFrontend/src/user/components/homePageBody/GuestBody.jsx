@@ -1,46 +1,23 @@
 import { Header } from "../header/header";
 import { AboutUs } from "../sections/about_us";
-import { StatisticContainer } from "../charts/statistics/statisticContainer.jsx";
+import TermekCard from "../carouselCards/termekCard";
 import { fetchItems } from "../../functions/items";
-import { fetchComments } from "../../functions/getComments.js";
-import { useState, useEffect } from "react";
-import bookIcon from '../../../assets/illustration-of-book-icon-free-vector.jpg';
-import chatIcon from "../../../assets/chat.png";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import HeaderText from "../header/headerTextGuest.jsx"
 import "./GuestBody.css"
 
 export default function GuestBody() {
-    const [items, setItems] = useState([]);       // lowercase setter
-    const [comments, setComments] = useState([]); // lowercase setter
+    const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setLoading(true);
-        setError(null);
-
-        fetchItems({ setItems, setLoading, setError });
-        fetchComments(setComments); // pass the setter directly
-
+        fetchItems({ setLoading, setItems, setError });
     }, []);
 
-    if (loading) return <p>Betöltés...</p>;
-    if (error) return <p>{error}</p>;
-
-    const statistics = [
-        {
-            value: items.length || '0',
-            title: 'Termékek',
-            color: '#3498db',
-            image: bookIcon
-        },
-        {
-            value: comments.length || '0',
-            title: 'Értékelések',
-            color: '#e74c3c',
-            image: chatIcon
-        }
-    ];
+    const previewItems = items.slice(0, 8);
+    const rollingItems = [...previewItems, ...previewItems];
 
     return (
     <div className="guest-body">
@@ -51,17 +28,37 @@ export default function GuestBody() {
         />
         <div className="section-divider"></div>
         <main className="body-content">
-            
             <AboutUs />
 
-            <section className="container py-5">
-                <div className="row justify-content-center">
-                    <div className="col-12 col-md-8 col-lg-6">
-                        <div className="stats-box p-4 shadow text-center">
-                            <StatisticContainer stats={statistics} />
+            <section className="guest-preview-section">
+                <div className="guest-preview-header">
+                    <div>
+                        <p className="guest-preview-kicker">Böngészés vendégként</p>
+                        <h2>Könyvek és filmek</h2>
+                        <p className="guest-preview-text">
+                            Nézz körül a kínálatban bejelentkezés nélkül is. Ha találsz valamit, ami érdekel,
+                            belépés után már kölcsönözhetsz és véleményt is írhatsz.
+                        </p>
+                    </div>
+                    <Link to="/termekek" className="guest-preview-link">
+                        Összes termék megtekintése
+                    </Link>
+                </div>
+
+                {loading && <p className="guest-preview-feedback">Betöltés...</p>}
+                {!loading && error && <p className="guest-preview-feedback">Hiba: {error}</p>}
+
+                {!loading && !error && previewItems.length > 0 && (
+                    <div className="guest-preview-viewport">
+                        <div className="guest-preview-track">
+                            {rollingItems.map((item, index) => (
+                                <div className="guest-preview-card" key={`${item.i_id}-${index}`}>
+                                    <TermekCard item={item} />
+                                </div>
+                            ))}
                         </div>
                     </div>
-                </div>
+                )}
             </section>
         </main>
     </div>

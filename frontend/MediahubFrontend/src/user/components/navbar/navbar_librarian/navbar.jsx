@@ -1,8 +1,10 @@
 import "./navbar.css";
 import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
 
 export function Navbar_Librarian() {
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Read username from localStorage
   const username = localStorage.getItem('username') || '';
@@ -18,18 +20,29 @@ export function Navbar_Librarian() {
   };
 
   return (
-    <nav className="appNavbar">
+    <nav className={`appNavbar ${isMobileMenuOpen ? "mobileNavOpen" : ""}`}>
       <section className="navbarSection1">
         <Link to="/" className="navLink">
           <h3>MediaHub</h3>
         </Link>
+        <button
+          className="navbarMenuToggle"
+          type="button"
+          aria-label="Menü megnyitása"
+          aria-expanded={isMobileMenuOpen}
+          onClick={() => setIsMobileMenuOpen((open) => !open)}
+        >
+          <span className="navbarMenuIcon" />
+          <span className="navbarMenuIcon" />
+          <span className="navbarMenuIcon" />
+        </button>
       </section>
 
       <section className="navbarSection2">
         {/* Links for logged-in user */}
-        <Link to="/termekek" className="navLink">Termékek</Link>
-        <Link to="/termek_details" className="navLink">Termékek kezelése</Link>
-        <Link to="/kolcsonzesek" className="navLink">Kölcsönzések</Link>
+        <Link to="/termekek" className="navLink" onClick={() => setIsMobileMenuOpen(false)}>Termékek</Link>
+        <Link to="/termek_details" className="navLink" onClick={() => setIsMobileMenuOpen(false)}>Termékek kezelése</Link>
+        <Link to="/kolcsonzesek" className="navLink" onClick={() => setIsMobileMenuOpen(false)}>Kölcsönzések</Link>
 
         {/* User profile */}
         <div className="dropdown userProfile">
@@ -41,7 +54,10 @@ export function Navbar_Librarian() {
             <li>
               <button
                 className="dropdownItem dropdown-item button_text logOutButton"
-                onClick={handleLogout}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleLogout();
+                }}
               >
                 Kilépés
               </button>
