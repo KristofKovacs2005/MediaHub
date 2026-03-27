@@ -76,20 +76,9 @@ const handleSearch = (input) => {
         setSortOrder={setSortOrder} // input will be passed automatically
       />
 
-      {/* Sort select */}
-      <div className="sort-bar">
-        <label htmlFor="sortOrder">Rendezés:</label>
-        <select
-          id="sortOrder"
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-        >
-          <option value="AZ">A → Z</option>
-          <option value="ZA">Z → A</option>
-        </select>
+      <div className="items-grid-wrapper">
+        <ItemsGrid items={sortedItems} loading={loading} error={error} />
       </div>
-
-      <ItemsGrid items={sortedItems} loading={loading} error={error} />
       <Footer />
     </div>
   );

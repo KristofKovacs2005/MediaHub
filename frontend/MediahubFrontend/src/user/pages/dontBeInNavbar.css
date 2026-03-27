@@ -1,4 +1,10 @@
 .termekek-page {
     padding-top: 64px; /* same as navbar height */
-    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.items-grid-wrapper {
+    flex: 1;
 }
