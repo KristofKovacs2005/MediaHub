@@ -5,7 +5,7 @@ import ReportReviewModal from "../modal/reportReviewConfirmModal/reportReviewCon
 import AdminActionModal from "../modal/admin_action_on_review/admin_action_modal";
 import three_dot from "../../../assets/dots.png"
 
-export function Comment({ commentAuthor, commentText, commentRating, r_id, u_id }) {
+export function Comment({ commentAuthor, commentText, commentRating, r_id, u_id, itemName }) {
 
 	const status = getAuthStatus();
 	const isLoggedIn = status !== null;
@@ -63,6 +63,10 @@ export function Comment({ commentAuthor, commentText, commentRating, r_id, u_id 
 				) : (
 				<ReportReviewModal
 					r_id={r_id}
+					itemName={itemName}
+					commentAuthor={commentAuthor}
+					commentText={commentText}
+					commentRating={commentRating}
 					isClose={() => setIsModalOpen(false)}
 				/>)}
 			</Modal>

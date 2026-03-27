@@ -70,6 +70,7 @@ export default function TermekDetailsPage() {
 				<TermekDetails item={item} tags={tags} />
 				<CommentsSection
 					comments={comments}
+					itemName={item?.i_name || "Ismeretlen elem"}
 					itemId={id}
 					userHasCommented={userHasCommented}
 					onOpenReviewModal={() => setIsReviewModalOpen(true)}

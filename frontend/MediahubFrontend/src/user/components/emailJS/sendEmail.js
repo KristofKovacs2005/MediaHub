@@ -8,10 +8,11 @@ import emailjs from "@emailjs/browser";
 
 export const sendEmailForKolcsonzesek = (username, useremail, message) => {
     const templateParams = {
-        name: username,
-        email: useremail,
+        username,
+        user_email: useremail,
         message: message.body,
-        subject: message.subject
+        subject: message.subject,
+        time: new Date().toLocaleString()
     };
 
     emailjs.send(
@@ -32,15 +33,15 @@ export const sendEmailForKolcsonzesek = (username, useremail, message) => {
  */
 
 export const sendEmailForReporting = async ({ 
-    user_name, user_email, item_name, stars, comment, reason 
+    user_name, item_name, stars, comment, reason 
     }) => {
     const templateParams = {
-        name: user_name,
-        email: user_email,
-        item_name: item_name,
-        stars: stars,
-        comment: comment,
-        reason: reason
+        user_name,
+        item_name,
+        stars,
+        comment,
+        reason,
+        time: new Date().toLocaleString()
     };
     try {
     await emailjs.send(

@@ -1,5 +1,5 @@
 import { Comment } from "./comment";
-export function CommentsSection({ comments, userHasCommented, onOpenReviewModal }) {
+export function CommentsSection({ comments, itemName, userHasCommented, onOpenReviewModal }) {
 	// Format comments date if needed
 	return (
 		<section className="commentsSection">
@@ -24,6 +24,7 @@ export function CommentsSection({ comments, userHasCommented, onOpenReviewModal 
 								key={comment.r_id}
 								r_id={comment.r_id}
 								u_id={comment.u_id}
+								itemName={itemName}
 								commentAuthor={comment.username || "Ismeretlen"}
 								commentText={comment.comment || "Nincs szöveg"}
 								commentRating={comment.stars || 0}
