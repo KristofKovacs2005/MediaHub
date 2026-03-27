@@ -6,19 +6,6 @@ import  RenderNavbar  from "../navbar/renderNavbar";
 export default function FlaggedCommentsPage() {
     const status = authLoader({ minRole: 5 });
 
-    // Only admins can see this page
-    if (status !== 5) {
-        return (
-            <div className="pageMainDiv">
-                <RenderNavbar />
-                <div className="pageBelowNavbar">
-                    <p>Hozzáférés megtagadva</p>
-                </div>
-                <Footer />
-            </div>
-        );
-    }
-
     return (
         <div className="pageMainDiv">
             <RenderNavbar />

@@ -33,6 +33,9 @@ export function useLoadThisItem({ id }) {
 					reviews = Array.isArray(reviewsData) ? reviewsData : [];
 					reviews = reviews.map(r => ({ ...r, comment: decodeBuffer(r?.comment) }));
 				}
+				if(reviewsRes.status === 404){
+					setComments([]);
+				}
 				setComments(reviews);
 
 				const tagsRes = await fetch(`http://localhost:3000/item/${id}/tags`, {
