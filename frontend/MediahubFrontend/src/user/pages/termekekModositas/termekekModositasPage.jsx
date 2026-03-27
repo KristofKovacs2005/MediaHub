@@ -1,171 +1,210 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import Modal from "../../components/modal/modal.jsx";
 import ConfirmModifyItem from "../../components/modal/confirmItemModal/confirmModifyItem/confirmModifyItem.jsx";
 import { handleModifyItem } from "../../functions/items.js";
-import { useLocation } from "react-router-dom";
+import { fetchTags } from "../../functions/tags.js";
+import "./termekekModositas.css"
+
 export function TermekModositas() {
     const { id } = useParams() || {};
-	const location = useLocation();
+    const navigate = useNavigate();
+    const location = useLocation();
     const { item, tags } = location.state || {};
-	const navigate = useNavigate()
+
+    // Product details
     const [iName, setIName] = useState(item?.i_name || "");
     const [author, setAuthor] = useState(item?.author || "");
     const [iDescription, setIDescription] = useState(item?.i_description || "");
     const [amount, setAmount] = useState(Number(item?.amount) || 0);
-    const [itemTags, setItemTags] = useState(tags || []);
     const [image, setImage] = useState(item?.img_url || "/uploads/images.jpeg");
-    const [isOpenModal, setIsOpenModal] = useState(false);
     const [imageFile, setImageFile] = useState(null);
-    const [error, setError] = useState(null);
+
+    // Modal state
+    const [isOpenModal, setIsOpenModal] = useState(false);
+
+    // Tags
+    const [itemTags, setItemTags] = useState(
+        Array.isArray(tags)
+            ? tags.map(t => typeof t === "object" ? t.t_name : t)
+            : tags?.split(",").map(t => t.trim()) || []
+    );
+    const [availableTags, setAvailableTags] = useState([]);
 
     const itemStock = amount > 0;
-
     const MAX_SIZE = 3 * 1024 * 1024; // 3MB
 
-    // Handle image change
+    // Fetch available tags
+    useEffect(() => {
+        const getTags = async () => {
+            await fetchTags(setAvailableTags, () => {});
+        };
+        getTags();
+    }, []);
+
+    // Image change
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
-
         if (file.size > MAX_SIZE) {
             alert("A kép túl nagy! Maximum 3MB.");
             return;
         }
-
         setImageFile(file);
         setImage(URL.createObjectURL(file));
     };
 
-    // Handle tag add/remove
-    const handleTagChange = (index, value) => {
-        const newTags = [...itemTags];
-        newTags[index] = value;
-        setItemTags(newTags);
+    // Add tag (like FilterBar)
+    const addTagFromDropdown = (tagName) => {
+        setItemTags(prev => prev.includes(tagName) ? prev : [...prev, tagName]);
     };
 
-    const addTag = () => setItemTags([...itemTags, ""]);
-    const removeTag = (index) => setItemTags(itemTags.filter((_, i) => i !== index));
+    // Remove tag
+    const removeTag = (tagName) => {
+        setItemTags(prev => prev.filter(t => t !== tagName));
+    };
 
-    // Handle submit
+    // Submit
     const handleSubmit = async () => {
+        // Map tag names to IDs for backend
+        const tagIDs = itemTags
+            .map(name => availableTags.find(t => t.t_name === name)?.t_id)
+            .filter(Boolean);
+
         try {
             await handleModifyItem(id, {
                 i_name: iName,
                 author,
                 i_description: iDescription,
                 amount,
-                tags: itemTags.join(","), // ⚠ comma-separated for backend
+                tags: tagIDs, // send IDs
                 imageFile
             });
             alert("Sikeres módosítás!");
             setIsOpenModal(false);
-			navigate("/termek_details")
+            navigate("/termek_details");
         } catch (err) {
             alert(err.message || "Hiba történt");
         }
     };
 
     return (
-        <section className="detailsSection">
-            <div className="container-lg">
-                <div className="row g-4 align-items-start">
-                    {/* Image column */}
-                    <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center">
-                        <img
-                            src={image?"http://localhost:3000" + image:image}
-                            alt={iName}
-                            className="detailsImage img-fluid mb-3"
-                        />
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="form-control"
-                        />
-                    </div>
+        <section className="termekModSection">
+            {/* Image column */}
+            <div className="termekModImageColumn">
+                <img
+                    src={image ? "http://localhost:3000" + image : image}
+                    alt={iName}
+                    className="termekModImage"
+                />
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="termekModInputFile"
+                />
+            </div>
 
-                    {/* Details column */}
-                    <div className="col-lg-8 col-md-7">
-                        <input
-                            type="text"
-                            className="form-control mb-3"
-                            value={iName}
-                            onChange={(e) => setIName(e.target.value)}
-                            placeholder="Termék neve"
-                        />
-                        <input
-                            type="text"
-                            className="form-control mb-2"
-                            value={author}
-                            onChange={(e) => setAuthor(e.target.value)}
-                            placeholder="Szerző"
-                        />
-                        <textarea
-                            className="form-control mb-3"
-                            value={iDescription}
-                            onChange={(e) => setIDescription(e.target.value)}
-                            placeholder="Leírás"
-                            rows={4}
-                        />
-                        <input
-                            type="number"
-                            className="form-control mb-3"
-                            value={amount}
-                            onChange={(e) => setAmount(Number(e.target.value))}
-                            min={0}
-                            placeholder="Mennyiség"
-                        />
-                        <p>
-                            {itemStock ? (
-                                <span className="text-success">Raktáron: {amount} db</span>
-                            ) : (
-                                <span className="text-danger">Nincs raktáron</span>
-                            )}
-                        </p>
+            {/* Details column */}
+            <div className="termekModDetailsColumn">
+                <input
+                    type="text"
+                    className="termekModInput"
+                    value={iName}
+                    onChange={(e) => setIName(e.target.value)}
+                    placeholder="Termék neve"
+                />
+                <input
+                    type="text"
+                    className="termekModInput"
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                    placeholder="Szerző"
+                />
+                <textarea
+                    className="termekModTextarea"
+                    value={iDescription}
+                    onChange={(e) => setIDescription(e.target.value)}
+                    placeholder="Leírás"
+                    rows={4}
+                />
+                <input
+                    type="number"
+                    className="termekModInput"
+                    value={amount}
+                    onChange={(e) => setAmount(Number(e.target.value))}
+                    min={0}
+                    placeholder="Mennyiség"
+                />
 
-                        {/* Tags */}
-                        <div className="mb-3">
-                            {itemTags.map((tag, index) => (
-                                <div key={index} className="d-flex mb-2">
-                                    <input
-                                        type="text"
-                                        className="form-control me-2"
-                                        value={tag}
-                                        onChange={(e) => handleTagChange(index, e.target.value)}
-                                        placeholder="Tag"
-                                    />
-                                    <button
-                                        type="button"
-                                        className="btn btn-danger"
-                                        onClick={() => removeTag(index)}
-                                    >
-                                        ×
-                                    </button>
-                                </div>
-                            ))}
+                <p className="termekModStock">
+                    {itemStock ? (
+                        <span className="text-success">Raktáron: {amount} db</span>
+                    ) : (
+                        <span className="text-danger">Nincs raktáron</span>
+                    )}
+                </p>
+
+                {/* Existing tags (removable only) */}
+                <div className="termekModTags mb-3">
+                    {itemTags.map((tag) => (
+                        <span key={tag} className="tagRow">
                             <button
                                 type="button"
-                                className="btn btn-secondary btn-sm"
-                                onClick={addTag}
+                                className="termekModButton"
+                                style={{ backgroundColor: "#dc3545" }}
+                                onClick={() => removeTag(tag)}
                             >
-                                Új tag hozzáadása
+                                {tag} ×
                             </button>
-                        </div>
-
-                        <button className="btn btn-success" onClick={() => setIsOpenModal(true)}>
-                            Módosítás
-                        </button>
-
-                        <Modal isOpen={isOpenModal} isClose={() => setIsOpenModal(false)}>
-                            <ConfirmModifyItem
-                                termek={{ i_name: iName }}
-                                isClose={() => setIsOpenModal(false)}
-                                onConfirm={handleSubmit}
-                            />
-                        </Modal>
-                    </div>
+                        </span>
+                    ))}
                 </div>
+
+                {/* Available tags dropdown */}
+                <div className="availableTags mb-3">
+                    <p>Választható címkék:</p>
+                    {availableTags.map((tag) => {
+                        const isSelected = itemTags.includes(tag.t_name);
+                        return (
+                            <button
+                                key={tag.t_id}
+                                type="button"
+                                className="termekModButton"
+                                style={{
+                                    margin: "2px",
+                                    backgroundColor: isSelected ? "#6c757d" : "#0d6efd",
+                                    color: "#fff"
+                                }}
+                                onClick={() => addTagFromDropdown(tag.t_name)}
+                                disabled={isSelected}
+                            >
+                                {tag.t_name} {isSelected ? "✓" : ""}
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {/* Submit buttons */}
+                <div className="modButtonRow">
+                    <button
+                        className="termekModButton"
+                        onClick={() => setIsOpenModal(true)}
+                    >
+                        Módosítás
+                    </button>
+                    <Link to={`/termek_details`} className="btn btn-primary termekModButton">
+                        Vissza
+                    </Link>
+                </div>
+
+                <Modal isOpen={isOpenModal} isClose={() => setIsOpenModal(false)}>
+                    <ConfirmModifyItem
+                        termek={{ i_name: iName }}
+                        isClose={() => setIsOpenModal(false)}
+                        onConfirm={handleSubmit}
+                    />
+                </Modal>
             </div>
         </section>
     );

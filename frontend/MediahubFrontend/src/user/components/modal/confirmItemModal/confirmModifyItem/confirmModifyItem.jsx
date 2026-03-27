@@ -14,7 +14,7 @@ export default function ConfirmModifyItem({ isClose, termek, onConfirm }) {
                         Mégse
                     </button>
                     <button className="btn btn-success" onClick={onConfirm}>
-                        Hozzáadás
+                        Módosítás
                     </button>
                 </div>
             </div>

@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom"; // <-- import Link
 import Modal from "../modal/modal";
 import ConfirmDeleteItem from "../modal/confirmItemModal/deleteItem/confirmDeleteItem";
+import { useLoadThisItem } from "../../functions/load_this_item_function";
 
 export default function TermekRow({ termek, onActionComplete }) {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
+    const { tags } = useLoadThisItem({ id: termek.i_id })
     return (
         <tr>
             <td>{termek.i_name}</td>
@@ -15,7 +16,7 @@ export default function TermekRow({ termek, onActionComplete }) {
             ):(<td>Nincs raktáron</td>)}
             <td>
                 {/* Use Link for navigation */}
-                <Link to={`/termekmodositas/${termek.i_id}`} state={{ item: termek, tags: termek.tags }} className="btn btn-primary">
+                <Link to={`/termekmodositas/${termek.i_id}`} state={{ item: termek, tags: tags }} className="btn btn-primary">
                     Módosítás
                 </Link>
             </td>

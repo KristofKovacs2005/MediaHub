@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import RenderNavbar from "../components/navbar/renderNavbar";
 import { Footer } from "../components/footer/footer";
 import OrderTable from "../components/librarianOrderPage/orderTable";
 import { getOrdersForLibrarian } from "../functions/orders";
-import "../components/librarianOrderPage/orderPage.css"
+import "../components/librarianOrderPage/orderPage.css";
 import { PieChart } from "../components/charts/pieChart/pieChart";
 
 export default function OrdersLibrarianPage() {
     const [orders, setOrders] = useState([]);
-    const [statusFilter, setStatusFilter] = useState(null); // filter by pie slice
-    const [searchTerm, setSearchTerm] = useState("");       // optional search
+    const [filteredOrders, setFilteredOrders] = useState([]);
+
+    const userRef = useRef();
+    const itemRef = useRef();
+    const statusRef = useRef(null);
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -29,15 +32,20 @@ export default function OrdersLibrarianPage() {
     orders.forEach(order => { if (statusCounts[order.s_id] !== undefined) statusCounts[order.s_id]++; });
     const values = [1, 2, 3, 4, 5, 6].map(i => statusCounts[i]);
 
-    // filtered orders by status & search
-    const filteredOrders = orders.filter(order => {
-        const matchesStatus = statusFilter ? order.s_id === statusFilter : true;
-        const matchesSearch = searchTerm
-            ? order.item?.i_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            order.user?.username.toLowerCase().includes(searchTerm.toLowerCase())
-            : true;
-        return matchesStatus && matchesSearch;
-    });
+    const handleSearch = () => {
+        const filtered = orders.filter(order =>
+            (!userRef.current.value || order.user?.username.toLowerCase().includes(userRef.current.value.toLowerCase())) &&
+            (!itemRef.current.value || order.item?.i_name.toLowerCase().includes(itemRef.current.value.toLowerCase())) &&
+            (!statusRef.current || order.s_id === statusRef.current)
+        );
+        setFilteredOrders(filtered);
+    };
+
+    const handleClear = () => {
+        userRef.current.value = "";
+        itemRef.current.value = "";
+        setFilteredOrders([]);
+    };
 
     return (
         <div className="page-wrapper">
@@ -63,42 +71,17 @@ export default function OrdersLibrarianPage() {
                             ]}
                             onSliceClick={(label) => {
                                 const index = labels.indexOf(label);
-                                setStatusFilter(index >= 0 ? index + 1 : null);
+                                statusRef.current = index >= 0 ? index + 1 : null;
+                                handleSearch(); // immediately apply filter
                             }}
                         />
-
                     </div>
                 </section>
-
-                {/* SEARCH FILTER */}
-                <div className="search-filter" style={{ marginBottom: '1rem', textAlign: 'right' }}>
-                    <input
-                        type="text"
-                        placeholder="Keresés felhasználó vagy termék név alapján..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        style={{
-                            padding: '0.5rem 1rem',
-                            borderRadius: '8px',
-                            border: '1px solid #ccc',
-                            width: '100%',
-                            maxWidth: '400px',
-                            fontSize: '0.9rem'
-                        }}
-                    />
-                    <button
-                        className="btn btn-secondary"
-                        style={{ marginTop: "1rem" }}
-                        onClick={() => { setStatusFilter(null); setSearchTerm(""); }}
-                    >
-                        Clear
-                    </button>
-                </div>
 
                 {/* TABLE SECTION */}
                 <section className="section-container">
                     <div className="table-card">
-                        <OrderTable orders={filteredOrders} />
+                        <OrderTable orders={filteredOrders.length > 0 ? filteredOrders : orders} />
                     </div>
                 </section>
             </div>

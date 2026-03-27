@@ -1,6 +1,6 @@
 import { Header } from "../header/header";
 import { Link } from "react-router-dom";
-import "./librarianBody.css";
+import "./LibrarianBody.css";
 import HeaderText from "../header/headerTextUser.jsx";
 
 export default function LibrarianBody() {
@@ -8,7 +8,7 @@ export default function LibrarianBody() {
         <div className="guest-body">
             <Header title={<HeaderText/>}/>
 
-            <main className="dashboard">
+            <main className="dashboardLibrarian">
                 <div className="top-row">
                     <Link to="/termek_details" className="dashboard-card products">
                         <div className="overlay">

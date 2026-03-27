@@ -1,0 +1,107 @@
+/* TERMÉK MÓDOSÍTÁS PAGE CSS */
+.termekModSection {
+    margin: 40px auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    width: 95%; /* almost full page */
+    max-width: 1400px; /* bigger than before */
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.termekModImageColumn {
+    flex: 1 1 300px; /* grows and shrinks, minimum 300px */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.termekModImageColumn img {
+    width: 100%;
+    max-width: 400px; /* bigger image */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+}
+
+.termekModDetailsColumn {
+    flex: 2 1 500px; /* takes more space for inputs */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.termekModInput,
+.termekModTextarea,
+.termekModInputFile {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.termekModInput:focus,
+.termekModTextarea:focus {
+    border-color: #0F4C5C;
+    box-shadow: 0 0 0 3px rgba(15, 76, 92, 0.2);
+    outline: none;
+}
+
+.termekModStock {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.termekModTags, .modButtonRow {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.termekModButton {
+    background-color: #0F4C5C;
+    color: white;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    width: fit-content;
+}
+
+.termekModButton:hover {
+    background-color: #0a3a48;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+    .termekModSection {
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    .termekModImageColumn {
+        width: 100%;
+        margin-bottom: 20px; /* add spacing below image */
+        align-items: center; /* already there, just to be safe */
+    }
+
+    .termekModImageColumn img {
+        width: 100%;
+        max-width: 400px; /* keeps it from being too big */
+        height: auto;
+        margin-bottom: 20px; /* extra space under image */
+    }
+
+    .termekModDetailsColumn {
+        width: 100%;
+    }
+}
