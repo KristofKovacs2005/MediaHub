@@ -86,7 +86,7 @@ INSERT INTO `items` (`i_id`, `author`, `i_name`, `img_url`, `i_description`, `am
 (6, 'Quentin Tarantino', 'Ponyvaregény', '/uploads/pr.jpg', 'A Ponyvaregény (eredeti cím: Pulp Fiction) 1994-ben bemutatott amerikai bűnügyi film Quentin Tarantino rendezésében.', 1),
 (7, 'Christopher Nolan', 'Csillagok között', '/uploads/ck.jpg', 'A Csillagok között (eredeti cím: Interstellar) 2014-ben bemutatott sci-fi film, amely felvonultatja a 21. századi elméleti fizika elképzeléseit a világűrről, a téridőről, valamint felvázolja a zsákutcába jutott emberiség lehetséges jövőjét.', 1),
 (8, 'Francis Ford Coppola', 'A keresztapa', '/uploads/ka.png', 'A Keresztapa (The Godfather) Mario Puzo azonos című regényéből készült 1972-ben bemutatott világhírű filmdráma Francis Ford Coppola rendezésében Marlon Brando, Al Pacino, Robert Duvall és James Caan főszereplésével.', 1),
-(9, '	Frank Darabont', 'A remény rabjai', '/uploads/arr.jpeg', 'A remény rabjai (eredeti cím: The Shawshank Redemption) 1994-ben bemutatott amerikai filmdráma, melyet Frank Darabont írt és rendezett. A forgatókönyv alapjául Stephen King azonos című regénye szolgált.', 0)
+(9, '	Frank Darabont', 'A remény rabjai', '/uploads/arr.jpeg', 'A remény rabjai (eredeti cím: The Shawshank Redemption) 1994-ben bemutatott amerikai filmdráma, melyet Frank Darabont írt és rendezett. A forgatókönyv alapjául Stephen King azonos című regénye szolgált.', 0),
 (10, 'J. K. Rowling', 'Harry Potter és a bölcsek köve', '/uploads/hp1.jpg', 'Az első rész a híres Harry Potter sorozatból, mely bemutatja Harry és barátai első kalandját a Roxfortban.', 1),
 (11, 'J. K. Rowling', 'Harry Potter és a titkok kamrája', '/uploads/hp2.jpg', 'Harry második évét követi a Roxfortban, ahol új veszélyekkel és rejtélyekkel találkozik.', 3),
 (12, 'George Orwell', '1984', '/uploads/1984.jpg', 'George Orwell disztópikus regénye a totalitárius államok elnyomásáról és a személyes szabadság elvesztéséről.', 2),
@@ -163,7 +163,7 @@ INSERT INTO `item_tag` (`i_id`, `t_id`) VALUES
 
 (9, 2),
 (9, 8),
-(9, 10)
+(9, 10),
 
 (10, 1), -- Harry Potter és a bölcsek köve → book
 (10, 11), -- fantasy
