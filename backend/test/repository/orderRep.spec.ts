@@ -103,7 +103,6 @@ describe("insertItem", () => {
       mockQuery.mockResolvedValueOnce([{}, []])
         .mockResolvedValueOnce([[{ amount: 1 }], []])
         .mockResolvedValueOnce([{affectedRows: 1}, []]) 
-        .mockResolvedValueOnce([, []]) 
         .mockResolvedValueOnce([{}, []]) 
 
         const result = await repo.insertOrder(1, 3, new Date("2026-10-11"), new Date("2026-11-11"))
@@ -119,12 +118,8 @@ describe("insertItem", () => {
             "insert into orders values (null, 1, ?, ?, ?, ?);",
             [1, 3, expect.any(Date), expect.any(Date)]
         )
-        expect(mockQuery).toHaveBeenNthCalledWith(
-            4,
-            "update items set amount = ? where i_id = ?",
-            [0, 3]
-        )
-        expect(mockQuery).toHaveBeenNthCalledWith(5, "COMMIT;")
+       
+        expect(mockQuery).toHaveBeenNthCalledWith(4, "COMMIT;")
 
         expect(mockConnection.end).toHaveBeenCalled()
         expect(result).toEqual({ affectedRows: 1 })
@@ -174,7 +169,6 @@ describe("insertItem", () => {
       mockQuery.mockResolvedValueOnce([{}, []])
         .mockResolvedValueOnce([[{ amount: 1 }], []])
         .mockResolvedValueOnce([{affectedRows: 0}, []]) 
-        .mockResolvedValueOnce([, []]) 
         .mockResolvedValueOnce([{}, []]) 
 
         const result = await repo.insertOrder(1, 3, new Date("2026-10-11"), new Date("2026-11-11"))
@@ -190,12 +184,8 @@ describe("insertItem", () => {
             "insert into orders values (null, 1, ?, ?, ?, ?);",
             [1, 3, expect.any(Date), expect.any(Date)]
         )
-        expect(mockQuery).toHaveBeenNthCalledWith(
-            4,
-            "update items set amount = ? where i_id = ?",
-            [0, 3]
-        )
-        expect(mockQuery).toHaveBeenNthCalledWith(5, "ROLLBACK;")
+       
+        expect(mockQuery).toHaveBeenNthCalledWith(4, "ROLLBACK;")
 
         expect(mockConnection.end).toHaveBeenCalled()
         expect(result).toEqual({ affectedRows: 0 })
@@ -263,30 +253,7 @@ describe("modifyOrder", () => {
 
     })
 
-    test("order successfully modified with item amount change", async () => {
-        const sql = "UPDATE orders set status = ? where o_id = ?"
-        const values: any[] = [1, 1]
-        const id = 1
-        const status = 4
-        mockQuery.mockResolvedValueOnce([{}, []])
-        .mockResolvedValueOnce([[{p_id: 1}], []])
-        .mockResolvedValueOnce([[{amount: 0}], []]) 
-        .mockResolvedValueOnce([{affectedRows: 1}, []]) 
-        .mockResolvedValueOnce([, []]) 
-        .mockResolvedValueOnce([{}, []]) 
-
-        const result = await repo.modifyOrder(sql, values, id, status)
-
-        expect(mockQuery).toHaveBeenNthCalledWith(1, "START TRANSACTION;")
-        expect(mockQuery).toHaveBeenNthCalledWith(2, "select p_id from orders where o_id = ?", [1])
-        expect(mockQuery).toHaveBeenNthCalledWith(3, "select amount from items where i_id = ?", [1])
-        expect(mockQuery).toHaveBeenNthCalledWith(4, sql, values)
-        expect(mockQuery).toHaveBeenNthCalledWith(5, "update items set amount = ? where i_id = ?", [1, 1])
-        expect(mockQuery).toHaveBeenNthCalledWith(6, "COMMIT;")
-        expect(mockConnection.end).toHaveBeenCalled()
-        expect(result).toEqual({ affectedRows: 1 })
-
-    })
+   
 
     test("modify did not succeed", async () => {
         const sql = "UPDATE orders set status = ? where o_id = ?"

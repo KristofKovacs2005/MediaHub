@@ -50,7 +50,7 @@ export class OrderRep {
         const [results] = await connection.query(
             "insert into orders values (null, 1, ?, ?, ?, ?);", [ user_id, product_id, new Date(date), new Date(r_date)]
         ) as Array<any>
-        await connection.query("update items set amount = ? where i_id = ?", [item[0].amount - 1, product_id])
+        
         if (results.affectedRows == 0) {
             await connection.query("ROLLBACK;")
         }else {

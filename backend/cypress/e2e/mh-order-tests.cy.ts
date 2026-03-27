@@ -233,11 +233,7 @@ describe("POST /orders tesztek", () => {
     }).then((response => {
       expect(response.status).to.eq(201)
       return response.body.id
-    })).then(res => {
-      cy.request(`http://localhost:3000/item/${6}`).then(resp => {
-        expect(num - 1).to.eq(resp.body[0].amount)
-      })
-    })
+    }))
   })
 
   it("POST /orders foglalt elem", () => {
@@ -395,10 +391,6 @@ describe("PATCH /orders tesztek", () => {
     }
   }).then((response) => {
     expect(response.status).to.eq(201)
-  }).then(res => {
-    cy.request("http://localhost:3000/item/3").then(r => {
-      expect(r.body[0].amount).to.eq(num + 1)
-    })
   })
   })
 
@@ -419,10 +411,6 @@ describe("PATCH /orders tesztek", () => {
     }
   }).then((response) => {
     expect(response.status).to.eq(201)
-  }).then(res => {
-    cy.request("http://localhost:3000/item/3").then(r => {
-      expect(r.body[0].amount).to.eq(num)
-    })
   })
   })
 
