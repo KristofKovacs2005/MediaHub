@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FlaggedComment } from "./FlaggedComment";
+import { FlaggedComment } from "./flaggedComment";
 import { useGetReportedReviews } from "./loadFlaggedComments";
 
 export default function FlaggedCommentsTable() {
