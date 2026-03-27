@@ -1,5 +1,7 @@
 import { Comment } from "./comment";
 export function CommentsSection({ comments, itemName, userHasCommented, isLoggedIn, onOpenReviewModal }) {
+	const currentUsername = localStorage.getItem("username");
+
 	// Format comments date if needed
 	return (
 		<section className="commentsSection">
@@ -24,7 +26,6 @@ export function CommentsSection({ comments, itemName, userHasCommented, isLogged
 
 				{comments && comments.length > 0 ? (
 					<div className="commentsList">
-						{console.log(comments)}
 						{comments.map(comment => (
 							<Comment
 								key={comment.r_id}
@@ -34,6 +35,7 @@ export function CommentsSection({ comments, itemName, userHasCommented, isLogged
 								commentAuthor={comment.username || "Ismeretlen"}
 								commentText={comment.comment || "Nincs szöveg"}
 								commentRating={comment.stars || 0}
+								isOwnComment={currentUsername === comment.username}
 							/>
 						))}
 

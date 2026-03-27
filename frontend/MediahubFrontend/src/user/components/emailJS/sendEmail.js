@@ -20,8 +20,7 @@ export const sendEmailForKolcsonzesek = (username, useremail, message) => {
         "template_3grz80p",  // replace with your template ID
         templateParams,
         "iw9PPde2zM7Ml84Xx"    // replace with your EmailJS public key
-    ).then(() => console.log("Email sent!"))
-    .catch(err => console.error("Email error:", err));;
+    ).catch(() => null);
 };
 
 /**
@@ -50,8 +49,7 @@ export const sendEmailForReporting = async ({
         templateParams,
         "iw9PPde2zM7Ml84Xx"    // EmailJS public key
     );
-    console.log("Email sent!");
     } catch(err) {
-        console.error("Email error:", err);
+        return null;
     }
 }

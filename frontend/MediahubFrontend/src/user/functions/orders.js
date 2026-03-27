@@ -26,7 +26,6 @@ export async function insertOrder(p_id, return_date) {
     const token = localStorage.getItem("authToken");
     
     const date = new Date().toISOString().split("T")[0];
-    console.log(p_id, return_date, date)
     return await apiCall(
         "http://localhost:3000/orders",
         "POST",
@@ -40,7 +39,6 @@ export async function fetchOrdersUser() {
         const token = localStorage.getItem("authToken"); // token for auth
         return await apiCall("http://localhost:3000/order", "GET", null, token);
     } catch (error) {
-        console.error("Error fetching orders:", error);
         return []; // preserve original fallback
     }
 }

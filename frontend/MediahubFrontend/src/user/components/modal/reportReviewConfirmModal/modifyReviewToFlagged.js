@@ -29,7 +29,6 @@ export default async function modifyReviewToFlagged(r_id, reason) {
         return true;
     }
     catch(err){
-        console.error(err);
         return false;
     }
 }

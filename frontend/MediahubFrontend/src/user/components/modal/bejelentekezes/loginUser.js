@@ -40,7 +40,6 @@ export const handleLogIn = async (event) => {
         window.location.reload();
 
     } catch (error) {
-        console.error("Hiba a bejelentkezéskor:", error);
         alert('Hálózati hiba történt: ' + (error.message || error));
     }
 };

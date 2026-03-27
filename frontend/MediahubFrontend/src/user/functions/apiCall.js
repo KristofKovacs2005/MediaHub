@@ -26,7 +26,6 @@ export async function apiCall(url, method = "GET", bodyObject = null, token = nu
         if (contentType.includes("application/json")) return await res.json();
         return null; // no content
     } catch (err) {
-        console.error("API error:", err);
         throw err;
     }
 }

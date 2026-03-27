@@ -21,10 +21,9 @@ export default async function postUser(event) {
     }
 
     const userData = { username, email, password, status: 1 };
-    console.log(JSON.stringify(userData));
 
     try {
-        const json = await apiCall(url, "POST", userData);
+        await apiCall(url, "POST", userData);
 
         // If apiCall succeeds, we assume creation was successful
         if (form && typeof form.reset === 'function') form.reset();
@@ -32,8 +31,6 @@ export default async function postUser(event) {
         alert('Sikeres regisztráció!');
 
     } catch (error) {
-        // apiCall already throws with the backend error message
-        console.error("Hiba a felhasználó létrehozásakor:", error);
         alert('Sikertelen regisztráció: ' + (error.message || error));
     }
 }

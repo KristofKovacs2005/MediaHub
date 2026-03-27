@@ -22,7 +22,6 @@ export default function OrderRow({ order }) {
     },[])
     const handleElfogadas = () => {
         try {
-            console.log(user.email)
             modifyOrderWithLibrarian(order.o_id, 2);
             sendEmailForKolcsonzesek(
                 user.username,
@@ -56,7 +55,6 @@ export default function OrderRow({ order }) {
                 "marci061123@gmail.com",
                 emailMessages[2],
             );
-            console.log("Sikeres figyelmeztetés!");
             setisElutasitasOpen(false);
         } catch (err) {
             alert(err.message || "Hiba történt");

@@ -56,7 +56,7 @@ export default function TermekekLibrarianPage() {
                 </div>
 
                 {loading && <p>Betöltés...</p>}
-                {error && <p>Hiba: {error}</p>}
+                {error && <p>Nem sikerült betölteni az elemeket.</p>}
 
                 {!loading && !error && (
                     <TermekTable items={filteredItems.length > 0 ? filteredItems : items} onActionComplete={fetchingItems} />

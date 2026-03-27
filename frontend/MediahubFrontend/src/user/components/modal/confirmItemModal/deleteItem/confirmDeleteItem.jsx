@@ -8,7 +8,6 @@ export default function ConfirmDeleteItem({ i_id, isClose, onConfirm }) {
         onConfirm();  // call onConfirm here
         isClose();    // close modal
     } catch (err) {
-        console.error(err);
         alert("Hiba a termék törlésekor!");
     }
 };

@@ -9,7 +9,6 @@ export default function ModalOrderInsert({ isClose, termekId,termek }) {
     });
 
     const handleRent = async (e) => {
-        console.log("Attempting to insert order for product ID:", termekId, "with return date:", returnDate);
         e.preventDefault();
         try {
             await insertOrder(termekId, returnDate);
@@ -17,7 +16,6 @@ export default function ModalOrderInsert({ isClose, termekId,termek }) {
             isClose && isClose(); // close modal
         } catch (err) {
             alert(err.message);
-            console.error("Error inserting order:", err);
         }
     };
 

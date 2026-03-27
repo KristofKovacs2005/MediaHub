@@ -32,8 +32,6 @@ export default function OrderCard({ order }) {
                 const itemRes = await fetch(`http://localhost:3000/item/${order.p_id}`, {
                     headers: { "x-access-token": token }
                 });
-                console.log(item)
-                console.log(itemRes)
 
                 if (!itemRes.ok) throw new Error("Nem sikerült lekérni az elemet.");
 
@@ -47,7 +45,7 @@ export default function OrderCard({ order }) {
 
                 setItem(normalizedItem);
             } catch (e) {
-                console.warn("Item fetch failed:", e);
+                setItem(undefined);
             }
         };
         fetchItem();

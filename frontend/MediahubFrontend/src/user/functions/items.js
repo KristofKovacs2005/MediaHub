@@ -36,12 +36,10 @@ export async function fetchItems({ name, tags, author, setLoading, setError, set
 
 export async function handleDeleteItem(id) {
     try {
-        console.log(id)
         const token = localStorage.getItem("authToken")
         const url = `http://localhost:3000/items/${id}`;
         return await apiCall(url, "DELETE",null,token);
     } catch (err) {
-        console.error(err);
         alert("Váratlan hiba történt");
     }
 }
@@ -69,7 +67,6 @@ export async function handleModifyItem(id, { i_name, author, i_description, amou
 
         return null;
     } catch (err) {
-        console.error("Modify item error:", err);
         throw err;
     }
 }
@@ -90,7 +87,6 @@ export async function handleInsertItem({ i_name, author, i_description, amount, 
 
         if (!res.ok) {
         const text = await res.text();
-        console.error("SERVER ERROR:", text);
         throw new Error(text || "Server error");
         }
 
@@ -101,7 +97,6 @@ export async function handleInsertItem({ i_name, author, i_description, amount, 
 
         return null;
     } catch (err) {
-        console.error("Insert item error:", err);
         throw err;
     }
 }

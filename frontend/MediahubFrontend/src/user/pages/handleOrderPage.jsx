@@ -20,7 +20,7 @@ export default function OrdersLibrarianPage() {
                 const data = await getOrdersForLibrarian();
                 setOrders(data);
             } catch (err) {
-                console.error(err);
+                setOrders([]);
             }
         };
         fetchOrders();

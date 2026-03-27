@@ -9,6 +9,6 @@ export async function fetchComments(setComments) {
         const data = await res.json();
         setComments(data);
     } catch (err) {
-        console.log(err.message);
+        setComments([]);
     }
 }

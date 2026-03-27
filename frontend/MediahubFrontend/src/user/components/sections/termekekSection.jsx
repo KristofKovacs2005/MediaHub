@@ -58,7 +58,7 @@ export function TermekekSectionUser() {
                         {loadingOrders ? (
                             <div className="loading">Betöltés...</div>
                         ) : errorOrders ? (
-                            <div className="error">{errorOrders}</div>
+                            <div className="error">Nem sikerült betölteni a kölcsönzéseket.</div>
                         ) : orders.length > 0 ? (
                             orders.map(order => <OrderCard key={order.o_id} order={order} />)
                         ) : (
@@ -73,7 +73,7 @@ export function TermekekSectionUser() {
                         {loadingBooks ? (
                             <div className="loading">Betöltés...</div>
                         ) : errorBooks ? (
-                            <div className="error">{errorBooks}</div>
+                            <div className="error">Nem sikerült betölteni a könyveket.</div>
                         ) : books.length > 0 ? (
                             books.map(book => <TermekCard key={book.i_id} item={book} />)
                         ) : (
@@ -87,7 +87,7 @@ export function TermekekSectionUser() {
                         {loadingMovies ? (
                             <div className="loading">Betöltés...</div>
                         ) : errorMovies ? (
-                            <div className="error">{errorMovies}</div>
+                            <div className="error">Nem sikerült betölteni a filmeket.</div>
                         ) : movies.length > 0 ? (
                             movies.map(movie => <TermekCard key={movie.i_id} item={movie} />)
                         ) : (

@@ -29,8 +29,7 @@ export function useGetReportedReviews() {
                 const data = await response.json();
                 setReport(data);
             } catch (err) {
-                console.error(err);
-                setError(err.message || String(err));
+                setError(err.message || "Nem sikerult betolteni a jelzett velemenyeket.");
             } finally {
                 setLoading(false);
             }
@@ -76,8 +75,7 @@ export function useModifyOrder(id, orderData) {
             // sikeres módosítás
             setSuccess(true);
         } catch (err) {
-            console.error(err); // hibalogolás konzolra
-            setError(err.message || String(err)); // hiba tárolása state-be
+            setError(err.message || "Hiba a modositas soran"); // hiba tárolása state-be
         } finally {
             setLoading(false); // betöltés befejeződött
         }

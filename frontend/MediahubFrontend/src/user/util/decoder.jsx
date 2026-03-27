@@ -14,7 +14,6 @@ export function decodeBuffer(value) {
 			const bytes = new Uint8Array(value.data);
 			return new TextDecoder("utf-8").decode(bytes);
 		} catch (err) {
-			console.warn("Buffer decode failed:", err);
 			return "";
 		}
 	}

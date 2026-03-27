@@ -3,7 +3,7 @@ import "./itemGrid.css";
 
 const ItemsGrid = ({ items, loading, error }) => {
   if (loading) return <div>Loading...</div>;
-  if (error) return <div className="error">{error}</div>;
+  if (error) return <div className="error">Nem sikerült betölteni a termékeket.</div>;
   if (!items.length) return <div>Nincs találat.</div>;
 
   return (

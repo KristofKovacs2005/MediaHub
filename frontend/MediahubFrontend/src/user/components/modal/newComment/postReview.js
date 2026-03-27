@@ -17,7 +17,9 @@ export default async function postReview(itemId, stars, comment, comments, onSuc
 
 		const username = localStorage.getItem("username");
 		const safeComments = Array.isArray(comments) ? comments : [];
-		const alreadyCommented = safeComments.some(c => String(c.u_id) === String(username));
+		const alreadyCommented = username
+			? safeComments.some(c => String(c.username) === String(username))
+			: false;
 
 		if (alreadyCommented) {
 			alert("Már írtál véleményt ehhez az elemhez!");
@@ -30,8 +32,6 @@ export default async function postReview(itemId, stars, comment, comments, onSuc
 			comment: comment || null,
 		};
 
-		console.log("Submitting review with payload:", payload);
-
 		// apiCall already throws if there's an error
 		await apiCall("http://localhost:3000/reviews", "POST", payload, token);
 
@@ -39,7 +39,6 @@ export default async function postReview(itemId, stars, comment, comments, onSuc
 		if (onSuccess) onSuccess();
 
 	} catch (err) {
-		console.error("Review submission error:", err);
 		alert("Hiba történt a vélemény beküldésekor: " + (err.message || err));
 	}
 }

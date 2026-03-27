@@ -2,14 +2,14 @@ import { useState } from "react";
 import "../modal.css";
 import postReview from "./postReview";
 
-export default function NewCommentModal({ isClose, itemId }) {
+export default function NewCommentModal({ isClose, itemId, comments, onSuccess }) {
 	const [stars, setStars] = useState(5);
 	const [comment, setComment] = useState("");
 	const [hoverStars, setHoverStars] = useState(0);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		postReview(itemId, stars, comment, isClose);
+		await postReview(itemId, stars, comment, comments, onSuccess);
 	};
 
 	return (

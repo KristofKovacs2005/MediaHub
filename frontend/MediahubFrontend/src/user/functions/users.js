@@ -10,7 +10,7 @@ export async function fetchUsers(setUsers) {
         const users = await getUsers();
         setUsers(users);
     } catch (error) {
-        console.error("Error fetching users:", error);
+        setUsers([]);
     }
 }
 
@@ -21,7 +21,7 @@ export async function fetchUsersById({u_id, setUsersById}){
         const user = await apiCall(api, "GET", null, token);
         setUsersById(user[0]);
     } catch (error) {
-        console.error("Error fetching users:", error);
+        setUsersById(null);
     }
 }
 

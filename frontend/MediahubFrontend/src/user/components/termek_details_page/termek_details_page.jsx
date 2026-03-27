@@ -11,7 +11,7 @@ import "./termek_details_page.css";
 
 export default function TermekDetailsPage() {
 	const { id } = useParams(); // Get item_id from route parameter
-	const { item, comments, tags, loading, error } = useLoadThisItem({ id });
+	const { item, comments, tags, loading, error, refetch } = useLoadThisItem({ id });
 	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 	const username = localStorage.getItem("username"); // stored as string
 	const isLoggedIn = !!localStorage.getItem("authToken");
@@ -40,7 +40,7 @@ export default function TermekDetailsPage() {
 				<RenderNavbar />
 				<div className="pageBelowNavbar">
 					<div className="errorContainer">
-						<p>Hiba: {error}</p>
+						<p>Nem sikerült betölteni az elem adatait.</p>
 					</div>
 				</div>
 				<Footer />
@@ -82,6 +82,11 @@ export default function TermekDetailsPage() {
 			<Modal isOpen={isReviewModalOpen} isClose={() => setIsReviewModalOpen(false)}>
 				<NewCommentModal
 					itemId={id}
+					comments={comments}
+					onSuccess={async () => {
+						await refetch();
+						setIsReviewModalOpen(false);
+					}}
 					isClose={() => setIsReviewModalOpen(false)}
 				/>
 			</Modal>

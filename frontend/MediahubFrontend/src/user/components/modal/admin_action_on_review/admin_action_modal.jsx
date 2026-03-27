@@ -14,7 +14,6 @@ export default function AdminActionModal({ r_id, u_id, isClose }) {
             alert("Vélemény törölve!");
             isClose();
         } catch (err) {
-            console.error(err);
             alert("Hiba a vélemény törlésekor!");
         }
     };
@@ -25,7 +24,6 @@ export default function AdminActionModal({ r_id, u_id, isClose }) {
             alert("Vélemény visszaállítva!");
             isClose();
         } catch (err) {
-            console.error(err);
             alert("Hiba a vélemény visszaállítása során!");
         }
     };
@@ -36,7 +34,6 @@ export default function AdminActionModal({ r_id, u_id, isClose }) {
             alert("Felhasználó felfüggesztve!");
             isClose();
         } catch (err) {
-            console.error(err);
             alert("Hiba a felhasználó felfüggesztésekor!");
         }
     };
