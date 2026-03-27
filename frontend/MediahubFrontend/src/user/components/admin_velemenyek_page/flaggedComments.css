@@ -1,85 +1,147 @@
+/* Main page wrapper */
+.page-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* full viewport height */
+  padding-top: 64px; /* reserve space for fixed navbar */
+}
+
+.page-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-x: auto; /* horizontal scroll if table too wide */
+}
+
 /* Container */
 .flagged_cell-container {
-    padding: 2rem;
+  padding: 2rem;
+  overflow-x: auto; /* horizontal scroll on small screens */
+  background-color: #f9fafb; /* light gray background */
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
 /* Table */
-
 .flagged_cell-table {
-    width: 1500px;
+  width: 100%;
+  min-width: 600px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: "Inter", sans-serif;
+}
+
+/* Table headers */
+.flagged_cell-table th {
+  background-color: #1976d2;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 /* Table cells */
-.flagged_cell-cell {
-    border: 1px solid #ddd;
-    padding: 8px;
+.flagged_cell-table td {
+  background-color: white;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
 }
 
-/* Table row (optional hover effect) */
+/* Row hover effect */
+.flagged_cell-row {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
 .flagged_cell-row:hover {
-    background-color: #f9f9f9;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Buttons */
 .flagged_cell-button {
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.9rem;
-}
-
-.flagged_cell-button-danger {
-    background-color: #d32f2f;
-    color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .flagged_cell-button-primary {
-    background-color: #1976d2;
-    color: #fff;
+  background-color: #42a5f5;
+  color: white;
+}
+.flagged_cell-button-primary:hover {
+  background-color: #1976d2;
 }
 
-/* Icon inside button */
-.flagged_cell-icon {
-    width: 16px;
+.flagged_cell-button-danger {
+  background-color: #ef5350;
+  color: white;
+}
+.flagged_cell-button-danger:hover {
+  background-color: #d32f2f;
 }
 
-/* Actions cell */
-.flagged_cell-actions {
-    position: relative;
-}
-
-/* Modal/dropdown */
-.flagged_cell-modal {
-    position: absolute;
-    top: 30px;
-    right: 0;
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 4px;
-    z-index: 10;
-    display: flex;
-    gap: 5px;
-}
-
-.starRating {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
-}
-
+/* Star rating */
 .star {
-    background: none;
-    border: none;
-    font-size: 32px;
-    color: #ddd;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    padding: 0;
+  font-size: 1.5rem;
+  color: #ddd;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+.star.active {
+  color: #ffc107;
+}
+.star:hover,
+.star:hover ~ .star {
+  color: #ffb400;
+  transform: scale(1.2);
 }
 
-.star.active {
-    color: #ffc107;
+.flagged_cell-icon{
+    max-width: 2rem;
+}
+
+/* Modal */
+.fc-modal {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 50;
+  animation: fadeIn 0.2s ease;
+}
+
+/* Fade-in animation for modal */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .flagged_cell-table th,
+  .flagged_cell-table td {
+    padding: 0.5rem 0.75rem;
+  }
+  .star {
+    font-size: 1.25rem;
+  }
+  .fc-modal {
+    min-width: 150px;
+    right: 0.5rem;
+  }
 }

@@ -46,7 +46,7 @@ export function useModifyOrder(id, orderData) {
     const [loading, setLoading] = useState(false); // betöltés állapot
     const [error, setError] = useState(null); // hiba üzenet
     const [success, setSuccess] = useState(false); // sikeres módosítás jelző
-    const token = checkAuthAdminLoader(); // admin auth token lekérdezése
+    const token = localStorage.getItem("authToken")
 
     /**
      * A rendelés módosítását végző aszinkron függvény

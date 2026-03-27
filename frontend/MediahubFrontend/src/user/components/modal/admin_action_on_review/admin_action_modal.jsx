@@ -1,11 +1,12 @@
 import { useDeleteReportedReview } from "./delete_review_ban_user";
 import { useBanUserForRuleBreaking } from "./delete_review_ban_user";
 import { useReportedReviewToNormalReview } from "./delete_review_ban_user";
+import "./AdminActionModal.css"; // import CSS file
 
 export default function AdminActionModal({ r_id, u_id, isClose }) {
     const { deleteReview } = useDeleteReportedReview();
     const { banUser } = useBanUserForRuleBreaking();
-    const { modifyReview } = useReportedReviewToNormalReview()
+    const { modifyReview } = useReportedReviewToNormalReview();
 
     const handleDelete = async () => {
         try {
@@ -25,7 +26,7 @@ export default function AdminActionModal({ r_id, u_id, isClose }) {
             isClose();
         } catch (err) {
             console.error(err);
-            alert("Hiba a vélemény törlésekor!");
+            alert("Hiba a vélemény visszaállítása során!");
         }
     };
 
@@ -41,20 +42,20 @@ export default function AdminActionModal({ r_id, u_id, isClose }) {
     };
 
     return (
-        <div className="modalContent">
-            <h3>Admin műveletek</h3>
-            <p>Válassz egy műveletet a véleményhez:</p>
+        <div className="modalContentAdminCom">
+            <h3 className="modalTitle">Admin műveletek</h3>
+            <p className="modalSubtitle">Válassz egy műveletet a véleményhez:</p>
             <div className="adminButtonGroup">
-                <button className="btn btn-danger" onClick={handleDelete}>
+                <button className="btn btn-delete" onClick={handleDelete}>
                     Vélemény törlése
                 </button>
-                <button className="btn btn-success" onClick={handleReturnToNormal}>
+                <button className="btn btn-restore" onClick={handleReturnToNormal}>
                     Vélemény visszaállítása
                 </button>
-                <button className="btn btn-warning" onClick={handleBan}>
+                <button className="btn btn-ban" onClick={handleBan}>
                     Felhasználó felfüggesztése
                 </button>
-                <button className="btn btn-secondary" onClick={isClose}>
+                <button className="btn btn-cancel" onClick={isClose}>
                     Mégse
                 </button>
             </div>

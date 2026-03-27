@@ -8,7 +8,7 @@ import { ErrorPage } from './user/pages/errorPage.jsx';
 import { TermekHozzadas } from './user/pages/termekekHozzaAdasa/termekekHozzadasaPage.jsx';
 import { TermekModositas } from './user/pages/termekekModositas/termekekModositasPage.jsx';
 import HandleOrderPage from './user/pages/handleOrderPage.jsx';
-import FlaggedCommentsPage from "./user/components/admin_velemenyek_page/velemenyek_page.jsx"
+import FlaggedCommentsPage from "./user/pages/velemenyek_page.jsx"
 
 export const router = createBrowserRouter([
     {

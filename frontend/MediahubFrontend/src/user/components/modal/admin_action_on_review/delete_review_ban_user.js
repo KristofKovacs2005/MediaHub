@@ -15,7 +15,7 @@ export function useDeleteReportedReview() {
 }
 
 export function useReportedReviewToNormalReview() {
-    const token = checkAuthAdminLoader();
+    const token = authLoader({ minRole: 5 });
 
     async function modifyReview(r_id) {
         await fetch(`http://localhost:3000/reviews/${r_id}`, {
@@ -32,7 +32,7 @@ export function useReportedReviewToNormalReview() {
 }
 
 export function useBanUserForRuleBreaking() {
-    const token = checkAuthAdminLoader();
+    const token = authLoader({ minRole: 5 });
     async function banUser(u_id) {
         await fetch(`http://localhost:3000/users/${u_id}`, {
             method: "PATCH",
