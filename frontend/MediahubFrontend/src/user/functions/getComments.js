@@ -1,4 +1,4 @@
-export async function fetchComments(setComments) {
+export async function fetchComments(itemId, setComments) {
     try {
         const res = await fetch(`http://localhost:3000/item/${itemId}/reviews`,{
             method: "GET"

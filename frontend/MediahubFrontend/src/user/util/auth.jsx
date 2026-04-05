@@ -34,7 +34,7 @@ export const MESSAGES = {
     unauthorized: "Nincs ehez jogosultsága"
 };
 
-export function authLoader({ minRole = 1, redirectUrl = '/' } = {}) {
+export function authLoader({ minRole = 1, maxRole = null, redirectUrl = '/' } = {}) {
     const status = getAuthStatus();
     const token = getAuthToken();
 
@@ -46,6 +46,12 @@ export function authLoader({ minRole = 1, redirectUrl = '/' } = {}) {
 
     // no token or insufficient role
     if (!token || status < minRole) {
+        alert(MESSAGES.unauthorized);
+        return redirect(redirectUrl);
+    }
+
+    // role too high (e.g. moderator trying to access librarian-only pages)
+    if (maxRole !== null && status > maxRole) {
         alert(MESSAGES.unauthorized);
         return redirect(redirectUrl);
     }

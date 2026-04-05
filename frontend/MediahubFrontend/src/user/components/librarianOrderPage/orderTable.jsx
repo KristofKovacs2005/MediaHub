@@ -1,6 +1,6 @@
 import  OrderRow from "./orderRow";
 
-export default function OrderTable({ orders }) {
+export default function OrderTable({ orders, onRefresh }) {
     if (!orders || orders.length === 0) {
         return <p>Nincsenek elemek.</p>;
     }
@@ -17,7 +17,7 @@ export default function OrderTable({ orders }) {
             </thead>
             <tbody>
                 {orders.map((order) => (
-                    <OrderRow key={order.o_id} order={order}/>
+                    <OrderRow key={order.o_id} order={order} onRefresh={onRefresh}/>
                 ))}
             </tbody>
         </table>

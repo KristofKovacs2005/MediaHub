@@ -41,8 +41,6 @@ export function Navbar_Admin() {
       <section className="navbarSection2">
         {/* Links for logged-in user */}
         <Link to="/termekek" className="navLink" onClick={() => setIsMobileMenuOpen(false)}>Termékek</Link>
-        <Link to="/termek_details" className="navLink" onClick={() => setIsMobileMenuOpen(false)}>Termékek kezelése</Link>
-        <Link to="/kolcsonzesek" className="navLink" onClick={() => setIsMobileMenuOpen(false)}>Kölcsönzések</Link>
         <Link to="/bejelentesek" className="navLink" onClick={() => setIsMobileMenuOpen(false)}>Bejelentések</Link>
         <Link to="/felhasznalok" className="navLink" onClick={() => setIsMobileMenuOpen(false)}>Felhasználók</Link>
         {/* User profile */}

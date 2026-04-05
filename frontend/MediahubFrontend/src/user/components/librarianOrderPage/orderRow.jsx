@@ -1,6 +1,7 @@
 import Modal from "../modal/modal";
 import ConfirmElfogadas from "../modal/confirmOrderModal/confirmElfogadas/confirmElfogadas";
 import ConfirmElutasitas from "../modal/confirmOrderModal/confirmElutasitas/confirmElutasitas";
+import ConfirmVissza from "./confirmVissza";
 import { sendEmailForKolcsonzesek } from "../emailJS/sendEmail";
 import { emailMessages } from "../emailJS/emailMessages";
 import { modifyOrderWithLibrarian } from "../../functions/orders";
@@ -8,10 +9,11 @@ import { useEffect, useState } from "react";
 import { fetchUsersById } from "../../functions/users";
 import { useLoadThisItem } from "../../functions/load_this_item_function";
 
-export default function OrderRow({ order }) {
+export default function OrderRow({ order, onRefresh }) {
     const { item } = useLoadThisItem({ id: order.p_id });
     const [isElfogadasOpen, setisElfogadasOpen] = useState(false);
     const [isElutasitasOpen, setisElutasitasOpen] = useState(false);
+    const [isVissza, setIsVissza] = useState(false);
     const [user, setUser] = useState();
 
     const fetchingUsers = async () => {
@@ -20,9 +22,9 @@ export default function OrderRow({ order }) {
     useEffect(()=>{
         fetchingUsers();
     },[])
-    const handleElfogadas = () => {
+    const handleElfogadas = async () => {
         try {
-            modifyOrderWithLibrarian(order.o_id, 2);
+            await modifyOrderWithLibrarian(order.o_id, 2);
             sendEmailForKolcsonzesek(
                 user.username,
                 user.email,
@@ -30,13 +32,14 @@ export default function OrderRow({ order }) {
             );
             alert("Sikeres módosítás!");
             setisElfogadasOpen(false);
+            if (onRefresh) onRefresh();
         } catch (err) {
             alert(err.message || "Hiba történt");
         }
     };
-    const handleElutasitas = () => {
+    const handleElutasitas = async () => {
         try {
-            modifyOrderWithLibrarian(order.o_id, 3);
+            await modifyOrderWithLibrarian(order.o_id, 3);
             sendEmailForKolcsonzesek(
                 user.username,
                 user.email,
@@ -44,6 +47,7 @@ export default function OrderRow({ order }) {
             );
             alert("Sikeres módosítás!");
             setisElutasitasOpen(false);
+            if (onRefresh) onRefresh();
         } catch (err) {
             alert(err.message || "Hiba történt");
         }
@@ -52,14 +56,25 @@ export default function OrderRow({ order }) {
         try {
             sendEmailForKolcsonzesek(
                 user.username,
-                "marci061123@gmail.com",
+                user.email,
                 emailMessages[2],
             );
-            setisElutasitasOpen(false);
         } catch (err) {
             alert(err.message || "Hiba történt");
         }
-    }
+    };
+    const handleVissza = async () => {
+        try {
+            // s_id=6 (late) → 5 (returned late), s_id=2 (active) → 4 (returned)
+            const newStatus = order.s_id === 6 ? 5 : 4;
+            await modifyOrderWithLibrarian(order.o_id, newStatus);
+            alert("Sikeres visszahozás!");
+            setIsVissza(false);
+            if (onRefresh) onRefresh();
+        } catch (err) {
+            alert(err.message || "Hiba történt");
+        }
+    };
 
     const statusOrderName = {
         1: "Várakozik",
@@ -94,9 +109,18 @@ export default function OrderRow({ order }) {
                 </Modal>
 
                 {isActive && (
-                    <button className="btn btn-warning">
-                        Visszahozva
-                    </button>
+                    <>
+                        <button className="btn btn-warning" onClick={() => setIsVissza(true)}>
+                            Visszahozva
+                        </button>
+                        <Modal isOpen={isVissza} isClose={() => setIsVissza(false)}>
+                            <ConfirmVissza
+                                isClose={() => setIsVissza(false)}
+                                onConfirm={handleVissza}
+                                isLate={order.s_id === 6}
+                            />
+                        </Modal>
+                    </>
                 )}
             </td>
 

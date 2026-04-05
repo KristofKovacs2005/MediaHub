@@ -15,7 +15,8 @@ const TermekekPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [searchInput, setSearchInput] = useState(""); // FilterBar manages selected tags internally
+  const [titleInput, setTitleInput] = useState("");
+  const [authorInput, setAuthorInput] = useState("");
   const [sortOrder, setSortOrder] = useState("AZ");   // Default sort A→Z
 
   useEffect(() => {
@@ -29,37 +30,15 @@ const TermekekPage = () => {
     : sortItemsZA(items);
 
   // Handle search submission
-  // Handle search submission
-const handleSearch = (input) => {
-  // parse tags and author from the search string
-  const tagRegex = /tag:([^\s]+)/gi;
-  const authorRegex = /author:([^\s]+)/i;
-
-  let tagsArray = [];
-  let author = "";
-  let name = input;
-
-  let match;
-  while ((match = tagRegex.exec(input))) {
-    tagsArray.push(match[1]);
-  }
-
-  const authorMatch = authorRegex.exec(input);
-  if (authorMatch) author = authorMatch[1];
-
-  // remove parsed tags and author from the text search
-  name = name.replace(tagRegex, "").replace(authorRegex, "").trim();
-
-  // call your existing applyFilters helper
+const handleSearch = ({ title, author, selectedTags }) => {
   applyFilters({
-    nameFilter: name,
-    tagsFilter: tagsArray,
+    nameFilter: title,
+    tagsFilter: selectedTags,
     authorFilter: author,
     setLoading,
     setItems,
     setError,
     fetchFn: fetchItems,
-    
   });
 };
 
@@ -68,12 +47,14 @@ const handleSearch = (input) => {
       <RenderNavbar />
 
       <FilterBar
-        searchInput={searchInput}
-        setSearchInput={setSearchInput}
+        titleInput={titleInput}
+        setTitleInput={setTitleInput}
+        authorInput={authorInput}
+        setAuthorInput={setAuthorInput}
         tags={tags}
         handleSearch={handleSearch}
         sortOrder={sortOrder}
-        setSortOrder={setSortOrder} // input will be passed automatically
+        setSortOrder={setSortOrder}
       />
 
       <div className="items-grid-wrapper">

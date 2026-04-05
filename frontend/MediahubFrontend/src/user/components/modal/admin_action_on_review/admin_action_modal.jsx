@@ -30,8 +30,8 @@ export default function AdminActionModal({ r_id, u_id, isClose }) {
 
     const handleBan = async () => {
         try {
-            await banUser(u_id);
-            alert("Felhasználó felfüggesztve!");
+            await banUser(u_id, r_id);
+            alert("Felhasználó felfüggesztve, vélemény törölve!");
             isClose();
         } catch (err) {
             alert("Hiba a felhasználó felfüggesztésekor!");

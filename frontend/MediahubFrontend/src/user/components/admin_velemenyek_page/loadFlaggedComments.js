@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { authLoader } from "../../util/auth";
+import { useState, useEffect, useCallback } from "react";
+import { getAuthToken } from "../../util/auth";
 import { decodeBuffer } from "../../util/decoder";
 
 
@@ -7,9 +7,13 @@ export function useGetReportedReviews() {
     const [report, setReport] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const token = authLoader({ minRole: 5 });
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    const refetch = useCallback(() => setRefreshKey((k) => k + 1), []);
 
     useEffect(() => {
+        const token = getAuthToken();
+
         async function fetchReportedReviews() {
             try {
                 setLoading(true);
@@ -36,9 +40,9 @@ export function useGetReportedReviews() {
         }
 
         fetchReportedReviews();
-    }, [token]);
+    }, [refreshKey]);
 
-    return { report, loading, error };
+    return { report, loading, error, refetch };
 }
 
 export function useModifyOrder(id, orderData) {

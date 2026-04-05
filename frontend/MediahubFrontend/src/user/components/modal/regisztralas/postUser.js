@@ -25,10 +25,27 @@ export default async function postUser(event) {
     try {
         await apiCall(url, "POST", userData);
 
-        // If apiCall succeeds, we assume creation was successful
         if (form && typeof form.reset === 'function') form.reset();
+
+        // Auto-login after successful registration
+        try {
+            const loginJson = await apiCall("http://localhost:3000/users/login", "POST", { email, password });
+            if (loginJson.token) {
+                localStorage.setItem('authToken', loginJson.token);
+                localStorage.setItem('username', loginJson.username);
+                localStorage.setItem('status', loginJson.status);
+                const expiration = new Date();
+                expiration.setHours(expiration.getHours() + 1);
+                localStorage.setItem('expiration', expiration.toISOString());
+            }
+        } catch (_) {
+            // Login failed silently — user can log in manually
+        }
+
         document.dispatchEvent(new CustomEvent('user-created', { detail: { username } }));
+        document.dispatchEvent(new CustomEvent('user-loged-in', { detail: { email } }));
         alert('Sikeres regisztráció!');
+        window.location.reload();
 
     } catch (error) {
         alert('Sikertelen regisztráció: ' + (error.message || error));

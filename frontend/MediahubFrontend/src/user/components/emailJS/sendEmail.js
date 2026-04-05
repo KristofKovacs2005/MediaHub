@@ -16,10 +16,10 @@ export const sendEmailForKolcsonzesek = (username, useremail, message) => {
     };
 
     emailjs.send(
-        "service_scnijrp",   // replace with your EmailJS service ID
-        "template_3grz80p",  // replace with your template ID
+        "service_scnijrp",
+        "template_3grz80p",
         templateParams,
-        "iw9PPde2zM7Ml84Xx"    // replace with your EmailJS public key
+        { publicKey: "iw9PPde2zM7Ml84Xx" }
     ).catch(() => null);
 };
 
@@ -44,10 +44,10 @@ export const sendEmailForReporting = async ({
     };
     try {
     await emailjs.send(
-        "service_scnijrp",   // EmailJS service ID
-        "template_c9wfxc9",  // EmailJS template ID
+        "service_scnijrp",
+        "template_c9wfxc9",
         templateParams,
-        "iw9PPde2zM7Ml84Xx"    // EmailJS public key
+        { publicKey: "iw9PPde2zM7Ml84Xx" }
     );
     } catch(err) {
         return null;

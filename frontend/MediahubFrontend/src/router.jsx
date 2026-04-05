@@ -35,25 +35,25 @@ export const router = createBrowserRouter([
         path: "/termek_details",
         element: <TermekekLibrarianPage />,
         errorElement: <ErrorPage />,
-        loader: () => authLoader({ minRole: 4 }), // librarian or admin
+        loader: () => authLoader({ minRole: 4, maxRole: 4 }), // librarian only
     },
     {
         path: '/ujtermek',
         element: <TermekHozzadas />,
         errorElement: <ErrorPage />,
-        loader: () => authLoader({ minRole: 4 })
+        loader: () => authLoader({ minRole: 4, maxRole: 4 })
     },
     {
         path: '/termekmodositas/:id',
         element: <TermekModositas/>,
         errorElement: <ErrorPage />,
-        loader: () => authLoader({ minRole: 4 })
+        loader: () => authLoader({ minRole: 4, maxRole: 4 })
     },
     {
         path:'/kolcsonzesek',
         element: <HandleOrderPage/>,
         errorElement:<ErrorPage/>,
-        loader: () => authLoader({ minRole: 4 })
+        loader: () => authLoader({ minRole: 4, maxRole: 4 })
     },
     {
         path: "/felhasznalok",

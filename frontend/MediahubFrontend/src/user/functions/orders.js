@@ -7,7 +7,7 @@ export async function getOrdersForLibrarian() {
 }
 
 
-export async function insertOrder(p_id, return_date) {
+export async function insertOrder(p_id, start_date, return_date) {
     const status = getAuthStatus();
 
     if (status === null) {
@@ -24,12 +24,11 @@ export async function insertOrder(p_id, return_date) {
     }
 
     const token = localStorage.getItem("authToken");
-    
-    const date = new Date().toISOString().split("T")[0];
+
     return await apiCall(
         "http://localhost:3000/orders",
         "POST",
-        { p_id, date, return_date },
+        { p_id, date: start_date, return_date },
         token
     );
 }

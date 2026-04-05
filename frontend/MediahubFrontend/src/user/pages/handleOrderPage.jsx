@@ -15,16 +15,17 @@ export default function OrdersLibrarianPage() {
     const statusRef = useRef(null);
 
     useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const data = await getOrdersForLibrarian();
-                setOrders(data);
-            } catch (err) {
-                setOrders([]);
-            }
-        };
         fetchOrders();
     }, []);
+
+    async function fetchOrders() {
+        try {
+            const data = await getOrdersForLibrarian();
+            setOrders(data);
+        } catch (err) {
+            setOrders([]);
+        }
+    }
 
     // count statuses
     const statusCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
@@ -81,7 +82,7 @@ export default function OrdersLibrarianPage() {
                 {/* TABLE SECTION */}
                 <section className="section-container">
                     <div className="table-card">
-                        <OrderTable orders={filteredOrders.length > 0 ? filteredOrders : orders} />
+                        <OrderTable orders={filteredOrders.length > 0 ? filteredOrders : orders} onRefresh={fetchOrders} />
                     </div>
                 </section>
             </div>

@@ -143,7 +143,7 @@ describe('TermekekPage integration', () => {
     });
 
     // Type in search and submit
-    const input = screen.getByPlaceholderText('Keresés: author:John ...');
+    const input = screen.getByPlaceholderText('Keresés cím alapján...');
     fireEvent.change(input, { target: { value: 'rózsa' } });
     fireEvent.click(screen.getByText('🔍'));
 

@@ -3,13 +3,13 @@ import { updateUserStatus } from "../../functions/users";
 
 const STATUS_LABELS = {
     1: "Felhasználó",
-    2: "Felhasználó (2)",
-    3: "Felfüggesztve",
+    2: "Figyelmeztetett felhasználó",
+    3: "Felfüggesztett felhasználó",
     4: "Könyvtáros",
-    5: "Admin",
+    5: "Moderátor",
 };
 
-const STATUS_OPTIONS = [1, 2, 3, 4, 5];
+const STATUS_OPTIONS = [1, 2, 3, 4];
 
 function getStatusLabel(status) {
     return STATUS_LABELS[status] || `Ismeretlen (${status})`;

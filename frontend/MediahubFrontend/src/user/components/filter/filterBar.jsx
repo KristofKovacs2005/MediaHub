@@ -2,8 +2,10 @@ import { useState } from "react";
 import "./filterBar.css";
 
 const FilterBar = ({
-    searchInput,
-    setSearchInput,
+    titleInput,
+    setTitleInput,
+    authorInput,
+    setAuthorInput,
     tags,
     handleSearch,
     sortOrder,
@@ -29,11 +31,7 @@ const FilterBar = ({
     // update the search input with free text + tags when submitting
     const onSubmit = (e) => {
         e.preventDefault();
-
-        const tagString = selectedTags.map((t) => `tag:${t}`).join(" ");
-        const fullSearch = `${searchInput} ${tagString}`.trim();
-
-        handleSearch(fullSearch);
+        handleSearch({ title: titleInput, author: authorInput, selectedTags });
     };
 
     return (
@@ -41,9 +39,15 @@ const FilterBar = ({
             <form onSubmit={onSubmit} className="filter-form">
                 <input
                     type="text"
-                    placeholder="Keresés: author:John ..."
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    placeholder="Keresés cím alapján..."
+                    value={titleInput}
+                    onChange={(e) => setTitleInput(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="Keresés szerző alapján..."
+                    value={authorInput}
+                    onChange={(e) => setAuthorInput(e.target.value)}
                 />
                 <div className="tags-input">
                     {/* selected tags as chips */}

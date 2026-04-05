@@ -3,8 +3,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import FilterBar from '../../user/components/filter/filterBar';
 
 const defaultProps = {
-  searchInput: '',
-  setSearchInput: vi.fn(),
+  titleInput: '',
+  setTitleInput: vi.fn(),
+  authorInput: '',
+  setAuthorInput: vi.fn(),
   tags: [
     { t_name: 'fantasy' },
     { t_name: 'sci-fi' },
@@ -18,17 +20,17 @@ const defaultProps = {
 describe('FilterBar', () => {
   it('should render search input and submit button', () => {
     render(<FilterBar {...defaultProps} />);
-    expect(screen.getByPlaceholderText('Keresés: author:John ...')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Keresés cím alapján...')).toBeInTheDocument();
     expect(screen.getByText('🔍')).toBeInTheDocument();
   });
 
   it('should call setSearchInput on typing', () => {
-    const setSearchInput = vi.fn();
-    render(<FilterBar {...defaultProps} setSearchInput={setSearchInput} />);
-    fireEvent.change(screen.getByPlaceholderText('Keresés: author:John ...'), {
+    const setTitleInput = vi.fn();
+    render(<FilterBar {...defaultProps} setTitleInput={setTitleInput} />);
+    fireEvent.change(screen.getByPlaceholderText('Keresés cím alapján...'), {
       target: { value: 'Harry' },
     });
-    expect(setSearchInput).toHaveBeenCalledWith('Harry');
+    expect(setTitleInput).toHaveBeenCalledWith('Harry');
   });
 
   it('should toggle tag dropdown on button click', () => {
@@ -86,7 +88,7 @@ describe('FilterBar', () => {
 
   it('should call handleSearch with combined text and tags on submit', () => {
     const handleSearch = vi.fn();
-    render(<FilterBar {...defaultProps} searchInput="Harry" handleSearch={handleSearch} />);
+    render(<FilterBar {...defaultProps} titleInput="Harry" handleSearch={handleSearch} />);
 
     // Add a tag
     fireEvent.click(screen.getByText('Taggek ▼'));
@@ -94,7 +96,7 @@ describe('FilterBar', () => {
 
     // Submit form
     fireEvent.click(screen.getByText('🔍'));
-    expect(handleSearch).toHaveBeenCalledWith('Harry tag:fantasy');
+    expect(handleSearch).toHaveBeenCalledWith({ title: 'Harry', author: '', selectedTags: ['fantasy'] });
   });
 
   it('should call setSortOrder when sort dropdown changes', () => {

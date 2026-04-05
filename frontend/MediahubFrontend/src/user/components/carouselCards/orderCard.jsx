@@ -59,9 +59,9 @@ export default function OrderCard({ order }) {
                         alt={item?.i_name || "Nincs név"}
                         className="detailsImage img-fluid"
                     />
-                    <h2>{item.i_name}</h2>
-                    <span className={getStatusClass(order.o_status)}>
-                        {orderStatus[order.o_status]}
+                    <h2>{item?.i_name || "Nincs név"}</h2>
+                    <span className={getStatusClass(order.s_id)}>
+                        {orderStatus[order.s_id]}
                     </span>
                 </div>
             ) : (
